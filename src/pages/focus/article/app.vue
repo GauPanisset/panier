@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div class="focus-article">
+        <div class="focus-article" ref="focusDiv">
 
             <div id="background"></div>
             <nav-bar></nav-bar>
@@ -9,7 +9,7 @@
             </div>
             <div class="text-container">
                 <h1>{{title}}</h1>
-                <h2>{{author}}, {{date}}, {{link}}</h2>
+                <h2>{{author}} – {{date}} – {{link}}</h2>
 
                 <p v-for="paragraph in content" :key="paragraph.substr(0, 20) + paragraph.length">{{paragraph}}</p>
 
@@ -36,6 +36,8 @@
     import 'bootstrap/dist/css/bootstrap.css'
     import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+    import axios from 'axios';
+
     import 'vue-awesome/icons/heart'
     import Icon from 'vue-awesome/components/Icon'
 
@@ -51,21 +53,10 @@
                 author: "Auteur",
                 date: "date",
                 link: "lien",
-                content: ['Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl sem, cursus eget convallis id, suscipit vehicula dui. Vestibulum sagittis eros eget rhoncus blandit. In hac habitasse platea dictumst. Duis gravida quam nec lorem venenatis, vitae congue leo tempus. Donec dictum elementum est at molestie. Cras semper libero id diam egestas dignissim. Curabitur laoreet molestie est id bibendum.',
-                    'Proin malesuada tempor nunc eget pulvinar. Quisque nec iaculis ipsum. Aliquam leo tellus, efficitur id lectus ut, vehicula luctus nunc. Donec est justo, facilisis vitae ullamcorper dapibus, scelerisque vel neque. Pellentesque quis accumsan sapien. Vivamus efficitur sapien vel purus ultrices tincidunt. Donec ex tellus, semper non sagittis eget, suscipit sit amet odio. Donec tempus accumsan mattis. Quisque maximus magna lectus, ac hendrerit orci egestas eget. Curabitur lacus eros, semper in lectus ac, gravida dictum dolor.',
-                    'Praesent ullamcorper feugiat tortor nec tristique. In gravida felis id tellus interdum, malesuada finibus mi facilisis. Etiam gravida tortor pulvinar neque maximus convallis. Sed in lacus lectus. Morbi congue pellentesque lobortis. Sed mattis aliquam sapien at elementum. Etiam volutpat diam at risus varius maximus. Quisque cursus, mauris sed laoreet posuere, nisi magna fermentum ex, non venenatis urna risus sit amet purus.',
-                    'Sed pharetra ligula euismod consectetur mollis. Praesent risus purus, pulvinar et pellentesque in, ultrices et risus. Sed vel aliquet eros, vitae ullamcorper velit. Fusce dolor nibh, fermentum sed nulla eu, eleifend maximus felis. Aliquam pellentesque tincidunt lectus. Vestibulum sodales nisl tortor, ut venenatis lorem semper eu. Curabitur fermentum, felis porta interdum aliquam, arcu purus cursus est, at sagittis nibh quam ut sapien. Phasellus blandit, mi sed dignissim vehicula, massa mauris elementum tortor, eu facilisis augue sapien non orci. Vestibulum sit amet arcu et ligula lobortis euismod et eget felis. Suspendisse eu ex vitae purus maximus consectetur id vitae libero. Pellentesque vel interdum lectus, sed lobortis ante. In magna lectus, euismod id mauris eu, viverra lobortis ligula. Duis consequat purus pretium auctor auctor.',
-                    'In viverra nisl nec sapien malesuada, facilisis feugiat dolor facilisis. Aliquam vitae lectus non massa varius ullamcorper. Etiam sed justo nec orci pharetra pharetra nec et lectus. Fusce rhoncus risus ut cursus condimentum. Ut non libero tempor, aliquet libero at, venenatis risus. Sed dictum auctor eleifend. Cras ornare vel lacus in mattis. Sed scelerisque convallis leo eu fermentum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.'],
+                content: [],
                 tags: ['tag1', 'tag2', 'tag3'],
-                images: ['1.jpg', '7.jpg'],
-                positions: {'1.jpg': {
-                        top: '30vh',
-                        left: '10vw'
-                        },
-                            '7.jpg': {
-                        top: '10vh',
-                        left: '55vw'
-                        }},
+                images: [],
+                positions: {},
                 products: {
                     title: "Produits liés",
                     display: "short",
@@ -79,7 +70,6 @@
                     content: [{name: "Titre article 1", image: "5.jpg"}, {name: "Titre article 2", image: "6.jpg"}]
                 }
             }
-
         },
         components: {
             NavBar,
@@ -102,6 +92,42 @@
                 this.$refs[image][0].style.zIndex = 1;
                 this.$refs[image][0].children[0].style.boxShadow = 'none';
             }
+        },
+        mounted() {
+            const id = this.$route.query.id;
+
+            axios
+                .get('http://localhost:3031/article/' + id)
+                .then(response => {
+                    this.title = response.data[0].titre;
+                    this.author = response.data[0].auteur;
+                    this.date = response.data[0].date;
+                    this.link = response.data[0].lien;
+                    let tmp = 0;
+                    for (let i = 0; i < response.data[0].texte.length - 4; i ++) {
+
+                        if (response.data[0].texte.substr(i, 4) === "\r\n\r\n") {
+                            this.content.push(response.data[0].texte.substring(tmp, i));
+                            tmp = i + 4;
+                        }
+                    }
+                });
+            axios
+                .get('http://localhost:3031/article/image/' + id)
+                .then(response => {
+                    const pos = [{
+                            top: '30vh',
+                            left: '10vw',
+                            }, {
+                            top: '10vh',
+                            left: '55vw',
+                            }];
+                    for (let i = 0; i < Math.min(2, response.data.length); i ++) {
+                        this.images.push(response.data[i]["url"]);
+                        this.positions[response.data[i]["url"]] = pos[i];
+                        this.positions[response.data[i]["url"]]["height"] = this.$refs.focusDiv.getBoundingClientRect().height + "px";
+                    }
+                });
         }
     }
 </script>
@@ -188,18 +214,21 @@
         margin-right: 5px;
     }
 
+    .focus-article {
+        min-height: 100vh;
+    }
+
     .focus-article .image-container {
         position: absolute;
-        height: 100%;
-        top: 0;
         z-index: 1;
+        top:0 !important;
     }
 
     .focus-article .image-container img {
         width: 30vw;
         position: sticky;
-        left: 0;
         z-index: 2;
+        height: auto !important;;
     }
 
 

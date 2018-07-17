@@ -50,7 +50,9 @@
 
             function scrollVert() {
             $('html, body, *').off('mousewheel').mousewheel(function (e, delta) {
-                this.scrollTop -= delta*(1.05 - Math.exp(-this.scrollTop*0.003));
+                if ($(window).scrollTop() + 8 + $(window).height() !== $(document).height()) {
+                    this.scrollTop -= delta*(1.05 - Math.exp(-this.scrollTop*0.003));
+                }
                 e.preventDefault();
                 setTimeout(function () {
 
@@ -69,7 +71,7 @@
                 scrollLeft = this.scrollLeft;
                 setTimeout(function () {
                     if (scrollLeft === 0) {
-                        scrollVert();
+                        //scrollVert();
                     }
                 }, 0);
             });

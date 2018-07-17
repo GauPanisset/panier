@@ -1,7 +1,7 @@
 <template>
   <div class="home-section">
     <template v-for="subsec in attribute.content">
-      <subsection :img="subsec.img" :text="subsec.text" :position="position"></subsection>
+      <subsection :img="subsec.image" :text="{title: subsec.titre, content: subsec.texte, id: subsec.id}" :position="position"></subsection>
     </template>
     <transition name="fade">
         <h1 v-if="position.scrollTop + 8 >= this.windowHeigth" ref="sectionTitle">{{attribute.name}}</h1>

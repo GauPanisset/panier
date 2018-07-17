@@ -9,7 +9,23 @@ Vue.use(ElementUI);
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue);
 
+import VueRouter from 'vue-router'
+Vue.use(VueRouter);
+
+let router = new VueRouter({
+        mode: 'history',
+        routes: [
+            {
+                path: '/focus/article.html',
+                component: require('./app'),
+                name: 'article'
+            }
+        ]
+    }
+);
+
 new Vue({
     el: '#app',
+    router,
     render: h => h(App)
 });

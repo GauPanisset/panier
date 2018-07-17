@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar">
     <div class="logo">
-      <img src="../assets/img/logo.png" style="width: 100%; height: 100%"/>
+      <a href="http://localhost:8010/home.html"><img src="../assets/img/logo.png" style="width: 100%; height: 100%"/></a>
     </div>
     <div id="nav-bar-middle">
       <div id="nav-search-bar">
