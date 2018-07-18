@@ -22,17 +22,17 @@
 
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#description" role="tab" aria-controls="home" aria-selected="true">Description</a>
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#description-tab" role="tab" aria-controls="home" aria-selected="true">Description</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#fiche" role="tab" aria-controls="profile" aria-selected="false">Fiche technique</a>
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#fiche-tab" role="tab" aria-controls="profile" aria-selected="false">Fiche technique</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="tab-pane fade show active" id="description-tab" role="tabpanel" aria-labelledby="home-tab">
                             <p class="text-description" v-for="paragraph in description" :key="paragraph.substr(0, 20) + paragraph.length">{{paragraph}}</p>
                         </div>
-                        <div class="tab-pane fade" id="fiche" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade" id="fiche-tab" role="tabpanel" aria-labelledby="profile-tab">
                             <div class="attributes-container">
                                 <table>
                                     <tr v-for="item in attributes" :key="item[0]">
@@ -59,7 +59,9 @@
     import 'bootstrap/dist/css/bootstrap.css'
     import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-import 'vue-awesome/icons/heart'
+    import axios from 'axios';
+
+    import 'vue-awesome/icons/heart'
     import Icon from 'vue-awesome/components/Icon'
 
     import CatSection from 'components/cat-section'
@@ -72,29 +74,29 @@ import 'vue-awesome/icons/heart'
             return {
                 product: "Nom objet",
                 price: "45",
-                attributes: [["Matière", "Céramique"], ["Dimention", "Diamètre 25cm"], ["Couleur", "Sable"], ["Marque", "Brand"], ["N° article", "2398237"], ["Style", "Antique"]],
-                description: ['Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl sem, cursus eget convallis id, suscipit vehicula dui. Vestibulum sagittis eros eget rhoncus blandit. In hac habitasse platea dictumst. Duis gravida quam nec lorem venenatis, vitae congue leo tempus. Donec dictum elementum est at molestie. Cras semper libero id diam egestas dignissim. Curabitur laoreet molestie est id bibendum.',
-                    'Proin malesuada tempor nunc eget pulvinar. Quisque nec iaculis ipsum. Aliquam leo tellus, efficitur id lectus ut, vehicula luctus nunc. Donec est justo, facilisis vitae ullamcorper dapibus, scelerisque vel neque. Pellentesque quis accumsan sapien. Vivamus efficitur sapien vel purus ultrices tincidunt. Donec ex tellus, semper non sagittis eget, suscipit sit amet odio. Donec tempus accumsan mattis. Quisque maximus magna lectus, ac hendrerit orci egestas eget. Curabitur lacus eros, semper in lectus ac, gravida dictum dolor.'],
-                images: ['1.jpg', '7.jpg'],
-                positions: {'1.jpg': {
+                attributes: []/*[["Matière", "Céramique"], ["Dimention", "Diamètre 25cm"], ["Couleur", "Sable"], ["Marque", "Brand"], ["N° article", "2398237"], ["Style", "Antique"]]*/,
+                description: [] /*['Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl sem, cursus eget convallis id, suscipit vehicula dui. Vestibulum sagittis eros eget rhoncus blandit. In hac habitasse platea dictumst. Duis gravida quam nec lorem venenatis, vitae congue leo tempus. Donec dictum elementum est at molestie. Cras semper libero id diam egestas dignissim. Curabitur laoreet molestie est id bibendum.',
+                    'Proin malesuada tempor nunc eget pulvinar. Quisque nec iaculis ipsum. Aliquam leo tellus, efficitur id lectus ut, vehicula luctus nunc. Donec est justo, facilisis vitae ullamcorper dapibus, scelerisque vel neque. Pellentesque quis accumsan sapien. Vivamus efficitur sapien vel purus ultrices tincidunt. Donec ex tellus, semper non sagittis eget, suscipit sit amet odio. Donec tempus accumsan mattis. Quisque maximus magna lectus, ac hendrerit orci egestas eget. Curabitur lacus eros, semper in lectus ac, gravida dictum dolor.']*/,
+                images: [] /*['1.jpg', '7.jpg']*/,
+                positions: {}/*{'1.jpg': {
                         top: '30vh',
                         left: '10vw'
                     },
                     '7.jpg': {
                         top: '10vh',
                         left: '15vw'
-                    }},
+                    }}*/,
                 products: {
                     title: "Produits similaires",
                     display: "short",
                     font: "raleway",
-                    content: [{name: 'Produit 1', image: '16.jpeg', price:'45'}, {name: 'Produit 2', image: '16.jpeg', price:'45'}, {name: 'Produit 3', image: '16.jpeg', price:'45'}, {name: 'Produit 4', image: '16.jpeg', price:'45'}, {name: 'Produit 5', image: '16.jpeg', price:'45'}, {name: 'Produit 6', image: '16.jpeg', price:'45'}]
+                    content: [{name: 'Pot blanc', image: '11.jpeg', price:'30', id: '3'}, {name: 'Assiette rose', image: '25.jpg', price:'35', id: '4'}, {name: 'Petite peluche souris', image: '32.jpg', price:'25', id: '5'}, {name: 'Baignoire Design', image: '43.jpg', price:'450', id: '6'}, {name: 'Bougie de jardin', image: '49.jpg', price: '20', id: '7'}, {name: 'Chaise design', image: '8.jpg', price:'50', id: '2'}]
                 },
                 articles: {
                     title: "Articles liés",
                     display: "short",
                     font: "raleway",
-                    content: [{name: "Titre article 1", image: "5.jpg"}, {name: "Titre article 2", image: "6.jpg"}]
+                    content: [{name: "Titre article 1", image: "5.jpg", id: '10'}, {name: "Titre article 2", image: "6.jpg", id: '11'}]
                 }
             }
 
@@ -120,6 +122,46 @@ import 'vue-awesome/icons/heart'
                 this.$refs[image][0].style.zIndex = 1;
                 this.$refs[image][0].children[0].style.boxShadow = 'none';
             }
+        },
+        mounted() {
+            const id = this.$route.query.id;
+            const attri = [["Matière", "matiere"], ["Dimention", "dimension"], ["Couleur", "couleur"], ["Marque", "marque"], ["N° article", "numero"], ["Style", "style"]];
+
+            axios
+                .get('http://localhost:3031/product/' + id)
+                .then(response => {
+                    this.product = response.data[0].nom;
+                    this.price = response.data[0].prix;
+                    let tmp = 0;
+                    for(let i = 0; i < attri.length; i++){
+                        if (response.data[0][attri[i][1]] !== undefined && response.data[0][attri[i][1]] !== 0 && response.data[0][attri[i][1]] !== null) {
+                            this.attributes.push([attri[i][0], response.data[0][attri[i][1]]]);
+                        }
+                    }
+                    for (let i = 0; i < response.data[0].description.length - 4; i ++) {
+
+                        if (response.data[0].description.substr(i, 4) === "\r\n\r\n") {
+                            this.description.push(response.data[0].description.substring(tmp, i));
+                            tmp = i + 4;
+                        }
+                    }
+                    this.description.push(response.data[0].description.substring(tmp, response.data[0].description.length));
+                });
+            axios
+                .get('http://localhost:3031/product/image/' + id)
+                .then(response => {
+                    const pos = [{
+                        top: '30vh',
+                        left: '10vw',
+                    }, {
+                        top: '10vh',
+                        left: '15vw',
+                    }];
+                    for (let i = 0; i < Math.min(2, response.data.length); i ++) {
+                        this.images.push(response.data[i]["url"]);
+                        this.positions[response.data[i]["url"]] = pos[i];
+                    }
+                });
         }
     }
 </script>

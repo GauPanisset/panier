@@ -2,9 +2,11 @@
     <div class="cat-section">
         <div class="title" :style="font[attribute.font]">{{attribute.title}}</div>
         <b-container class="bv-example-row">
-            <b-row align-h="start" v-if="attribute.title != 'Produits' && attribute.display == 'short'">
+            <b-row align-h="start" v-if="!attribute.title.includes('Produits') && attribute.display === 'short'">
                 <b-col class="result-container" cols="2" v-for="index in displayLength" :key="attribute.content[index].name">
-                    <b-card href="#" :title="attribute.content[index].name" :img-src="getImgUrl(attribute.content[index].image)" :img-alt="attribute.content[index].name"></b-card>
+                    <a :href="getLinkUrl(attribute.title, attribute.content[index].id)">
+                        <b-card :title="attribute.content[index].name" :img-src="getImgUrl(attribute.content[index].image)" :img-alt="attribute.content[index].name"></b-card>
+                    </a>
                 </b-col>
                 <b-col class="result-plus" sm="1" md="1" lg="2">
                     <b-button v-if="attribute.content.length >= 5" :variant="'outline-secondary'" class="plus-button">
@@ -13,19 +15,40 @@
                 </b-col>
             </b-row>
 
-            <b-row align-h="start" v-if="attribute.title != 'Produits' && attribute.display == 'large'">
+            <b-row align-h="start" v-if="!attribute.title.includes('Produits') && attribute.display === 'large'">
                 <b-col class="result-container" cols="2" v-for="item in attribute.content" :key="item.name">
-                    <b-card href="#" :title="item.name" :img-src="getImgUrl(item.image)" :img-alt="item.name"></b-card>
+                    <a :href="getLinkUrl(attribute.title, item.id)">
+                        <b-card :title="item.name" :img-src="getImgUrl(item.image)" :img-alt="item.name"></b-card>
+                    </a>
                 </b-col>
             </b-row>
 
-            <b-row align-h="start" v-if="attribute.title == 'Produits'">
+            <b-row align-h="start" v-if="attribute.title.includes('Produits') && attribute.display === 'short'">
+                <b-col class="result-container" cols="2" v-for="index in displayLength" :key="attribute.content[index].name">
+                    <a :href="getLinkUrl(attribute.title, attribute.content[index].id)">
+                        <b-card :title="attribute.content[index].name" :img-src="getImgUrl(attribute.content[index].image)" :img-alt="attribute.content[index].name">
+                            <p class="card-text">
+                                Prix constaté {{attribute.content[index].price}} €
+                            </p>
+                        </b-card>
+                    </a>
+                </b-col>
+                <b-col class="result-plus" sm="1" md="1" lg="2">
+                    <b-button v-if="attribute.content.length >= 5" :variant="'outline-secondary'" class="plus-button">
+                        <icon name="plus"></icon>
+                    </b-button>
+                </b-col>
+            </b-row>
+
+            <b-row align-h="start" v-if="attribute.title.includes('Produits') && attribute.display === 'large'">
                 <b-col class="result-container" cols="2" v-for="product in attribute.content" :key="product.name">
-                    <b-card href="#" :title="product.name" :img-src="getImgUrl(product.image)" :img-alt="product.name">
-                        <p class="card-text">
-                            Prix constaté {{product.price}} €
-                        </p>
-                    </b-card>
+                    <a :href="getLinkUrl(attribute.title, product.id)">
+                        <b-card :title="product.name" :img-src="getImgUrl(product.image)" :img-alt="product.name">
+                            <p class="card-text">
+                                Prix constaté {{product.price}} €
+                            </p>
+                        </b-card>
+                    </a>
                 </b-col>
             </b-row>
 
@@ -64,6 +87,18 @@
                 }
                 return pic;
             },
+            getLinkUrl(type, id) {
+                if (type.includes('Produit')) {
+                    type = 'product'
+                } else if (type.includes('Article')) {
+                    type = 'article'
+                } else if (type.includes('Marque')) {
+                    type = 'brand'
+                } else {
+                    return "#"
+                }
+                return "http://localhost:8010/focus/" + type + ".html?id=" + id;
+            }
         }
     }
 </script>
@@ -72,6 +107,10 @@
 
     @import '../assets/css/custom-bootstrap.scss';
     @import '../../node_modules/bootstrap/scss/bootstrap.scss';
+
+    .cat-section a {
+        color: black;
+    }
 
     .cat-section .container {
         max-width: none;

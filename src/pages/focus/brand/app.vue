@@ -32,6 +32,7 @@
 
         </div>
         <div style="background-color: white">
+            <cat-section :attribute="shop"></cat-section>
             <cat-section :attribute="products"></cat-section>
             <cat-section :attribute="articles"></cat-section>
         </div>
@@ -63,17 +64,23 @@
                 tags: ['tag1', 'tag2', 'tag3'],
                 images: [],
                 positions: {},
-                products: {
-                    title: "Produits liés",
+                shop: {
+                    title: "Boutiques liées",
                     display: "short",
                     font: "raleway",
-                    content: [{name: 'Produit 1', image: '16.jpeg', price:'45'}, {name: 'Produit 2', image: '16.jpeg', price:'45'}, {name: 'Produit 3', image: '16.jpeg', price:'45'}, {name: 'Produit 4', image: '16.jpeg', price:'45'}, {name: 'Produit 5', image: '16.jpeg', price:'45'}, {name: 'Produit 6', image: '16.jpeg', price:'45'}]
+                    content: [{name: "Boutique 1", image: "20.jpg", id: ''}]
+                },
+                products: {
+                    title: "Produits",
+                    display: "short",
+                    font: "raleway",
+                    content: [{name: 'Pot blanc', image: '11.jpeg', price:'30', id: '3'}, {name: 'Assiette rose', image: '25.jpg', price:'35', id: '4'}, {name: 'Petite peluche souris', image: '32.jpg', price:'25', id: '5'}, {name: 'Baignoire Design', image: '43.jpg', price:'450', id: '6'}, {name: 'Bougie de jardin', image: '49.jpg', price: '20', id: '7'}, {name: 'Chaise design', image: '8.jpg', price:'50', id: '2'}]
                 },
                 articles: {
-                    title: "Articles similaires",
+                    title: "Articles",
                     display: "short",
                     font: "raleway",
-                    content: [{name: "Titre article 1", image: "5.jpg"}, {name: "Titre article 2", image: "6.jpg"}]
+                    content: [{name: "Titre article 1", image: "5.jpg", id: '10'}, {name: "Titre article 2", image: "6.jpg", id: '11'}]
                 }
             }
 
