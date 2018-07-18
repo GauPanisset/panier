@@ -1,8 +1,8 @@
 <template>
   <div class="subsection" v-bind:style="styleObject">
-      <img class="image" :src="getImgUrl(img)" ref="imgRef"/>
+      <img class="image" :src="getImgUrl(attribute.image)" ref="imgRef"/>
       <div class="text" ref="textRef" v-bind:style="styleMove">
-          <h2>{{text.title}}</h2>
+          <h2>{{attribute.title}}</h2>
           <p>{{summary.content}}</p>
           <a class="readMore" :href="summary.link">Lire la suite</a>
       </div>
@@ -32,7 +32,7 @@
                 }
             }
         },
-        props: ['img', 'text', 'position'],
+        props: ['attribute', 'position'],
         methods: {
             getImgUrl(pic) {
 
@@ -56,11 +56,16 @@
           const value = (this.$refs.imgRef.getBoundingClientRect().left + this.init.widthImg/2)/window.innerWidth;
           this.styleMove.left = 50*(2*value - 1) + Math.abs(this.init.widthImg - this.init.widthText)/2 + "px";
 
-          this.summary.content=this.text.content.substr(0, 100);
+          this.summary.content=this.attribute.content.substr(0, 100);
           if (this.summary.content[-1] !== ".") {
               this.summary.content = this.summary.content.concat("...")
           }
-          this.summary.link = "http://localhost:8010/focus/article.html?id=" + this.text.id;
+          if (!this.attribute.brand){
+              this.summary.link = "http://localhost:8010/focus/article.html?id=" + this.attribute.id;
+          } else {
+              this.summary.link = "http://localhost:8010/focus/brand.html?id=" + this.attribute.id;
+          }
+
         },
         created() {
           window.addEventListener('scroll', this.parallaxe);

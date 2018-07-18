@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --config build/webpack.dev.conf.js",
-    "build": "webpack --mode production --progress --config build/webpack.prod.conf.js"
+    "build": "webpack --mode production --progress --config build/webpack.prod.conf.js",
+    "start": "node panierServer/index.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -16,6 +17,7 @@
     "jquery-mousewheel": "^3.1.13",
     "node-sass": "^4.9.2",
     "sass-loader": "^7.0.3",
+    "serve-static": "^1.13.2",
     "vue": "^2.5.16",
     "vue-awesome": "^2.3.8",
     "vue-router": "^3.0.1",

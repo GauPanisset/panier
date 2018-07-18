@@ -111,6 +111,7 @@
                             tmp = i + 4;
                         }
                     }
+                    this.content.push(response.data[0].texte.substring(tmp, response.data[0].texte.length));
                 });
             axios
                 .get('http://localhost:3031/article/image/' + id)
@@ -228,7 +229,7 @@
         width: 30vw;
         position: sticky;
         z-index: 2;
-        height: auto !important;;
+        height: auto !important;
     }
 
 

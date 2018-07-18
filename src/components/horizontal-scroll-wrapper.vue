@@ -47,19 +47,22 @@
         mounted () {
             axios
                 .get('http://localhost:3031/article/accueil/news')
-                .then(response => {(this.sections.push({name: "News", content: response.data}))});
+                .then(response => {(this.sections.push({name: "News", content: response.data, brand: false}))});
             axios
                 .get('http://localhost:3031/article/accueil/reportage')
-                .then(response => {(this.sections.push({name: "Reportages", content: response.data}))});
+                .then(response => {(this.sections.push({name: "Reportages", content: response.data, brand: false}))});
             axios
                 .get('http://localhost:3031/article/accueil/dossier')
-                .then(response => {(this.sections.push({name: "Dossiers", content: response.data}))});
+                .then(response => {(this.sections.push({name: "Dossiers", content: response.data, brand: false}))});
             axios
                 .get('http://localhost:3031/article/accueil/maison')
-                .then(response => {(this.sections.push({name: "Maison", content: response.data}))});
+                .then(response => {(this.sections.push({name: "Maison", content: response.data, brand: false}))});
+            axios
+                .get('http://localhost:3031/brand/accueil')
+                .then(response => {(this.sections.push({name: "Marques", content: response.data, brand: true}))});
             axios
                 .get('http://localhost:3031/article/accueil/boutique')
-                .then(response => {(this.sections.push({name: "Boutiques", content: response.data}))});
+                .then(response => {(this.sections.push({name: "Boutiques", content: response.data, brand: false}))});
         }
     }
 </script>
