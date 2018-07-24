@@ -5,9 +5,9 @@
         </div>
         <div id="search-input">
             <b-input-group>
-                <b-form-input id="bar" type="text" placeholder="Que cherchez vous ?"></b-form-input>
+                <b-form-input v-model="request" id="bar" type="text" placeholder="Que cherchez vous ?"></b-form-input>
                 <b-input-group-append>
-                    <b-btn variant="outline-secondary">Rechercher</b-btn>
+                    <b-btn variant="outline-secondary" @click="toResult()" >Rechercher</b-btn>
                 </b-input-group-append>
             </b-input-group>
         </div>
@@ -38,9 +38,10 @@
             }
         },
         methods: {
-      },
-      created () {
-      }
+            toResult() {
+                window.location.href = "http://localhost:8010/result.html?request=" + this.request;
+            }
+        },
     }
 </script>
 

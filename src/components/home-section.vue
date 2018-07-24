@@ -35,7 +35,7 @@
 
     h1 {
         font-family: 'salomeregular';
-        font-size: 5em;
+        font-size: 8vh;
         height: fit-content;
         position: sticky;
         top: 85%;

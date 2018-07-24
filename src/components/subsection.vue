@@ -1,12 +1,13 @@
 <template>
   <div class="subsection" v-bind:style="styleObject">
-      <img class="image" :src="getImgUrl(attribute.image)" ref="imgRef"/>
+      <transition name="fade">
+          <a class="readMore" :href="summary.link"><img class="image" :src="getImgUrl(attribute.image)" ref="imgRef"/></a>
+      </transition>
       <div class="text" ref="textRef" v-bind:style="styleMove">
           <h2>{{attribute.title}}</h2>
           <p>{{summary.content}}</p>
           <a class="readMore" :href="summary.link">Lire la suite</a>
       </div>
-
   </div>
 </template>
 
@@ -17,10 +18,11 @@
             return {
                 init: {
                     widthText: 0,
-                    widthImg: 0
+                    widthImg: 0,
+                    heightImg: 0,
                 },
                 styleObject: {
-                    top: (Math.random() * 150).toString() + "px",
+                    top: 0,
                     'padding-left': (Math.random() * 80).toString() + "px"
                 },
                 styleMove: {
@@ -29,7 +31,7 @@
                 summary: {
                     content: "",
                     link: ""
-                }
+                },
             }
         },
         props: ['attribute', 'position'],
@@ -45,6 +47,8 @@
                 if(this.$refs.imgRef !== undefined) {
                     if (this.init.widthImg === 0) {
                         this.init.widthImg = this.$refs.imgRef.getBoundingClientRect().width;
+                        this.init.heightImg = this.$refs.imgRef.getBoundingClientRect().height;
+                        this.styleObject.top = ((Math.random() * 150) * 2*(1 - this.init.heightImg/(window.innerHeight - 50))).toString() + "px";
                     }
                     let value = (this.$refs.imgRef.getBoundingClientRect().left + this.init.widthImg/2)/window.innerWidth;
                     this.styleMove.left = 80*(2*value - 1) + Math.abs(this.init.widthImg - this.init.widthText)/2 + "px";
@@ -52,19 +56,20 @@
             }
         },
         mounted() {
-          this.init.widthText = this.$refs.textRef.getBoundingClientRect().width;
-          const value = (this.$refs.imgRef.getBoundingClientRect().left + this.init.widthImg/2)/window.innerWidth;
-          this.styleMove.left = 50*(2*value - 1) + Math.abs(this.init.widthImg - this.init.widthText)/2 + "px";
 
-          this.summary.content=this.attribute.content.substr(0, 100);
-          if (this.summary.content[-1] !== ".") {
-              this.summary.content = this.summary.content.concat("...")
-          }
-          if (!this.attribute.brand){
-              this.summary.link = "http://localhost:8010/focus/article.html?id=" + this.attribute.id;
-          } else {
-              this.summary.link = "http://localhost:8010/focus/brand.html?id=" + this.attribute.id;
-          }
+            this.init.widthText = this.$refs.textRef.getBoundingClientRect().width;
+            const value = (this.$refs.imgRef.getBoundingClientRect().left)/window.innerWidth;
+            this.styleMove.left = 80*(2*value - 1) + Math.abs(this.init.widthImg - this.init.widthText)/2 + "px";
+
+            this.summary.content=this.attribute.content.substr(0, 100);
+            if (this.summary.content[-1] !== ".") {
+                this.summary.content = this.summary.content.concat("...")
+            }
+            if (!this.attribute.brand){
+                this.summary.link = "http://localhost:8010/focus/article.html?id=" + this.attribute.id;
+            } else {
+                this.summary.link = "http://localhost:8010/focus/brand.html?id=" + this.attribute.id;
+            }
 
         },
         created() {
@@ -96,6 +101,11 @@
         width: 80%;
         top: -30px;
         left: 0;
+        font-size: 1.5vh;
+    }
+
+    .text h2 {
+        font-size: 3vh;
     }
 
     .readMore {
@@ -104,5 +114,11 @@
         margin-left: 20px;
     }
 
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+    }
 
 </style>

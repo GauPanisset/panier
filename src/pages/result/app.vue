@@ -12,6 +12,8 @@
     import FilterAside from 'components/filter-aside'
     import CatSection from 'components/cat-section'
 
+    import axios from 'axios';
+
     import 'bootstrap/dist/css/bootstrap.css'
     import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -42,16 +44,46 @@
                         display: "short",
                         font: "salome",
                         content: [{name: "Marque 1", image: "50.png", id: '1'}, {name: "Marque 2", image: "58.jpg", id: '4'}]
-                    },
-                    {
-                        title: 'Produits',
-                        display: "large",
-                        font: "salome",
-                        content: [{name: 'Pot blanc', image: '11.jpeg', price:'30', id: '3'}, {name: 'Assiette rose', image: '25.jpg', price:'35', id: '4'}, {name: 'Petite peluche souris', image: '32.jpg', price:'25', id: '5'}, {name: 'Baignoire Design', image: '43.jpg', price:'450', id: '6'}, {name: 'Bougie de jardin', image: '49.jpg', price: '20', id: '7'}, {name: 'Chaise design', image: '8.jpg', price:'50', id: '2'}]
                     }
-
                 ],
             }
+        },
+        methods: {
+        },
+        mounted() {
+            let request = "";
+            if (this.$route.query.request !== undefined) {
+                request = this.$route.query.request.replace(' ', '&');
+                console.log(request);
+            } else {
+                request = "all";
+            }
+
+            axios
+                .get('http://localhost:3031/product/request/' + request)
+                .then(response => {
+                    let productContent = [];
+                    response.data.hits.hits.forEach((item) => {
+                        let tmp = {
+                            name: item._source.nom,
+                            image: '',
+                            price: item._source.prix,
+                            id: item._source.id,
+                        };
+                        axios
+                            .get('http://localhost:3031/product/image/' + tmp.id)
+                            .then(response => {
+                                tmp.image = response.data[0].url
+                            });
+                        productContent.push(tmp);
+                    });
+                    this.sections.push({
+                        title: "Produits",
+                        display: "large",
+                        font: "salome",
+                        content: productContent
+                    });
+                });
         }
     }
 </script>
