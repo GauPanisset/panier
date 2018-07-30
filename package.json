@@ -20,6 +20,7 @@
     "serve-static": "^1.13.2",
     "vue": "^2.5.16",
     "vue-awesome": "^2.3.8",
+    "vue-gallery": "^1.4.0",
     "vue-router": "^3.0.1",
     "vue-scrollto": "^2.11.0"
   },

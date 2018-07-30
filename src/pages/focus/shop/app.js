@@ -16,9 +16,9 @@ let router = new VueRouter({
         mode: 'history',
         routes: [
             {
-                path: '/focus/product.html',
+                path: '/focus/shop.html',
                 component: require('./app'),
-                name: 'product'
+                name: 'shop'
             }
         ]
     }

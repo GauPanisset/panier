@@ -26,63 +26,129 @@
         },
         data() {
             return {
-                sections: [
-                    {
-                        title: "Articles",
-                        display: "large",
-                        font: "salome",
-                        content: [{name: "Titre article 1", image: "5.jpg", id: '10'}, {name: "Titre article beaucoup plus long", image: "44.jpg", id: '3'}, {name: "Titre article 2", image: "6.jpg", id: '11'}, {name: "Titre article 3", image: "9.jpg", id: '14'}, {name: "Titre article 4", image: "23.jpg", id: '2'}, {name: "Titre article 6", image: "19.png", id: '1'}, {name: "Titre article 7", image: "2.jpg", id: '7'}]
-                    },
-                    {
-                        title: "Boutiques",
-                        display: "short",
-                        font: "salome",
-                        content: [{name: "Nom boutique 1", image: "20.jpg", id: ''}, {name: "Nom boutique 2", image: "34.jpg", id: ''}, {name: "Nom boutique 3", image: "38.jpg", id: ''}, {name: "Nom boutique 4", image: "46.jpg", id: ''}, {name: "Nom boutique 5", image: "20.jpg", id: ''}]
-                    },
-                    {
-                        title: "Marques",
-                        display: "short",
-                        font: "salome",
-                        content: [{name: "Marque 1", image: "50.png", id: '1'}, {name: "Marque 2", image: "58.jpg", id: '4'}]
-                    }
-                ],
+                sections: [],
             }
         },
         methods: {
         },
         mounted() {
             let request = "";
-            if (this.$route.query.request !== undefined) {
+            if (this.$route.query.request !== "" && this.$route.query.request !== undefined) {
                 request = this.$route.query.request.replace(' ', '&');
                 console.log(request);
             } else {
-                request = "all";
+                request = "";
+            }
+            if (this.$route.query.section !== "" && this.$route.query.section !== undefined) {
+                if (this.$route.query.section !== "brand" && this.$route.query.section !== "shop") {
+                    axios
+                        .get('http://localhost:3031/article/section/' + this.$route.query.section)
+                        .then(response => {
+                            let title = '';
+                            switch (this.$route.query.section) {
+                                case 'news':
+                                    title = "News";
+                                    break;
+                                case 'maison':
+                                    title = "Maison";
+                                    break;
+                                case 'reportage':
+                                    title = "Reportages";
+                                    break;
+                                case 'dossier':
+                                    title = "Dossiers";
+                                    break;
+                            }
+                            this.sections.push({
+                                    title: title,
+                                    display: "short",
+                                    font: "salome",
+                                    content: response.data,
+                                    type: "article"
+                                }
+                            )});
+                } else {
+                    axios
+                        .get('http://localhost:3031/' + this.$route.query.section + '/index/all')
+                        .then(response => {
+                            let title = '';
+                            switch (this.$route.query.section) {
+                                case 'brand':
+                                    title = "Marques";
+                                    break;
+                                case 'shop':
+                                    title = "Boutiques";
+                                    break;
+                            }
+                            this.sections.push({
+                                    title: title,
+                                    display: "short",
+                                    font: "salome",
+                                    content: response.data,
+                                    type: this.$route.query.section
+                                }
+                            )});
+                }
             }
 
             axios
                 .get('http://localhost:3031/product/request/' + request)
                 .then(response => {
-                    let productContent = [];
-                    response.data.hits.hits.forEach((item) => {
-                        let tmp = {
-                            name: item._source.nom,
-                            image: '',
-                            price: item._source.prix,
-                            id: item._source.id,
-                        };
-                        axios
-                            .get('http://localhost:3031/product/image/' + tmp.id)
-                            .then(response => {
-                                tmp.image = response.data[0].url
-                            });
-                        productContent.push(tmp);
-                    });
-                    this.sections.push({
-                        title: "Produits",
-                        display: "large",
-                        font: "salome",
-                        content: productContent
-                    });
+                    if (response.data.hits !== undefined) {
+                        let itemContent = [];
+                        response.data.hits.hits.forEach((item) => {
+                            let tmp = {
+                                name: item._source.nom,
+                                image: '',
+                                price: item._source.prix,
+                                id: item._source.id,
+                            };
+                            axios
+                                .get('http://localhost:3031/product/image/' + tmp.id)
+                                .then(response => {
+                                    tmp.image = response.data[0].url
+                                });
+                            itemContent.push(tmp);
+                        });
+                        this.sections.push({
+                            title: "Produits",
+                            display: "short",
+                            font: "salome",
+                            content: itemContent,
+                            type: "product"
+                        });
+                    }
+                });
+
+            axios
+                .get('http://localhost:3031/article/request/' + request)
+                .then(response => {
+                    if (response.data.hits !== undefined) {
+                        console.log(response);
+                        let itemContent= [];
+                        response.data.hits.hits.forEach((item) => {
+                            let tmp = {
+                                name: item._source.titre,
+                                image: '',
+                                id: item._source.id,
+                                subtitle: item._source.sous_titre,
+                                text: item._source.texte
+                            };
+                            axios
+                                .get('http://localhost:3031/article/image/' + tmp.id)
+                                .then(response => {
+                                    tmp.image = response.data[0].url
+                                });
+                            itemContent.push(tmp);
+                        });
+                        this.sections.push({
+                            title: "Articles",
+                            display: "short",
+                            font: "salome",
+                            content: itemContent,
+                            type: "article"
+                        });
+                    }
                 });
         }
     }

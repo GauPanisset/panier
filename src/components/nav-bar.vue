@@ -16,41 +16,13 @@
                 <b-navbar-toggle target="nav_dropdown_collapse"></b-navbar-toggle>
                 <b-collapse is-nav id="nav_dropdown_collapse" class="nav-bar-container">
                     <b-navbar-nav class="main-bar">
-                        <b-nav-item-dropdown text="News" right no-caret>
-                            <b-dropdown-item href="#">EN</b-dropdown-item>
-                            <b-dropdown-item href="#">ES</b-dropdown-item>
-                            <b-dropdown-item href="#">RU</b-dropdown-item>
-                            <b-dropdown-item href="#">FA</b-dropdown-item>
-                        </b-nav-item-dropdown>
-                        <b-nav-item-dropdown text="Reportages" right no-caret>
-                            <b-dropdown-item href="#">EN</b-dropdown-item>
-                            <b-dropdown-item href="#">S</b-dropdown-item>
-                            <b-dropdown-item href="#">RU</b-dropdown-item>
-                            <b-dropdown-item href="#">FA</b-dropdown-item>
-                        </b-nav-item-dropdown>
-                        <b-nav-item-dropdown text="Dossiers" right no-caret>
-                            <b-dropdown-item href="#">EN</b-dropdown-item>
-                            <b-dropdown-item href="#">ES</b-dropdown-item>
-                            <b-dropdown-item href="#">R</b-dropdown-item>
-                            <b-dropdown-item href="#">FA</b-dropdown-item>
-                        </b-nav-item-dropdown>
+                        <b-nav-item href="http://localhost:8010/result.html?section=news">News</b-nav-item>
+                        <b-nav-item href="http://localhost:8010/result.html?section=reportage">Reportages</b-nav-item>
+                        <b-nav-item href="http://localhost:8010/result.html?section=dossier">Dossiers</b-nav-item>
                         <div class="divider"></div>
-                        <b-nav-item-dropdown text="Maison" right no-caret>
-                            <b-dropdown-item href="#">EN</b-dropdown-item>
-                            <b-dropdown-item href="#">ES</b-dropdown-item>
-                            <b-dropdown-item href="#">RU</b-dropdown-item>
-                            <b-dropdown-item href="#">A</b-dropdown-item>
-                        </b-nav-item-dropdown>
-                        <b-nav-item-dropdown text="Marques" right no-caret>
-                            <b-dropdown-item href="#">N</b-dropdown-item>
-                            <b-dropdown-item href="#">ES</b-dropdown-item>
-                            <b-dropdown-item href="#">RU</b-dropdown-item>
-                            <b-dropdown-item href="#">FA</b-dropdown-item>
-                        </b-nav-item-dropdown>
-                        <b-nav-item-dropdown text="Boutiques" right no-caret>
-                            <b-dropdown-item href="#">Account</b-dropdown-item>
-                            <b-dropdown-item href="#">Settings</b-dropdown-item>
-                        </b-nav-item-dropdown>
+                        <b-nav-item href="http://localhost:8010/result.html?section=maison">Maison</b-nav-item>
+                        <b-nav-item href="http://localhost:8010/result.html?section=brand">Marques</b-nav-item>
+                        <b-nav-item href="http://localhost:8010/result.html?section=shop">Boutiques</b-nav-item>
                     </b-navbar-nav>
                 </b-collapse>
             </b-navbar>

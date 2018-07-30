@@ -1,10 +1,10 @@
 <template>
     <div id="app">
         <div class="focus-product">
-
+            <gallery :images="imagesGallery" :index="index" @close="index = null"></gallery>
             <div id="background"></div>
             <nav-bar></nav-bar>
-            <div class="image-container" :ref="image" v-for="image in images" :key="image" :style="positions[image]">
+            <div class="image-container image" :ref="image" v-for="(image, imageIndex) in images" :key="imageIndex" @click="index = imageIndex" :style="positions[image]">
                 <b-img :src="getImgUrl(image)" fluid alt="image article" :style="positions[image]" @mouseenter="displayImg(image)" @mouseleave="hideImg(image)"/>
             </div>
 
@@ -68,36 +68,32 @@
 
     import NavBar from "components/nav-bar"
 
+    import VueGallery from "vue-gallery"
+
     export default {
         name: "app",
         data() {
             return {
                 product: "Nom objet",
                 price: "45",
-                attributes: []/*[["Matière", "Céramique"], ["Dimention", "Diamètre 25cm"], ["Couleur", "Sable"], ["Marque", "Brand"], ["N° article", "2398237"], ["Style", "Antique"]]*/,
-                description: [] /*['Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl sem, cursus eget convallis id, suscipit vehicula dui. Vestibulum sagittis eros eget rhoncus blandit. In hac habitasse platea dictumst. Duis gravida quam nec lorem venenatis, vitae congue leo tempus. Donec dictum elementum est at molestie. Cras semper libero id diam egestas dignissim. Curabitur laoreet molestie est id bibendum.',
-                    'Proin malesuada tempor nunc eget pulvinar. Quisque nec iaculis ipsum. Aliquam leo tellus, efficitur id lectus ut, vehicula luctus nunc. Donec est justo, facilisis vitae ullamcorper dapibus, scelerisque vel neque. Pellentesque quis accumsan sapien. Vivamus efficitur sapien vel purus ultrices tincidunt. Donec ex tellus, semper non sagittis eget, suscipit sit amet odio. Donec tempus accumsan mattis. Quisque maximus magna lectus, ac hendrerit orci egestas eget. Curabitur lacus eros, semper in lectus ac, gravida dictum dolor.']*/,
-                images: [] /*['1.jpg', '7.jpg']*/,
-                positions: {}/*{'1.jpg': {
-                        top: '30vh',
-                        left: '10vw'
-                    },
-                    '7.jpg': {
-                        top: '10vh',
-                        left: '15vw'
-                    }}*/,
+                attributes: [],
+                description: [],
+                images: [],
+                imagesGallery: [],
+                positions: {},
                 products: {
                     title: "Produits similaires",
                     display: "short",
                     font: "raleway",
-                    content: [{name: 'Pot blanc', image: '11.jpeg', price:'30', id: '3'}, {name: 'Assiette rose', image: '25.jpg', price:'35', id: '4'}, {name: 'Petite peluche souris', image: '32.jpg', price:'25', id: '5'}, {name: 'Baignoire Design', image: '43.jpg', price:'450', id: '6'}, {name: 'Bougie de jardin', image: '49.jpg', price: '20', id: '7'}, {name: 'Chaise design', image: '8.jpg', price:'50', id: '2'}]
+                    content: [{name: 'Pot blanc', image: '11.jpeg', price:'30', id: '3'}, {name: 'Assiette rose', image: '25.jpg', price:'35', id: '4'}, {name: 'Petite peluche souris', image: '32.jpg', price:'25', id: '5'}, {name: 'Baignoire Design', image: '43.jpg', price:'450', id: '6'}, {name: 'Bougie de jardin', image: '49.jpg', price: '20', id: '7'}, {name: 'Chaise design', image: '8.jpg', price:'50', id: '2'}],
                 },
                 articles: {
                     title: "Articles liés",
                     display: "short",
                     font: "raleway",
-                    content: [{name: "Titre article 1", image: "5.jpg", id: '10'}, {name: "Titre article 2", image: "6.jpg", id: '11'}]
-                }
+                    content: [{name: "Titre article 1", image: "5.jpg", id: '10'}, {name: "Titre article 2", image: "6.jpg", id: '11'}],
+                },
+                index: null
             }
 
         },
@@ -105,6 +101,7 @@
             NavBar,
             CatSection,
             Icon,
+            gallery: VueGallery,
         },
         methods: {
             getImgUrl(pic) {
@@ -159,6 +156,7 @@
                     }];
                     for (let i = 0; i < Math.min(2, response.data.length); i ++) {
                         this.images.push(response.data[i]["url"]);
+                        this.imagesGallery.push(this.getImgUrl(response.data[i]["url"]));
                         this.positions[response.data[i]["url"]] = pos[i];
                     }
                 });
@@ -300,6 +298,10 @@
         position: static;
         left: 0;
         z-index: 2;
+    }
+
+    .blueimp-gallery {
+        background: rgba(0,0,0,.5);
     }
 
 

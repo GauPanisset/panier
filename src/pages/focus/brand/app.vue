@@ -1,9 +1,9 @@
 <template>
     <div id="app">
         <div class="focus-brand" ref="focusDiv">
-
+            <gallery :images="imagesGallery" :index="index" @close="index = null"></gallery>
             <nav-bar></nav-bar>
-            <div class="image-container" :ref="image" v-for="image in images" :key="image" :style="positions[image]">
+            <div class="image-container image" :ref="image" v-for="(image, imageIndex) in images" :key="imageIndex" @click="index = imageIndex" :style="positions[image]">
                 <b-img :src="getImgUrl(image)" fluid alt="image article" :style="positions[image]" @mouseenter="displayImg(image)" @mouseleave="hideImg(image)"/>
             </div>
             <div class="text-container">
@@ -15,7 +15,7 @@
                 <div class="informations-section">
                     <a :href="website">{{website}}</a>
                     <div class="link-section">
-                        <p>Lien vers :</p>
+                        <p style="font-size: 1.2em">Lien vers :</p>
                         <a v-for="link in links" :key="link.name" :href="link.url">{{link.name}}</a>
                     </div>
                 </div>
@@ -53,6 +53,8 @@
 
     import NavBar from "components/nav-bar"
 
+    import VueGallery from "vue-gallery"
+
     export default {
         name: "app",
         data() {
@@ -63,6 +65,7 @@
                 links: [{name: 'Les produits', url: '#'}, {name: 'Collections', url: '#'}, {name: 'Catalogues', url: '#'}, {name: 'Actualités', url: '#'}, {name: "Galerie d'images", url: '#'}],
                 tags: ['tag1', 'tag2', 'tag3'],
                 images: [],
+                imagesGallery: [],
                 positions: {},
                 shop: {
                     title: "Boutiques liées",
@@ -81,7 +84,8 @@
                     display: "short",
                     font: "raleway",
                     content: [{name: "Titre article 1", image: "5.jpg", id: '10'}, {name: "Titre article 2", image: "6.jpg", id: '11'}]
-                }
+                },
+                index: null
             }
 
         },
@@ -89,6 +93,7 @@
             NavBar,
             CatSection,
             Icon,
+            gallery: VueGallery,
         },
         methods: {
             getImgUrl(pic) {
@@ -137,6 +142,7 @@
                     }];
                     for (let i = 0; i < Math.min(2, response.data.length); i ++) {
                         this.images.push(response.data[i]["url"]);
+                        this.imagesGallery.push(this.getImgUrl(response.data[i]["url"]));
                         this.positions[response.data[i]["url"]] = pos[i];
                         this.positions[response.data[i]["url"]]["height"] = this.$refs.focusDiv.getBoundingClientRect().height + "px";
                     }
@@ -257,6 +263,10 @@
 
     .link-section a{
         display: block;
+    }
+
+    .blueimp-gallery {
+        background: rgba(0,0,0,.5);
     }
 
 </style>

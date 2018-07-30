@@ -1,8 +1,6 @@
 <template>
-  <div class="subsection" v-bind:style="styleObject">
-      <transition name="fade">
-          <a class="readMore" :href="summary.link"><img class="image" :src="getImgUrl(attribute.image)" ref="imgRef"/></a>
-      </transition>
+  <div ref="imgRef" class="subsection" v-bind:style="styleObject">
+      <a :href="summary.link"><img class="image" :src="getImgUrl(attribute.image)"/></a>
       <div class="text" ref="textRef" v-bind:style="styleMove">
           <h2>{{attribute.title}}</h2>
           <p>{{summary.content}}</p>
@@ -20,6 +18,7 @@
                     widthText: 0,
                     widthImg: 0,
                     heightImg: 0,
+                    value: 0
                 },
                 styleObject: {
                     top: 0,
@@ -31,7 +30,7 @@
                 summary: {
                     content: "",
                     link: ""
-                },
+                }
             }
         },
         props: ['attribute', 'position'],
@@ -45,30 +44,39 @@
             },
             parallaxe() {
                 if(this.$refs.imgRef !== undefined) {
-                    if (this.init.widthImg === 0) {
-                        this.init.widthImg = this.$refs.imgRef.getBoundingClientRect().width;
-                        this.init.heightImg = this.$refs.imgRef.getBoundingClientRect().height;
-                        this.styleObject.top = ((Math.random() * 150) * 2*(1 - this.init.heightImg/(window.innerHeight - 50))).toString() + "px";
-                    }
-                    let value = (this.$refs.imgRef.getBoundingClientRect().left + this.init.widthImg/2)/window.innerWidth;
-                    this.styleMove.left = 80*(2*value - 1) + Math.abs(this.init.widthImg - this.init.widthText)/2 + "px";
+                    this.init.value = (this.$refs.imgRef.getBoundingClientRect().left + this.init.widthImg/2)/window.innerWidth;
+                    this.styleMove.left = 80*(2*this.init.value - 1) + Math.abs(this.init.widthImg - this.init.widthText)/2 + "px";
                 }
             }
         },
         mounted() {
 
-            this.init.widthText = this.$refs.textRef.getBoundingClientRect().width;
-            const value = (this.$refs.imgRef.getBoundingClientRect().left)/window.innerWidth;
-            this.styleMove.left = 80*(2*value - 1) + Math.abs(this.init.widthImg - this.init.widthText)/2 + "px";
+            let img = new Image();
+            const that = this;
+
+            img.onload = function () {
+                that.init.heightImg = that.$refs.imgRef.clientHeight;
+                that.init.widthImg = that.$refs.imgRef.clientWidth;
+                that.init.widthText = that.$refs.textRef.clientWidth + 20;
+
+                that.styleObject.top = (window.innerHeight*0.45 - that.init.heightImg/2 + ((Math.random() * 150) - 75) * 2*(1 - that.init.heightImg/(window.innerHeight - 50))).toString() + "px";
+                that.init.value = (that.$refs.imgRef.getBoundingClientRect().left + that.init.widthImg/2)/window.innerWidth;
+                that.styleMove.left = 80*(2*that.init.value - 1) + Math.abs(that.init.widthImg - that.init.widthText)/2 + "px";
+            };
+
+            img.src = this.getImgUrl(this.attribute.image);
+
 
             this.summary.content=this.attribute.content.substr(0, 100);
             if (this.summary.content[-1] !== ".") {
                 this.summary.content = this.summary.content.concat("...")
             }
-            if (!this.attribute.brand){
+            if (this.attribute.type === 'article') {
                 this.summary.link = "http://localhost:8010/focus/article.html?id=" + this.attribute.id;
-            } else {
+            } else if (this.attribute.type === 'brand') {
                 this.summary.link = "http://localhost:8010/focus/brand.html?id=" + this.attribute.id;
+            } else {
+                this.summary.link = "http://localhost:8010/focus/shop.html?id=" + this.attribute.id;
             }
 
         },
@@ -87,7 +95,7 @@
 
     img {
         position: relative;
-        top: 20px;
+        top: 1px;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         max-width: 100%;
         max-height: 55vh;
@@ -114,11 +122,5 @@
         margin-left: 20px;
     }
 
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
-    }
-    .fade-enter, .fade-leave-to {
-        opacity: 0;
-    }
 
 </style>

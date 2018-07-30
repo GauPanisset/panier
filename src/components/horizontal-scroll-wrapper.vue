@@ -47,22 +47,22 @@
         mounted () {
             axios
                 .get('http://localhost:3031/article/accueil/news')
-                .then(response => {(this.sections.push({name: "News", content: response.data, brand: false}))});
+                .then(response => {(this.sections.push({name: "News", content: response.data, type: "article", link: 'http://localhost:8010/result.html?section=news'}))});
             axios
                 .get('http://localhost:3031/article/accueil/reportage')
-                .then(response => {(this.sections.push({name: "Reportages", content: response.data, brand: false}))});
+                .then(response => {(this.sections.push({name: "Reportages", content: response.data, type: "article", link: 'http://localhost:8010/result.html?section=reportage'}))});
             axios
                 .get('http://localhost:3031/article/accueil/dossier')
-                .then(response => {(this.sections.push({name: "Dossiers", content: response.data, brand: false}))});
+                .then(response => {(this.sections.push({name: "Dossiers", content: response.data, type: "article", link: 'http://localhost:8010/result.html?section=dossier'}))});
             axios
                 .get('http://localhost:3031/article/accueil/maison')
-                .then(response => {(this.sections.push({name: "Maison", content: response.data, brand: false}))});
+                .then(response => {(this.sections.push({name: "Maison", content: response.data, type: "article", link: 'http://localhost:8010/result.html?section=maison'}))});
             axios
                 .get('http://localhost:3031/brand/accueil')
-                .then(response => {(this.sections.push({name: "Marques", content: response.data, brand: true}))});
+                .then(response => {(this.sections.push({name: "Marques", content: response.data, type: "brand", link: 'http://localhost:8010/result.html?section=brand'}))});
             axios
-                .get('http://localhost:3031/article/accueil/boutique')
-                .then(response => {(this.sections.push({name: "Boutiques", content: response.data, brand: false}))});
+                .get('http://localhost:3031/shop/accueil')
+                .then(response => {(this.sections.push({name: "Boutiques", content: response.data, type: "shop", link: 'http://localhost:8010/result.html?section=boutique'}))});
         }
     }
 </script>

@@ -1,10 +1,10 @@
 <template>
   <div class="home-section">
     <template v-for="subsec in attribute.content">
-      <subsection :attribute="{image: subsec.image, title: subsec.titre, content: subsec.texte, id: subsec.id, brand: attribute.brand}" :position="position"></subsection>
+      <subsection :attribute="{image: subsec.image, title: subsec.titre, content: subsec.texte, id: subsec.id, type: attribute.type}" :position="position"></subsection>
     </template>
     <transition name="fade">
-        <h1 v-if="position.scrollTop + 8 >= this.windowHeigth" ref="sectionTitle"><a>{{attribute.name}}</a></h1>
+        <h1 v-if="position.scrollTop + 8 >= this.windowHeigth" ref="sectionTitle"><a :href="attribute.link">{{attribute.name}}</a></h1>
     </transition>
   </div>
 
@@ -29,7 +29,7 @@
 
 <style scoped>
     .home-section {
-        padding-top:100px;
+        padding-top: 60px;
         height: 100vh;
     }
 
@@ -41,6 +41,11 @@
         top: 85%;
         right: 65%;
         z-index: 10;
+    }
+
+    a {
+        color: black;
+        text-decoration: none;
     }
 
     h1>a:before {
