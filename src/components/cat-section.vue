@@ -138,7 +138,7 @@
                 }
                 return res;
             }
-        }
+        },
     }
 </script>
 

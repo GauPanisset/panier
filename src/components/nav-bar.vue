@@ -6,7 +6,7 @@
         <div id="nav-bar-middle">
             <div id="nav-search-bar">
                 <b-input-group>
-                    <b-form-input v-model="request" id="bar" type="text" placeholder="Que cherchez vous ?"></b-form-input>
+                    <b-form-input v-model="request" id="bar" type="text" placeholder="Que cherchez vous ?" @keyup.enter.native="toResult"></b-form-input>
                     <b-input-group-append>
                         <b-btn id="bar-button" variant="outline-secondary" style="background-color: white" @click="toResult()">Rechercher</b-btn>
                     </b-input-group-append>

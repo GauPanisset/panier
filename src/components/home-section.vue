@@ -19,7 +19,6 @@
       data () {
         return {
           windowHeigth: window.innerHeight,
-          titleOffset: 0
         }
       },
       props: ['attribute', 'position'],

@@ -49,32 +49,32 @@
             let scrollLeft = 0;
 
             function scrollVert() {
-            $('html, body, *').off('mousewheel').mousewheel(function (e, delta) {
-                if ($(window).scrollTop() + 8 + $(window).height() !== $(document).height()) {
-                    this.scrollTop -= delta*(1.05 - Math.exp(-this.scrollTop*0.003));
-                }
-                e.preventDefault();
-                setTimeout(function () {
+                  $('html, body, *').off('mousewheel').mousewheel(function (e, delta) {
+                      if ($(window).scrollTop() + 8 + $(window).height() !== $(document).height()) {
+                          this.scrollTop -= delta*(1.05 - Math.exp(-this.scrollTop*0.003));
+                      }
+                      e.preventDefault();
+                      setTimeout(function () {
 
-                    if ($(window).scrollTop() + 8 + $(window).height() === $(document).height()) {
-                        scrollHoriz();
-                    }
-                }, 0);
+                          if ($(window).scrollTop() + 8 + $(window).height() === $(document).height()) {
+                              scrollHoriz();
+                          }
+                      }, 0);
 
-            });
+                  });
             }
 
             function scrollHoriz() {
-            $('html, body, *').off('mousewheel').mousewheel(function (e, delta) {
-                this.scrollLeft -= (delta);
-                e.preventDefault();
-                scrollLeft = this.scrollLeft;
-                setTimeout(function () {
-                    if (scrollLeft === 0) {
-                        //scrollVert();
-                    }
-                }, 0);
-            });
+                  $('html, body, *').off('mousewheel').mousewheel(function (e, delta) {
+                      this.scrollLeft -= (delta);
+                      e.preventDefault();
+                      scrollLeft = this.scrollLeft;
+                      setTimeout(function () {
+                          if (scrollLeft === 0) {
+                              //scrollVert();
+                          }
+                      }, 0);
+                  });
             }
         },
 

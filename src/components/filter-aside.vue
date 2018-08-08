@@ -1,42 +1,24 @@
 <template>
     <div id="filter-aside">
         <aside>
-            <el-collapse v-model="activeNames">
-                <el-collapse-item title="Marque" name="1">
+            <el-collapse v-model="activeNamesOrderBy">
+                <el-collapse-item  :title="'Trier par'" :name="order.name">
                     <b-form-group>
-                        <b-form-checkbox-group stacked v-model="brandSelections" :options="brandOptions" class="collapse-item" >
+                        <b-form-checkbox-group stacked v-model="order.selected" :options="order.content" @change="sendSort" class="collapse-item">
                         </b-form-checkbox-group>
                     </b-form-group>
                 </el-collapse-item>
-                <b-button-group size="sm" v-for="brand in brandSelections" :key="brand">
-                    <b-button :variant="'primary'" @click="brandSelections.splice(brandSelections.indexOf(brand), 1)">{{brand}}<icon name="close"></icon></b-button>
-                </b-button-group>
-                <el-collapse-item title="Couleur" name="2">
+            </el-collapse>
+            <br>
+            <el-collapse v-model="activeNames" v-for="filter in filters" :key="filter.title">
+                <el-collapse-item  :title="filter.title" :name="filter.name">
                     <b-form-group>
-                        <b-form-checkbox-group stacked v-model="colorSelections" :options="colorOptions" class="collapse-item" >
+                        <b-form-checkbox-group stacked v-model="filter.selected" :options="filter.content" @change="function (event){sendSelection(event, filter.name)}" class="collapse-item">
                         </b-form-checkbox-group>
                     </b-form-group>
                 </el-collapse-item>
-                <b-button-group size="sm" v-for="color in colorSelections" :key="color">
-                    <b-button :variant="'primary'" @click="colorSelections.splice(colorSelections.indexOf(color), 1)">{{color}}<icon name="close"></icon></b-button>
-                </b-button-group>
-                <el-collapse-item title="Matière" name="3">
-                <b-form-group>
-                    <b-form-checkbox-group stacked v-model="materialSelections" :options="materialOptions" class="collapse-item" >
-                    </b-form-checkbox-group>
-                </b-form-group>
-                </el-collapse-item>
-                <b-button-group size="sm" v-for="material in materialSelections" :key="material">
-                    <b-button :variant="'primary'" @click="materialSelections.splice(materialSelections.indexOf(material), 1)">{{material}}<icon name="close"></icon></b-button>
-                </b-button-group>
-                <el-collapse-item title="Prix" name="4">
-                <b-form-group>
-                    <b-form-checkbox-group stacked v-model="priceSelections" :options="priceOptions" class="collapse-item" >
-                    </b-form-checkbox-group>
-                </b-form-group>
-                </el-collapse-item>
-                <b-button-group size="sm" v-for="price in priceSelections" :key="price">
-                    <b-button :variant="'primary'" @click="priceSelections.splice(priceSelections.indexOf(price), 1)">{{price}}<icon name="close"></icon></b-button>
+                <b-button-group size="sm" v-for="item in filter.selected" :key="item">
+                    <b-button :variant="'primary'" @click="function () {filter.selected.splice(filter.selected.indexOf(item), 1); selection.splice(selection.indexOf(item),1)}">{{getName(item)}}<icon name="close"></icon></b-button>
                 </b-button-group>
             </el-collapse>
         </aside>
@@ -47,6 +29,7 @@
     import 'vue-awesome/icons/close'
     import Icon from 'vue-awesome/components/Icon'
 
+
     export default {
 
         name: "filter-aside",
@@ -56,35 +39,58 @@
         data() {
             return {
                 activeNames: [''],
-                brandOptions: [
-                    {id: 0, text: 'Rice', value: 'Rice'},
-                    {id: 1, text: 'Pip Studio', value: 'Pip Studio'},
-                    {id: 2, text: 'Greengate', value: 'Greengate'},
-                ],
-                brandSelections: [],
-                colorOptions: [
-                    {id: 0, text: 'Rouge', value: 'Rouge'},
-                    {id: 1, text: 'Vert', value: 'Vert'},
-                    {id: 2, text: 'Bleu', value: 'Bleu'},
-                    {id: 3, text: 'Jaune', value: 'Jaune'},
-                ],
-                colorSelections: [],
-                materialOptions: [
-                    {id: 0, text: 'Melamine', value: 'Melamine'},
-                    {id: 1, text: 'Porcelaine', value: 'Porcelaine'},
-                    {id: 2, text: 'Verre', value: 'Verre'},
-                ],
-                materialSelections: [],
-                priceOptions: [
-                    {id: 0, text: '< 10€', value: '< 10€'},
-                    {id: 1, text: '10€ < ... < 100€', value: '10€ < ... < 100€'},
-                    {id: 2, text: '> 100€', value: '> 100€'},
-                ],
-                priceSelections: [],
+                activeNamesOrderBy: [''],
+                selection: [],
+                order:
+                    {
+                        name: 0,
+                        selected: [],
+                        content: [
+                            {
+                                id: 1,
+                                text: "de A à Z",
+                                value: "alphaC"
+                            },
+                            {
+                                id: 2,
+                                text: "de Z à A",
+                                value: "alphaD"
+                            },
+                            {
+                                id: 3,
+                                text: "Date ↑",
+                                value: "dateC"
+                            },
+                            {
+                                id: 4,
+                                text: "Date ↓",
+                                value: "dateD"
+                            },
+                        ]
+                    }
             };
         },
+        props: ['filters'],
         methods: {
-        }
+            getName(value) {
+                return value.replace("_", " ");
+            },
+            sendSelection(selected, name) {
+
+                if (selected.length > 0) {
+                    this.selection[name] = selected;
+                } else {
+                    delete this.selection[name];
+                }
+
+
+                this.$emit('selected', this.selection);
+            },
+            sendSort(event) {
+                this.$emit('selectedSort', event);
+            }
+        },
+
     }
 </script>
 
