@@ -15,13 +15,13 @@
         <b-navbar-toggle target="nav_dropdown_collapse"></b-navbar-toggle>
         <b-collapse is-nav id="nav_dropdown_collapse">
             <b-navbar-nav id="main-bar-search">
-                <b-nav-item href="http://localhost:5000/result.html?section=news">News</b-nav-item>
-                <b-nav-item href="http://localhost:5000/result.html?section=reportage">Reportages</b-nav-item>
-                <b-nav-item href="http://localhost:5000/result.html?section=dossier">Dossiers</b-nav-item>
+                <b-nav-item href="https://panier-vue.herokuapp.com//result.html?section=news">News</b-nav-item>
+                <b-nav-item href="https://panier-vue.herokuapp.com//result.html?section=reportage">Reportages</b-nav-item>
+                <b-nav-item href="https://panier-vue.herokuapp.com//result.html?section=dossier">Dossiers</b-nav-item>
                 <div class="divider"></div>
-                <b-nav-item href="http://localhost:5000/result.html?section=maison">Maison</b-nav-item>
-                <b-nav-item href="http://localhost:5000/result.html?section=brand">Marques</b-nav-item>
-                <b-nav-item href="http://localhost:5000/result.html?section=shop">Boutiques</b-nav-item>
+                <b-nav-item href="https://panier-vue.herokuapp.com//result.html?section=maison">Maison</b-nav-item>
+                <b-nav-item href="https://panier-vue.herokuapp.com//result.html?section=brand">Marques</b-nav-item>
+                <b-nav-item href="https://panier-vue.herokuapp.com//result.html?section=shop">Boutiques</b-nav-item>
             </b-navbar-nav>
         </b-collapse>
     </b-navbar>
@@ -39,7 +39,7 @@
         },
         methods: {
             toResult() {
-                window.location.href = "http://localhost:5000/result.html?request=" + this.request;
+                window.location.href = "https://panier-vue.herokuapp.com//result.html?request=" + this.request;
             }
         },
     }
