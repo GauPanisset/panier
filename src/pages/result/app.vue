@@ -2,7 +2,8 @@
     <div id="app">
         <nav-bar></nav-bar>
         <filter-aside :filters="filters" v-on:selected="setSelection($event)" v-on:selectedSort="setSort($event)"></filter-aside>
-        <cat-section v-for="section in sections" :attribute="section" :key="section.title"></cat-section>
+        <p>{{displayType}}</p>
+        <cat-section v-for="section in sections" :attribute="section" :key="section.title" v-on:display="displayType[section.type] = $event"></cat-section>
     </div>
 </template>
 
@@ -27,8 +28,15 @@
         data() {
             return {
                 sections: [],
-                filters: "null",
+                displayType: {
+                    "product": "short",
+                    "article": "short",
+                    "brand": "short",
+                    "shop": "short"
+            },
+                filters: "",
                 request: "",
+                section: "",
                 reqParams: {
                     filter: "",
                     sort: "",
@@ -37,10 +45,23 @@
         },
         methods: {
             setSort(data) {
+                console.log(data);
+                if(data.length > 0) {
+                    this.reqParams.sort = "order=";
+                    data.forEach(item => {
+                        this.reqParams.sort += item + '+';
+                    });
+                    this.reqParams.sort = this.reqParams.sort.slice(0, -1);
+                } else {
+                    this.reqParams.sort = "";
+                }
 
-                this.reqParams.sort = "order=" + data;
+                if (this.request !== "") {
+                    this.displayResult();
+                } else {
+                    this.displaySection()
+                }
 
-                this.displayResult();
 
             },
             setSelection(data) {
@@ -61,13 +82,21 @@
 
                 this.reqParams.filter = filters;
 
-                this.displayResult();
+                if (this.request !== "") {
+                    this.displayResult();
+                } else {
+                    this.displaySection()
+                }
             },
-            displaySection(section) {
+            displaySection() {
                 this.sections = [];
+                const section = this.section;
+                const filters = this.reqParams.filter;
+                const sort = this.reqParams.sort;
+
                 if (this.$route.query.section !== "brand" && this.$route.query.section !== "shop") {
                     axios
-                        .get('http://localhost:3031/article/section/' + section)
+                        .get('http://localhost:3031/article/section/' + section + '/?' + filters + sort)
                         .then(response => {
                             let title = '';
                             switch (section) {
@@ -86,7 +115,7 @@
                             }
                             this.sections.push({
                                     title: title,
-                                    display: "short",
+                                    display: this.displayType.article,
                                     font: "salome",
                                     content: response.data,
                                     type: "article"
@@ -95,7 +124,7 @@
                         });
                 } else {
                     axios
-                        .get('http://localhost:3031/' + this.$route.query.section + '/index/all')
+                        .get('http://localhost:3031/' + this.$route.query.section + '/index/all' + '/?' + filters + sort)
                         .then(response => {
                             let title = '';
                             switch (this.$route.query.section) {
@@ -108,7 +137,7 @@
                             }
                             this.sections.push({
                                     title: title,
-                                    display: "short",
+                                    display: this.displayType[this.$route.query.section],
                                     font: "salome",
                                     content: response.data,
                                     type: this.$route.query.section
@@ -119,6 +148,7 @@
             },
             displayResult() {
                 this.sections = [];
+
                 const request = this.request;
                 const filters = this.reqParams.filter;
                 const sort = this.reqParams.sort;
@@ -133,7 +163,6 @@
                                     image: '',
                                     price: item._source.prix,
                                     id: item._source.id,
-                                    displayed: 1
                                 };
                                 axios
                                     .get('http://localhost:3031/product/image/' + tmp.id)
@@ -142,9 +171,10 @@
                                     });
                                 itemContent.push(tmp);
                             });
+
                             this.sections.push({
                                 title: "Produits",
-                                display: "short",
+                                display: this.displayType.product,
                                 font: "salome",
                                 content: itemContent,
                                 type: "product"
@@ -156,7 +186,7 @@
                     });
 
                 axios
-                    .get('http://localhost:3031/article/request/' + request + '/?' + filters + sort)
+                    .get('http://localhost:3031/article/request/' + request + '/?' + filters + sort)    //Pas encore de filtres pour les articles.
                     .then(response => {
                         if (response.data[0].hits !== undefined) {
                             let itemContent= [];
@@ -167,7 +197,6 @@
                                     id: item._source.id,
                                     subtitle: item._source.sous_titre,
                                     text: item._source.texte,
-                                    displayed: 1
                                 };
                                 axios
                                     .get('http://localhost:3031/article/image/' + tmp.id)
@@ -178,7 +207,7 @@
                             });
                             this.sections.push({
                                 title: "Articles",
-                                display: "short",
+                                display: this.displayType.article,
                                 font: "salome",
                                 content: itemContent,
                                 type: "article"
@@ -191,10 +220,11 @@
         mounted() {
             if (this.$route.query.request !== "" && this.$route.query.request !== undefined) {
                 this.request = this.$route.query.request.replace(' ', '&');
-                this.displayResult(this.request);
+                this.displayResult();
             }
             if (this.$route.query.section !== "" && this.$route.query.section !== undefined) {
-                this.displaySection(this.$route.query.section);
+                this.section = this.$route.query.section;
+                this.displaySection();
             }
         }
     }

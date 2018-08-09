@@ -9,7 +9,7 @@
                     </a>
                 </b-col>
                 <b-col class="result-plus" sm="1" md="1" lg="2">
-                    <b-button v-if="attribute.content.length >= 5" :variant="'outline-secondary'" class="plus-button" @click="display = 'large'">
+                    <b-button v-if="attribute.content.length >= 5" :variant="'outline-secondary'" class="plus-button" @click="changeDisplay">
                         <icon name="plus"></icon>
                     </b-button>
                 </b-col>
@@ -26,7 +26,7 @@
                     </a>
                 </b-col>
                 <b-col class="result-plus" sm="1" md="1" lg="2">
-                    <b-button v-if="attribute.content.length >= 5" :variant="'outline-secondary'" class="plus-button" @click="display = 'large'">
+                    <b-button v-if="attribute.content.length >= 5" :variant="'outline-secondary'" class="plus-button" @click="changeDisplay">
                         <icon name="plus"></icon>
                     </b-button>
                 </b-col>
@@ -47,7 +47,7 @@
                     </p>
                 </b-col>
                 <b-col class="result-plus" sm="1" md="1" lg="2">
-                    <b-button v-if="attribute.content.length >= 5" :variant="'outline-secondary'" class="plus-button" @click="display = 'large'">
+                    <b-button v-if="attribute.content.length >= 5" :variant="'outline-secondary'" class="plus-button" @click="changeDisplay">
                         <icon name="plus"></icon>
                     </b-button>
                 </b-col>
@@ -121,6 +121,10 @@
         },
         props: ['attribute'],
         methods: {
+            changeDisplay() {
+                this.display = "large";
+                this.$emit('display', this.display);
+            },
             getImgUrl(pic) {
 
                 if (pic !== "") {
