@@ -13,6 +13,8 @@
 <script>
     import Subsection from "./subsection";
 
+
+
     export default {
       components: {Subsection},
       name: "home-section",

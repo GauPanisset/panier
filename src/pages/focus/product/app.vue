@@ -70,6 +70,9 @@
 
     import VueGallery from "vue-gallery"
 
+    const server_url = "https://panier-app.herokuapp.com";
+    //const server_url = "http://localhost:3031";
+
     export default {
         name: "app",
         data() {
@@ -125,7 +128,7 @@
             const attri = [["Matière", "matiere"], ["Dimention", "dimension"], ["Couleur", "couleur"], ["Marque", "marque"], ["N° article", "numero"], ["Style", "style"]];
 
             axios
-                .get('http://localhost:3031/product/' + id)
+                .get(server_url + '/product/' + id)
                 .then(response => {
                     this.product = response.data[0].nom;
                     this.price = response.data[0].prix;
@@ -145,7 +148,7 @@
                     this.description.push(response.data[0].description.substring(tmp, response.data[0].description.length));
                 });
             axios
-                .get('http://localhost:3031/product/image/' + id)
+                .get(server_url + '/product/image/' + id)
                 .then(response => {
                     const pos = [{
                         top: '30vh',

@@ -13,6 +13,7 @@
     "bootstrap": "^4.1.1",
     "bootstrap-vue": "^2.0.0-rc.11",
     "element-ui": "^2.3.2",
+    "express": "^4.16.3",
     "jquery": "^3.3.1",
     "jquery-mousewheel": "^3.1.13",
     "node-sass": "^4.9.2",

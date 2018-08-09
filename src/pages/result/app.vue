@@ -18,6 +18,9 @@
     import 'bootstrap/dist/css/bootstrap.css'
     import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+    const server_url = "https://panier-app.herokuapp.com";
+    //const server_url = "http://localhost:3031";
+
     export default {
         name: "app",
         components: {
@@ -96,7 +99,7 @@
 
                 if (this.$route.query.section !== "brand" && this.$route.query.section !== "shop") {
                     axios
-                        .get('http://localhost:3031/article/section/' + section + '/?' + filters + sort)
+                        .get(server_url + '/article/section/' + section + '/?' + filters + sort)
                         .then(response => {
                             let title = '';
                             switch (section) {
@@ -124,7 +127,7 @@
                         });
                 } else {
                     axios
-                        .get('http://localhost:3031/' + this.$route.query.section + '/index/all' + '/?' + filters + sort)
+                        .get(server_url + '/' + this.$route.query.section + '/index/all' + '/?' + filters + sort)
                         .then(response => {
                             let title = '';
                             switch (this.$route.query.section) {
@@ -153,7 +156,7 @@
                 const filters = this.reqParams.filter;
                 const sort = this.reqParams.sort;
                 axios
-                    .get('http://localhost:3031/product/request/' + request + '/?' + filters + sort)
+                    .get(server_url + '/product/request/' + request + '/?' + filters + sort)
                     .then(response => {
                         if (response.data[0].hits !== undefined) {
                             let itemContent = [];
@@ -165,7 +168,7 @@
                                     id: item._source.id,
                                 };
                                 axios
-                                    .get('http://localhost:3031/product/image/' + tmp.id)
+                                    .get(server_url + '/product/image/' + tmp.id)
                                     .then(response => {
                                         tmp.image = response.data[0].url
                                     });
@@ -186,7 +189,7 @@
                     });
 
                 axios
-                    .get('http://localhost:3031/article/request/' + request + '/?' + filters + sort)    //Pas encore de filtres pour les articles.
+                    .get(server_url + '/article/request/' + request + '/?' + filters + sort)    //Pas encore de filtres pour les articles.
                     .then(response => {
                         if (response.data[0].hits !== undefined) {
                             let itemContent= [];
@@ -199,7 +202,7 @@
                                     text: item._source.texte,
                                 };
                                 axios
-                                    .get('http://localhost:3031/article/image/' + tmp.id)
+                                    .get(server_url + '/article/image/' + tmp.id)
                                     .then(response => {
                                         tmp.image = response.data[0].url
                                     });

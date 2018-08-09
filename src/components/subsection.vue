@@ -10,6 +10,9 @@
 </template>
 
 <script>
+    const domain_url = "http://localhost:5000";
+    //const domain_url = "http://localhost:8010";
+
     export default {
         name: "subsection",
         data() {
@@ -72,11 +75,11 @@
                 this.summary.content = this.summary.content.concat("...")
             }
             if (this.attribute.type === 'article') {
-                this.summary.link = "http://localhost:8010/focus/article.html?id=" + this.attribute.id;
+                this.summary.link = domain_url + "/focus/article.html?id=" + this.attribute.id;
             } else if (this.attribute.type === 'brand') {
-                this.summary.link = "http://localhost:8010/focus/brand.html?id=" + this.attribute.id;
+                this.summary.link = domain_url + "/focus/brand.html?id=" + this.attribute.id;
             } else {
-                this.summary.link = "http://localhost:8010/focus/shop.html?id=" + this.attribute.id;
+                this.summary.link = domain_url + "/focus/shop.html?id=" + this.attribute.id;
             }
 
         },

@@ -55,6 +55,9 @@
 
     import VueGallery from "vue-gallery"
 
+    const server_url = "https://panier-app.herokuapp.com";
+    //const server_url = "http://localhost:3031";
+
     export default {
         name: "app",
         data() {
@@ -116,7 +119,7 @@
             const id = this.$route.query.id;
 
             axios
-                .get('http://localhost:3031/brand/' + id)
+                .get(server_url + '/brand/' + id)
                 .then(response => {
                     this.brand = response.data[0].nom;
                     this.website = response.data[0].site;
@@ -131,7 +134,7 @@
                     this.content.push(response.data[0].description.substring(tmp, response.data[0].description.length));
                 });
             axios
-                .get('http://localhost:3031/brand/image/' + id)
+                .get(server_url + '/brand/image/' + id)
                 .then(response => {
                     const pos = [{
                         top: '30vh',

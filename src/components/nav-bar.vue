@@ -1,7 +1,7 @@
 <template>
     <div class="nav-bar">
         <div class="logo">
-            <a href="http://localhost:8010/home.html"><img src="../assets/img/logo.png" style="width: 100%; height: 100%"/></a>
+            <a href="http://localhost:5000/home.html"><img src="../assets/img/logo.png" style="width: 100%; height: 100%"/></a>
         </div>
         <div id="nav-bar-middle">
             <div id="nav-search-bar">
@@ -16,13 +16,13 @@
                 <b-navbar-toggle target="nav_dropdown_collapse"></b-navbar-toggle>
                 <b-collapse is-nav id="nav_dropdown_collapse" class="nav-bar-container">
                     <b-navbar-nav class="main-bar">
-                        <b-nav-item href="http://localhost:8010/result.html?section=news">News</b-nav-item>
-                        <b-nav-item href="http://localhost:8010/result.html?section=reportage">Reportages</b-nav-item>
-                        <b-nav-item href="http://localhost:8010/result.html?section=dossier">Dossiers</b-nav-item>
+                        <b-nav-item href="http://localhost:5000/result.html?section=news">News</b-nav-item>
+                        <b-nav-item href="http://localhost:5000/result.html?section=reportage">Reportages</b-nav-item>
+                        <b-nav-item href="http://localhost:5000/result.html?section=dossier">Dossiers</b-nav-item>
                         <div class="divider"></div>
-                        <b-nav-item href="http://localhost:8010/result.html?section=maison">Maison</b-nav-item>
-                        <b-nav-item href="http://localhost:8010/result.html?section=brand">Marques</b-nav-item>
-                        <b-nav-item href="http://localhost:8010/result.html?section=shop">Boutiques</b-nav-item>
+                        <b-nav-item href="http://localhost:5000/result.html?section=maison">Maison</b-nav-item>
+                        <b-nav-item href="http://localhost:5000/result.html?section=brand">Marques</b-nav-item>
+                        <b-nav-item href="http://localhost:5000/result.html?section=shop">Boutiques</b-nav-item>
                     </b-navbar-nav>
                 </b-collapse>
             </b-navbar>
@@ -35,6 +35,9 @@
 
 <script>
 
+    const domain_url = "http://localhost:5000";
+    //const domain_url = "http://localhost:8010";
+
     export default {
         name: "nav-bar",
         data () {
@@ -44,7 +47,7 @@
         },
         methods: {
             toResult() {
-                window.location.href = "http://localhost:8010/result.html?request=" + this.request;
+                window.location.href = domain_url + "/result.html?request=" + this.request;
             }
         },
         created () {

@@ -100,6 +100,9 @@
     import 'vue-awesome/icons/plus'
     import Icon from 'vue-awesome/components/Icon'
 
+    const domain_url = "http://localhost:5000";
+    //const domain_url = "http://localhost:8010";
+
     export default {
         name: "cat-section",
         data() {
@@ -133,7 +136,7 @@
                 return pic;
             },
             getLinkUrl(type, id) {
-                return "http://localhost:8010/focus/" + type + ".html?id=" + id;
+                return domain_url + "/focus/" + type + ".html?id=" + id;
             },
             getText(text) {
                 let res = text.substr(0, 150);
