@@ -1,7 +1,7 @@
 <template>
     <div class="nav-bar">
         <div class="logo">
-            <a href="https://panier-vue.herokuapp.com//home.html"><img src="../assets/img/logo.png" style="width: 100%; height: 100%"/></a>
+            <a href="https://panier-vue.herokuapp.com/home.html"><img src="../assets/img/logo.png" style="width: 100%; height: 100%"/></a>
         </div>
         <div id="nav-bar-middle">
             <div id="nav-search-bar">
@@ -18,11 +18,11 @@
                     <b-navbar-nav class="main-bar">
                         <b-nav-item href="https://panier-vue.herokuapp.com/result.html?section=news">News</b-nav-item>
                         <b-nav-item href="https://panier-vue.herokuapp.com/result.html?section=reportage">Reportages</b-nav-item>
-                        <b-nav-item href="https://panier-vue.herokuapp.com//result.html?section=dossier">Dossiers</b-nav-item>
+                        <b-nav-item href="https://panier-vue.herokuapp.com/result.html?section=dossier">Dossiers</b-nav-item>
                         <div class="divider"></div>
-                        <b-nav-item href="https://panier-vue.herokuapp.com//result.html?section=maison">Maison</b-nav-item>
-                        <b-nav-item href="https://panier-vue.herokuapp.com//result.html?section=brand">Marques</b-nav-item>
-                        <b-nav-item href="https://panier-vue.herokuapp.com//result.html?section=shop">Boutiques</b-nav-item>
+                        <b-nav-item href="https://panier-vue.herokuapp.com/result.html?section=maison">Maison</b-nav-item>
+                        <b-nav-item href="https://panier-vue.herokuapp.com/result.html?section=brand">Marques</b-nav-item>
+                        <b-nav-item href="https://panier-vue.herokuapp.com/result.html?section=shop">Boutiques</b-nav-item>
                     </b-navbar-nav>
                 </b-collapse>
             </b-navbar>
@@ -35,7 +35,7 @@
 
 <script>
 
-    const domain_url = "https://panier-vue.herokuapp.com/";
+    const domain_url = "https://panier-vue.herokuapp.com";
     //const domain_url = "http://localhost:8010";
 
     export default {

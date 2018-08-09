@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 5000;
 app = express();
 app.use(serveStatic(__dirname + "/dist"));
 
-app.get('*', function (req, res) {
+app.get('/home', function (req, res) {
     res.sendFile(__dirname + '/dist/home.html')
 });
 
