@@ -7,7 +7,7 @@ app = express();
 app.use(serveStatic(__dirname + "/dist"));
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/dist')
+    res.sendFile(__dirname + '/dist/home.html')
 });
 
 app.listen(PORT);
