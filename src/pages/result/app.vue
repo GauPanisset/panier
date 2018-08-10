@@ -2,7 +2,6 @@
     <div id="app">
         <nav-bar></nav-bar>
         <filter-aside :filters="filters" v-on:selected="setSelection($event)" v-on:selectedSort="setSort($event)"></filter-aside>
-        <p>{{displayType}}</p>
         <cat-section v-for="section in sections" :attribute="section" :key="section.title" v-on:display="displayType[section.type] = $event"></cat-section>
     </div>
 </template>

@@ -49,7 +49,8 @@
             let scrollLeft = 0;
 
             function scrollVert() {
-                  $('html, body, *').off('mousewheel').mousewheel(function (e, delta) {
+                  $('html, body, *').off('mousewheel').mousewheel(function (e) {
+                      const delta = e.deltaY;
                       if ($(window).scrollTop() + 8 + $(window).height() !== $(document).height()) {
                           this.scrollTop -= delta*(1.05 - Math.exp(-this.scrollTop*0.003));
                       }
@@ -65,7 +66,8 @@
             }
 
             function scrollHoriz() {
-                  $('html, body, *').off('mousewheel').mousewheel(function (e, delta) {
+                  $('html, body, *').off('mousewheel').mousewheel(function (e) {
+                      const delta = e.deltaY;
                       this.scrollLeft -= (delta);
                       e.preventDefault();
                       scrollLeft = this.scrollLeft;
