@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --config build/webpack.dev.conf.js",
     "build": "webpack --mode production --progress --config build/webpack.prod.conf.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "deploy": "git add . && git commit -m 'heroku' && git push heroku master"
   },
   "dependencies": {
     "axios": "^0.18.0",
