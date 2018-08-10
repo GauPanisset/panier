@@ -151,7 +151,7 @@
                 .get(server_url + '/product/image/' + id)
                 .then(response => {
                     const pos = [{
-                        top: '30vh',
+                        top: '15vh',
                         left: '10vw',
                     }, {
                         top: '10vh',
