@@ -297,7 +297,8 @@
     }
 
     .focus-product .image-container img {
-        width: 30vw;
+        max-width: 30vw;
+        max-height: 70vh;
         position: static;
         left: 0;
         z-index: 2;
