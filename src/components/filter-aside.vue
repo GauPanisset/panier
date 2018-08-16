@@ -2,10 +2,10 @@
     <div id="filter-aside">
         <aside>
             <el-collapse v-model="activeNamesOrderBy">
-                <el-collapse-item  :title="'Trier par'" :name="order.name">
-                    <b-form-group>
-                        <b-form-checkbox-group stacked v-model="order.selected" :options="order.content" @change="sendSort" class="collapse-item">
-                        </b-form-checkbox-group>
+                <el-collapse-item  :title="'Trier par'">
+                    <b-form-group v-for="sort in order" :key="sort.name">
+                        <b-form-radio-group stacked v-model="sort.selected" :options="sort.content" @change="function(event) {sendSort(event, sort.name)}" class="collapse-item">
+                        </b-form-radio-group>
                     </b-form-group>
                 </el-collapse-item>
             </el-collapse>
@@ -41,33 +41,38 @@
                 activeNames: [''],
                 activeNamesOrderBy: [''],
                 selection: [],
-                order:
+                order: [
                     {
                         name: 0,
-                        selected: [],
+                        selected: '',
                         content: [
                             {
-                                id: 1,
                                 text: "de A à Z",
-                                value: "alphaC"
+                                value: "alphaC",
                             },
                             {
-                                id: 2,
                                 text: "de Z à A",
                                 value: "alphaD"
                             },
+                        ]
+                    },
+                    {
+                        name: 1,
+                        selected: '',
+                        content: [
                             {
-                                id: 3,
                                 text: "Date ↑",
                                 value: "dateC"
                             },
                             {
-                                id: 4,
                                 text: "Date ↓",
                                 value: "dateD"
                             },
                         ]
                     }
+                ],
+                sortedBy: [],
+
             };
         },
         props: ['filters'],
@@ -86,8 +91,10 @@
 
                 this.$emit('selected', this.selection);
             },
-            sendSort(event) {
-                this.$emit('selectedSort', event);
+            sendSort(event, id) {
+                this.sortedBy[id] = event;
+
+                this.$emit('selectedSort', this.sortedBy);
             }
         },
 

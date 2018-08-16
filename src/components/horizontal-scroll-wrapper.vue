@@ -20,8 +20,8 @@
     const server_url = "https://panier-app.herokuapp.com";
     //const server_url = "http://localhost:3031";
 
-    const domain_url = "https://panier-vue.herokuapp.com";
-    //const domain_url = "http://localhost:8010";
+    //const domain_url = "https://panier-vue.herokuapp.com";
+    const domain_url = "http://localhost:8010";
 
     export default {
         props : ['position', 'windowHeight'],
