@@ -1,4 +1,8 @@
 <template>
+    <!--
+    Barre de navigation.
+    -->
+
     <div class="nav-bar">
         <div class="logo">
             <a :href="domain+'/home.html'"><img src="../assets/img/logo.png" style="width: 100%; height: 100%"/></a>
@@ -35,8 +39,8 @@
 
 <script>
 
-    //const domain_url = "https://panier-vue.herokuapp.com";
-    const domain_url = "http://localhost:8010";
+    const domain_url = "https://panier-vue.herokuapp.com";
+    //const domain_url = "http://localhost:8010";
 
     export default {
         name: "nav-bar",
@@ -47,7 +51,7 @@
             }
         },
         methods: {
-            toResult() {
+            toResult() {                        //Méthode de recherche.
                 window.location.href = domain_url + "/result.html?request=" + this.request;
             }
         },

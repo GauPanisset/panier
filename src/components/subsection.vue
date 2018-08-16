@@ -1,4 +1,8 @@
 <template>
+    <!--
+    Subsection permettant l'affichage des items mis en avant sur la page d'accueil.
+    Affiche une image et une description (titre ou nom ou apperçu de texte)
+    -->
   <div ref="imgRef" class="subsection" v-bind:style="styleObject">
       <a :href="summary.link"><img class="image" :src="getImgUrl(attribute.image)"/></a>
       <div class="text" ref="textRef" v-bind:style="styleMove">
@@ -10,49 +14,52 @@
 </template>
 
 <script>
-    //const domain_url = "https://panier-vue.herokuapp.com";
-    const domain_url = "http://localhost:8010";
+    const domain_url = "https://panier-vue.herokuapp.com";
+    //const domain_url = "http://localhost:8010";
 
     export default {
         name: "subsection",
         data() {
             return {
-                init: {
+                init: {                                         //Stocke les valeurs initiatiales des éléments pour permettre l'effet parallaxe.
                     widthText: 0,
                     widthImg: 0,
                     heightImg: 0,
                     value: 0
                 },
-                styleObject: {
+                styleObject: {                                  //Position aléatoire de la subsection.
                     top: 0,
                     'padding-left': (Math.random() * 80).toString() + "px"
                 },
-                styleMove: {
+                styleMove: {                                    //Position du texte avec effet parallaxe.
                     left: 0
                 },
-                summary: {
+                summary: {                                      //Texte et lien traité.
                     content: "",
                     link: ""
                 }
             }
         },
-        props: ['attribute', 'position'],
-        methods: {
-            getImgUrl(pic) {
+        props: ['attribute', 'position'],                       //position donne {scrollTop, scrollLeft} i.e. la position dans la home.
+        methods: {                                              //attribute donne les informations à afficher : {id, type, image, title, content}
+            getImgUrl(pic) {                                    //Méthode pour afficher les images à partir de l'url.
 
                 if (pic !== "") {
                     return require('../assets/img/'+pic);
                 }
                 return pic;
             },
-            parallaxe() {
+            parallaxe() {                                       //Méthode créant l'effet parallaxe i.e. modification de la position du texte par rapport à l'image en fonction du déplacement.
+                const myApp = document.getElementById("app");
                 if(this.$refs.imgRef !== undefined) {
-                    this.init.value = (this.$refs.imgRef.getBoundingClientRect().left + this.init.widthImg/2)/window.innerWidth;
+                    this.init.value = (this.$refs.imgRef.getBoundingClientRect().left + this.init.widthImg/2)/myApp.offsetWidth;
                     this.styleMove.left = 80*(2*this.init.value - 1) + Math.abs(this.init.widthImg - this.init.widthText)/2 + "px";
                 }
             }
         },
         mounted() {
+
+            const myApp = document.getElementById("app");
 
             let img = new Image();
             const that = this;
@@ -62,8 +69,8 @@
                 that.init.widthImg = that.$refs.imgRef.clientWidth;
                 that.init.widthText = that.$refs.textRef.clientWidth + 20;
 
-                that.styleObject.top = (window.innerHeight*0.45 - that.init.heightImg/2 + ((Math.random() * 150) - 75) * 2*(1 - that.init.heightImg/(window.innerHeight - 50))).toString() + "px";
-                that.init.value = (that.$refs.imgRef.getBoundingClientRect().left + that.init.widthImg/2)/window.innerWidth;
+                that.styleObject.top = (myApp.offsetHeight*0.45 - that.init.heightImg/2 + ((Math.random() * 150) - 75) * 2*(1 - that.init.heightImg/(myApp.offsetHeight - 50))).toString() + "px";
+                that.init.value = (that.$refs.imgRef.getBoundingClientRect().left + that.init.widthImg/2)/myApp.offsetWidth;
                 that.styleMove.left = 80*(2*that.init.value - 1) + Math.abs(that.init.widthImg - that.init.widthText)/2 + "px";
             };
 
@@ -84,7 +91,7 @@
 
         },
         created() {
-          window.addEventListener('scroll', this.parallaxe);
+          document.getElementById("app").addEventListener('scroll', this.parallaxe);
         }
     }
 </script>

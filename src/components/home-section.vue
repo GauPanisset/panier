@@ -1,12 +1,17 @@
 <template>
-  <div class="home-section">
-    <template v-for="subsec in attribute.content">
-      <subsection :attribute="{image: subsec.image, title: subsec.titre, content: subsec.texte, id: subsec.id, type: attribute.type}" :position="position"></subsection>
-    </template>
-    <transition name="fade">
-        <h1 v-if="position.scrollTop + 8 >= this.windowHeigth" ref="sectionTitle"><a :href="attribute.link">{{attribute.name}}</a></h1>
-    </transition>
-  </div>
+    <!--
+    Section regroupant tous les items d'une même catégorie présentés en page d'accueil.
+    Les items sont affichés grâce à des <subsection>.
+    Le titre de la catégorie est affiché avec le <h1>.
+    -->
+    <div class="home-section">
+        <template v-for="subsec in attribute.content">
+            <subsection :attribute="{image: subsec.image, title: subsec.titre, content: subsec.texte, id: subsec.id, type: attribute.type}" :position="position"></subsection>
+        </template>
+        <transition name="fade">
+            <h1 v-if="position.scrollTop + 8 >= this.windowHeigth" ref="sectionTitle"><a :href="attribute.link">{{attribute.name}}</a></h1>
+        </transition>
+    </div>
 
 </template>
 
@@ -16,14 +21,15 @@
 
 
     export default {
-      components: {Subsection},
-      name: "home-section",
-      data () {
-        return {
-          windowHeigth: window.innerHeight,
-        }
-      },
-      props: ['attribute', 'position'],
+        components: {Subsection},
+        name: "home-section",
+        data () {
+            return {
+                windowHeigth: window.innerHeight,
+            }
+        },
+        props: ['attribute', 'position'],               //position donne {scrollTop, scrollLeft} i.e. la position dans la home.
+                                                        //attribute donne les informations à afficher : {name, content: {id, texte, image, titre}, type, link}
     }
 
 </script>

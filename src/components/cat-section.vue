@@ -1,7 +1,18 @@
 <template>
+    <!--
+    Section d'affichage des catégories. Une catégorie est composée d'un titre <div class="title"> et d'un contenu <b-container>.
+    Cette section présente deux modes d'affichage :
+        - 'short': les items sont sur une seule ligne. Le dernier item de la ligne est remplacé par un bouton permettant de passer en mode 'large'.
+        - 'large': tous les items sont présentés.
+    Les sections présentent les items différemment en fonction de leur catégorie :
+        - 'product': 4 items/ligne ('short') et 5 items/ligne ('large').
+        - 'article': 2 items/ligne ('short' et 'large') avec apperçu du texte.
+        - 'brand' || 'shop' : 4 items/ligne ('short') et 5 items/ligne ('large').
+    -->
+
     <div class="cat-section" v-if="displayLength.length > 0">
-        <div class="title" :style="font[attribute.font]">{{attribute.title}}</div>
-        <b-container class="bv-example-row" v-if="display === 'short'">
+        <div class="title" :style="font[attribute.font]">{{attribute.title}}</div>          <!-- Titre de la section -->
+        <b-container class="bv-example-row" v-if="display === 'short'">                     <!-- Contenu de la section en mode 'short' -->
             <b-row align-h="start" v-if="attribute.type === 'brand' || attribute.type === 'shop'">
                 <b-col class="result-container" cols="2" v-for="index in displayLength" :key="attribute.content[index].name">
                     <a :href="getLinkUrl(attribute.type, attribute.content[index].id)">
@@ -54,7 +65,7 @@
             </b-row>
 
         </b-container>
-        <b-container class="bv-example-row" v-if="display === 'large'">
+        <b-container class="bv-example-row" v-if="display === 'large'">                     <!-- Contenu de la section en mode 'short' -->
 
             <b-row align-h="start" v-if="attribute.type === 'brand' || attribute.type === 'shop'">
                 <b-col class="result-container" cols="2" v-for="item in attribute.content" :key="item.name">
@@ -100,8 +111,8 @@
     import 'vue-awesome/icons/plus'
     import Icon from 'vue-awesome/components/Icon'
 
-    //const domain_url = "https://panier-vue.herokuapp.com";
-    const domain_url = "http://localhost:8010";
+    const domain_url = "https://panier-vue.herokuapp.com";
+    //const domain_url = "http://localhost:8010";
 
     export default {
         name: "cat-section",
@@ -111,34 +122,34 @@
                 dl.push(i);
             }
             return {
-                displayLength: dl,
-                font: {
+                displayLength: dl,                          //Array avec les indices des items à afficher.
+                font: {                                             //Font disponible
                     salome: {'font-family': 'salomeregular'},
                     raleway: {'font-family': 'Raleway'}
                 },
-                display: this.attribute.display,
+                display: this.attribute.display,            //Mode d'affichage.
             }
         },
         components: {
             Icon,
         },
-        props: ['attribute'],
-        methods: {
-            changeDisplay() {
+        props: ['attribute'],                               //[{title, display, font, type, content: {id, name, price, image} || {id, image, name, text, subtitle} || {id, image, name}}, ...]
+        methods: {                                          //                                          -> product                  -> article                          -> shop || brand
+            changeDisplay() {                               //Méthode de changement de mode de display.
                 this.display = "large";
                 this.$emit('display', this.display);
             },
-            getImgUrl(pic) {
+            getImgUrl(pic) {                                //Méthode pour afficher les images à partir de l'url.
 
                 if (pic !== "") {
                     return require('../assets/img/' + pic);
                 }
                 return pic;
             },
-            getLinkUrl(type, id) {
+            getLinkUrl(type, id) {                          //Méthode pour créer les liens des images.
                 return domain_url + "/focus/" + type + ".html?id=" + id;
             },
-            getText(text) {
+            getText(text) {                                 //Méthode pour créer l'apperçu du texte.
                 let res = text.substr(0, 150);
                 if (res[-1] !== ".") {
                     res = res.concat("...")

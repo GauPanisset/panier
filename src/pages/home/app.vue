@@ -1,8 +1,14 @@
 <template>
-      <div id="app">
-            <search-bar></search-bar>
+    <!--
+
+    -->
+    <div id="app">
+        <div id="container">
+            <search-bar :position="position" :windowHeight="windowHeight"></search-bar>
             <horizontal-scroll-wrapper :position="position" :windowHeight="windowHeight"></horizontal-scroll-wrapper>
-      </div>
+        </div>
+
+    </div>
 </template>
 
 <script>
@@ -31,53 +37,31 @@
         },
 
         methods: {
-          handleScroll () {
-            this.position.scrollTop = window.scrollY;
-            this.position.scrollLeft = window.scrollX;
-          }
+            handleScroll () {
+                const myApp = document.getElementById('app');
+                this.position.scrollTop = myApp.scrollTop;
+                this.position.scrollLeft = myApp.scrollLeft;
+                if  (this.position.scrollTop === $(window).height()) {
+                    myApp.style.overflowX = "scroll";
+                    myApp.style.overflowY = "hidden";
+                }
+
+            },
         },
 
         computed: {
         },
 
+        mounted() {
+            document.getElementById("app").addEventListener('scroll', this.handleScroll);
+            console.log(document.getElementById("container"));
+        },
         created() {
-            window.addEventListener('scroll', this.handleScroll);
+
+            document.getElementById("app").addEventListener('scroll', this.handleScroll);
 
             this.windowHeight = window.innerHeight;
 
-            scrollVert();
-            let scrollLeft = 0;
-
-            function scrollVert() {
-                  $('html, body, *').off('mousewheel').mousewheel(function (e) {
-                      const delta = e.deltaY;
-                      if ($(window).scrollTop() + 8 + $(window).height() !== $(document).height()) {
-                          this.scrollTop -= delta*(1.05 - Math.exp(-this.scrollTop*0.003));
-                      }
-                      e.preventDefault();
-                      setTimeout(function () {
-
-                          if ($(window).scrollTop() + 8 + $(window).height() === $(document).height()) {
-                              scrollHoriz();
-                          }
-                      }, 0);
-
-                  });
-            }
-
-            function scrollHoriz() {
-                  $('html, body, *').off('mousewheel').mousewheel(function (e) {
-                      const delta = e.deltaY;
-                      this.scrollLeft -= (delta);
-                      e.preventDefault();
-                      scrollLeft = this.scrollLeft;
-                      setTimeout(function () {
-                          if (scrollLeft === 0) {
-                              //scrollVert();
-                          }
-                      }, 0);
-                  });
-            }
         },
 
         beforeUpdate () {
@@ -96,9 +80,16 @@
     @import url('https://fonts.googleapis.com/css?family=Raleway');
 
     #app {
-        background: linear-gradient($firstColor, white);
+        overflow-x: hidden;
+        overflow-y: scroll;
         height: 100vh;
+        width: 100vw;
         font-family: 'Raleway', sans-serif;
-        margin: -8px;
     }
+
+    #container {
+        height: fit-content;
+        width: fit-content;
+    }
+
 </style>

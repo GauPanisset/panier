@@ -7,7 +7,9 @@ import ElementUI from 'element-ui'
 Vue.use(ElementUI);
 
 import VueScrollTo from 'vue-scrollto'
-Vue.use(VueScrollTo);
+Vue.use(VueScrollTo, {
+    container: "#app"
+});
 
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue);

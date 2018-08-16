@@ -1,4 +1,9 @@
 <template>
+    <!--
+   Page permettant l'affichage d'un article.
+   Le texte de l'article se trouve au center et les images se placent derrière le texte. L'utilisateur peut les faire passer au premier plan en les survolant.
+   En bas de page des <cat-section> présentent des éléments liés.
+    -->
     <div id="app">
         <div class="focus-article" ref="focusDiv">
             <gallery :images="imagesGallery" :index="index" @close="index = null"></gallery>
@@ -54,7 +59,7 @@
     export default {
         name: "app",
         data() {
-            return {
+            return {                                //données liées à l'article
                 title: "Titre article",
                 subtitle: "Sous-titre",
                 date: "date",

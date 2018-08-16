@@ -1,4 +1,8 @@
 <template>
+    <!--
+    Section sur laquelle l'utilisateur arrive.
+    Barre de recherche.
+    -->
     <div id="search-bar">
         <div class="logo-container">
             <img src="../assets/img/logo.png">
@@ -25,14 +29,14 @@
             </b-navbar-nav>
         </b-collapse>
     </b-navbar>
-    <img id="down-arrow" src="../assets/img/fleches_down.png" v-scroll-to="'#horizontal-scroll-wrapper'">
+    <img id="down-arrow" src="../assets/img/fleches_down.png" v-scroll-to="'#horizontal-scroll-wrapper'" v-if="2*position.scrollTop < windowHeight">
     </div>
 </template>
 
 <script>
 
-    //const domain_url = "https://panier-vue.herokuapp.com";
-    const domain_url = "http://localhost:8010";
+    const domain_url = "https://panier-vue.herokuapp.com";
+    //const domain_url = "http://localhost:8010";
 
     export default {
         name: "search-bar",
@@ -42,15 +46,18 @@
                 domain: domain_url,
             }
         },
+        props : ['position', 'windowHeight'],
         methods: {
-            toResult() {
+            toResult() {                                //Méthode de recherche
                 window.location.href = "https://panier-vue.herokuapp.com/result.html?request=" + this.request;
             }
         },
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    @import '../assets/css/custom-bootstrap.scss';
+    @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
     .logo-container {
         padding-top: 20vh;
@@ -61,7 +68,9 @@
     }
 
     #search-bar {
+        background: linear-gradient($firstColor, white);
         min-height: 100vh;
+        max-width: 100vw;
         text-align: center;
     }
 
@@ -79,6 +88,7 @@
         width: auto;
         max-height: 50px;
         max-width: 50px;
+        z-index: 1000;
     }
 
     @keyframes MoveUpDown {

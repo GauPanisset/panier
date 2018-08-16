@@ -1,7 +1,11 @@
 <template>
+    <!--
+        Affiche les filtres sur la gauche dans un aside.
+        Lorsque l'utilisateur coche un filtre, un bouton apparait en dessous hors du collapse. Il peut cliquer dessus pour désélectionner le filtre.
+      -->
     <div id="filter-aside">
         <aside>
-            <el-collapse v-model="activeNamesOrderBy">
+            <el-collapse v-model="activeNamesOrderBy">                      <!-- Trier par -->
                 <el-collapse-item  :title="'Trier par'">
                     <b-form-group v-for="sort in order" :key="sort.name">
                         <b-form-radio-group stacked v-model="sort.selected" :options="sort.content" @change="function(event) {sendSort(event, sort.name)}" class="collapse-item">
@@ -9,7 +13,7 @@
                     </b-form-group>
                 </el-collapse-item>
             </el-collapse>
-            <br>
+            <br>                                                            <!-- Filtres -->
             <el-collapse v-model="activeNames" v-for="filter in filters" :key="filter.title">
                 <el-collapse-item  :title="filter.title" :name="filter.name">
                     <b-form-group>
@@ -38,10 +42,10 @@
         },
         data() {
             return {
-                activeNames: [''],
-                activeNamesOrderBy: [''],
-                selection: [],
-                order: [
+                activeNames: [''],                              //Permet de savoir quel collapse est ouvert ("Trier par").
+                activeNamesOrderBy: [''],                       //Permet de savoir quel collapse est ouvert ("filtres").
+                selection: [],                                  //Selection pour les filtres.
+                order: [                                        //Description des options de "Trier par".
                     {
                         name: 0,
                         selected: '',
@@ -71,16 +75,16 @@
                         ]
                     }
                 ],
-                sortedBy: [],
+                sortedBy: [],                                   //Selection pour "Trier par"
 
             };
         },
-        props: ['filters'],
+        props: ['filters'],                                     //Descriptipn des options de filtres: [{name, content: {id, text, value}, title, selection}, ...]
         methods: {
-            getName(value) {
+            getName(value) {                                    //Méthode permettant de retrouver le nom des filtres lorsqu'ils sont composés de plusieurs mots.
                 return value.replace("_", " ");
             },
-            sendSelection(selected, name) {
+            sendSelection(selected, name) {                     //Méthode renvoyant la sélection des filtres.
 
                 if (selected.length > 0) {
                     this.selection[name] = selected;
@@ -91,7 +95,7 @@
 
                 this.$emit('selected', this.selection);
             },
-            sendSort(event, id) {
+            sendSort(event, id) {                               //Méthode renvoyant la sélection du tri.
                 this.sortedBy[id] = event;
 
                 this.$emit('selectedSort', this.sortedBy);
