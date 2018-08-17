@@ -41,7 +41,8 @@
                 const myApp = document.getElementById('app');
                 this.position.scrollTop = myApp.scrollTop;
                 this.position.scrollLeft = myApp.scrollLeft;
-                if  (this.position.scrollTop === $(window).height()) {
+                if  (this.position.scrollTop >= $(window).height()) {
+                    console.log(this.position.scrollTop);
                     myApp.style.overflowX = "scroll";
                     myApp.style.overflowY = "hidden";
                 }
@@ -54,14 +55,12 @@
 
         mounted() {
             document.getElementById("app").addEventListener('scroll', this.handleScroll);
-            console.log(document.getElementById("container"));
         },
         created() {
 
             document.getElementById("app").addEventListener('scroll', this.handleScroll);
 
             this.windowHeight = window.innerHeight;
-
         },
 
         beforeUpdate () {
@@ -78,6 +77,10 @@
     @import '../../assets/css/custom-bootstrap.scss';
     @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
     @import url('https://fonts.googleapis.com/css?family=Raleway');
+
+    body {
+        overflow: hidden;
+    }
 
     #app {
         overflow-x: hidden;
