@@ -42,7 +42,6 @@
                 this.position.scrollTop = myApp.scrollTop;
                 this.position.scrollLeft = myApp.scrollLeft;
                 if  (this.position.scrollTop >= $(window).height()) {
-                    console.log(this.position.scrollTop);
                     myApp.style.overflowX = "scroll";
                     myApp.style.overflowY = "hidden";
                 }

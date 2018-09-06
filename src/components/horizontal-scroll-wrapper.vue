@@ -4,7 +4,7 @@
     -->
     <div id="horizontal-scroll-wrapper">
         <transition name="fade">
-          <nav-bar v-show="position.scrollTop + 8 >= windowHeight"></nav-bar>
+          <nav-bar v-if="position.scrollTop + 8 >= windowHeight"></nav-bar>
         </transition>
         <!-- Bouton survol permettant de se déplacer -->
         <img v-show="position.scrollTop + 8 >= windowHeight" @mouseenter="mouseScroll(-1)" @mouseleave="mouseFree()" class="arrow" id="left-arrow" src="../assets/img/fleches_gauche.png">
@@ -85,14 +85,14 @@
     }
 
     div {
-      display: inline-flex;
+        display: inline-flex;
     }
 
     .arrow{
         width: 5%;
         position: fixed;
         top: 45%;
-        z-index: 1000;
+        z-index: 10;
     }
 
     #left-arrow{

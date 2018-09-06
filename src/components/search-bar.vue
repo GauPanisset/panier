@@ -49,7 +49,7 @@
         props : ['position', 'windowHeight'],
         methods: {
             toResult() {                                //Méthode de recherche
-                window.location.href = "https://panier-vue.herokuapp.com/result.html?request=" + this.request;
+                window.location.href = domain_url + "/result.html?request=" + this.request;
             }
         },
     }
