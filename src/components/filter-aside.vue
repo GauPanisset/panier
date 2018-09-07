@@ -25,6 +25,7 @@
                     <b-button :variant="'primary'" @click="function () {filter.selected.splice(filter.selected.indexOf(item), 1); selection.splice(selection.indexOf(item),1)}">{{getName(item)}}<icon name="close"></icon></b-button>
                 </b-button-group>
             </el-collapse>
+            <b-button :variant="'link'" @click="reset()" style="margin-top: 25px">Reset filtres</b-button>
         </aside>
     </div>
 </template>
@@ -99,6 +100,10 @@
                 this.sortedBy[id] = event;
 
                 this.$emit('selectedSort', this.sortedBy);
+            },
+            reset() {
+                this.selection = [];
+                this.$emit('selected', this.selection);
             }
         },
 
