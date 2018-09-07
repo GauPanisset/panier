@@ -3,7 +3,7 @@
 
         <div class="column small-12 left_panel" >
             <div id="chart_table">
-                <form id="chart_datas"  >
+                <form v-if="categorie !== 'user'" id="chart_datas"  >
                     <div class="grid-container">
                         <div class="grid-x grid-padding-x input_wrp">
                             <div class="col-3 cell column" v-for="column in columnNames" :key="column.id + '_input'">
@@ -53,8 +53,8 @@
 
     import axios from 'axios';
 
-    //const server_url = "https://panier-app.herokuapp.com";
-    const server_url = "http://localhost:3031";
+    const server_url = "https://panier-app.herokuapp.com";
+    //const server_url = "http://localhost:3031";
 
     import 'vue-awesome/icons/trash'
     import 'vue-awesome/icons/times'
@@ -77,13 +77,9 @@
         computed: {
             invalidFeedback() {
                 if (this.inputValue.marque !== undefined) {
-                    console.log(this.inputValue.marque);
-                    console.log(this.state);
                     if (this.inputValue.marque.length === 0 || this.state) {
-                        console.log('Coucou true');
                         return '';
                     } else {
-                        console.log('Coucou false');
                         return "La marque n'existe pas.";
                     }
                 }
@@ -197,7 +193,7 @@
     button{ cursor:pointer; }
 
     #chart_datas{ position: relative; }
-    #chartpanel{height: auto; border-radius:7px; max-height: 65vh;}
+    #chartpanel{height: auto; border-radius:7px;}
 
     .addRowBtn{  margin: auto; font-size: 2rem; width:50px; height:50px;   background-color: $firstColor;    padding: 0 1.1rem; border-radius: 2rem; z-index: 999999999999999; -webkit-box-shadow: 0px 3px 1px 0px rgba(0,0,0,0.45);
         -moz-box-shadow: 0px 3px 1px 0px rgba(0,0,0,0.45);

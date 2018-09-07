@@ -2,7 +2,6 @@
     <!--
     Barre de navigation.
     -->
-
     <div class="nav-bar" @click="(event) => {changeUserConnect(event)}">
         <div id="grey-screen" v-if="userInput"></div>
         <div class="row">
@@ -46,20 +45,112 @@
                     <b-form-input class="input-user" v-model="password"
                                   type="password"
                                   placeholder=""></b-form-input>
-                    <a class="dropdown-item second-item" href="#">Mot de passe oublié ?</a>
+                    <a class="dropdown-item second-item disabled" href="#">Mot de passe oublié ?</a>
                     <a class="dropdown-item first-item" @click="login()" style="text-decoration: underline">Connexion</a>
-                    <a class="dropdown-item second-item" href="#">Créer un compte</a>
+                    <a class="dropdown-item second-item" href="#" @click="showModal = true">Créer un compte</a>
                 </div>
                 <div v-if="userConnected" class="dropdown-menu" aria-labelledby="dropdown-user">
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item first-item" :href="domain + '/focus/user.html'">{{username}}</a>
-                    <a class="dropdown-item first-item" href="#">Mes collections <icon name="heart"></icon></a>
+                    <a class="dropdown-item first-item">Mes collections <icon name="heart"></icon></a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item first-item" @click="logout()" style="text-decoration: underline">Déconnexion</a>
                 </div>
             </div>
         </div>
+        <my-modal id="account-creation" v-if="showModal" @close="closeModal()" @ok="confirm()" :backOffice="false" :width="'300px'">
+            <h4 slot="header">Créer un compte</h4>
+
+            <div slot="body" role="tablist">
+                <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                        <b-btn block href="#" v-b-toggle.accordion1 variant="info">Pseudo</b-btn>
+                    </b-card-header>
+                    <b-collapse id="accordion1" visible accordion="my-accordion" role="tabpanel">
+                        <b-card-body>
+                            <b-form-group
+                                    class="fieldset"
+                                    description="Choisissez un pseudo"
+                                    label="Entrez un pseudo"
+                                    label-for="input0"
+                                    :invalid-feedback="invalidFeedbackPseudo"
+                                    :valid-feedback="validFeedbackPseudo"
+                                    :state="stateEmail"
+                            >
+                                <b-form-input id="input0" :state="statePseudo" v-model.trim="newPseudo" type="text"></b-form-input>
+                            </b-form-group>
+                        </b-card-body>
+                    </b-collapse>
+                </b-card>
+                <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                        <b-btn block href="#" v-b-toggle.accordion2 variant="info">Adresse mail</b-btn>
+                    </b-card-header>
+                    <b-collapse id="accordion2" accordion="my-accordion" role="tabpanel">
+                        <b-card-body>
+                            <b-form-group
+                                    class="fieldset"
+                                    description="Choisissez votre adresse mail."
+                                    label="Entrez une adresse mail"
+                                    label-for="input1"
+                                    :invalid-feedback="invalidFeedbackEmail"
+                                    :valid-feedback="validFeedbackEmail"
+                                    :state="stateEmail"
+                            >
+                                <b-form-input id="input1" :state="stateEmail" v-model.trim="newMail" type="email"></b-form-input>
+                            </b-form-group>
+                        </b-card-body>
+                    </b-collapse>
+                </b-card>
+                <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                        <b-btn block href="#" v-b-toggle.accordion3 variant="info">Mot de passe</b-btn>
+                    </b-card-header>
+                    <b-collapse id="accordion3" accordion="my-accordion" role="tabpanel">
+                        <b-card-body>
+                            <b-form-group
+                                    class="fieldset"
+                                    description="Votre mot de passe doit contenir au moins 8 caractères."
+                                    label="Entrez un mot de passe"
+                                    label-for="input2"
+                                    :invalid-feedback="invalidFeedbackMdp"
+                                    :valid-feedback="validFeedbackMdp"
+                                    :state="stateMdp"
+                            >
+                                <b-form-input id="input2" :state="stateMdp" v-model.trim="newMdp.one" type="password"></b-form-input>
+                            </b-form-group>
+                            <b-form-group
+                                    class="fieldset"
+                                    description="Votre mot de passe doit être identique."
+                                    label="Réécrivez votre mot de passe"
+                                    label-for="input21"
+                                    :invalid-feedback="invalidFeedbackMdp2"
+                                    :valid-feedback="validFeedbackMdp2"
+                                    :state="stateMdp2"
+                            >
+                                <b-form-input id="input21" :state="stateMdp2" v-model.trim="newMdp.two" type="password"></b-form-input>
+                            </b-form-group>
+                        </b-card-body>
+                    </b-collapse>
+                </b-card>
+                <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                        <b-btn disabled block href="#" v-b-toggle.accordion4 variant="info">Je suis une marque</b-btn>
+                    </b-card-header>
+                    <b-collapse id="accordion4" accordion="my-accordion" role="tabpanel">
+                        <b-card-body>
+                            Selection marque
+                        </b-card-body>
+                    </b-collapse>
+                </b-card>
+                <transition name="fade">
+                    <p v-if="confirmed" class="confirm-text">Vos modifications ont été enregistrées</p>
+                </transition>
+
+            </div>
+        </my-modal>
     </div>
+
 </template>
 
 <script>
@@ -67,17 +158,18 @@
     import 'vue-awesome/icons/heart'
     import Icon from 'vue-awesome/components/Icon'
     import axios from 'axios';
+    import MyModal from 'components/myModal'
 
     import swal from 'sweetalert2'
 
-    //const server_url = "https://panier-app.herokuapp.com";
-    const server_url = "http://localhost:3031";
+    const server_url = "https://panier-app.herokuapp.com";
+    //const server_url = "http://localhost:3031";
 
-    //const domain_url = "https://panier-vue.herokuapp.com";
-    const domain_url = "http://localhost:8010";
+    const domain_url = "https://panier-vue.herokuapp.com";
+    //const domain_url = "http://localhost:8010";
 
     export default {
-        components: {Icon},
+        components: {Icon, MyModal},
         name: "nav-bar",
         data () {
             return {
@@ -88,7 +180,71 @@
                 picture: "user.png",
                 userInput: false,
                 userConnected: false,
+                showModal: false,
+                statePseudo: false,
+                newPseudo: false,
+                stateEmail: false,
+                newMail: "",
+                stateMdp: false,
+                stateMdp2: false,
+                newMdp: {
+                    one: "",
+                    two: "",
+                },
+                confirmed: false,
             }
+        },
+        computed: {
+            invalidFeedbackPseudo () {
+                if (this.newPseudo.length < 4) {
+                    this.statePseudo = false;
+                    return 'Pseudo trop court'
+                } else {
+                    this.statePseudo = true;
+                    return ''
+                }
+            },
+            validFeedbackPseudo () {
+                return this.statePseudo ? 'Pseudo valide' : '';
+            },
+            invalidFeedbackEmail () {
+                if (this.newMail.indexOf('@') < 0 || this.newMail.indexOf('.') < this.newMail.indexOf('@')) {
+                    this.stateEmail = false;
+                    return 'Adresse non valide'
+                } else {
+                    this.stateEmail = true;
+                    return ''
+                }
+            },
+            validFeedbackEmail () {
+                return this.stateEmail ? 'Adresse valide' : '';
+            },
+            invalidFeedbackMdp () {
+                if (this.newMdp.one.length < 8) {
+                    this.stateMdp = false;
+                    return ''
+                } else {
+                    this.stateMdp = true;
+                    return ''
+                }
+            },
+            validFeedbackMdp () {
+            },
+            invalidFeedbackMdp2 () {
+                if (this.newMdp.two.length < 8 || !this.stateMdp) {
+                    this.stateMdp2 = false;
+                    return 'Mot de passe trop court';
+                } else if (this.newMdp.one !== this.newMdp.two) {
+                    this.stateMdp2 = false;
+                    return 'Les mots de passe doivent être identiques';
+                } else {
+                    this.stateMdp2 = true;
+                    return '';
+                }
+            },
+            validFeedbackMdp2 () {
+                return this.stateEmail ? 'Mot de passe valide' : '';
+            },
         },
         methods: {
             getImgUrl(pic) {
@@ -130,7 +286,7 @@
                             });
 
                             axios
-                                .get(server_url + "/user/info/" + sessionStorage.getItem("id"))
+                                .get(server_url + "/user/index/" + sessionStorage.getItem("id"))
                                 .then(response => {
                                     this.username = response.data[0].pseudo;
                                     this.picture = response.data[0].image === null ? "user.png" : response.data[0].image;
@@ -173,6 +329,73 @@
                     .catch(err => {
                         console.log(err);
                     });
+
+            },
+            closeModal() {
+                this.showModal = false;
+                this.confirmed = false;
+            },
+            confirm() {
+                if (this.statePseudo && this.stateEmail && this.stateMdp) {
+                    axios
+                        .post(server_url + '/user/create', {
+                            pseudo: this.newPseudo,
+                            mail: this.newMail,
+                            mdp: this.newMdp.one,
+                            marque: 0,
+                        })
+                        .then(response => {
+                            console.log("Account created");
+                            swal({
+                                position: 'top',
+                                type: 'success',
+                                title: 'Vous pouvez vous connecter !',
+                                showConfirmButton: false,
+                                animation: false,
+                                customClass: 'animated fadeInDown',
+                                timer: 1500
+                            });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                }
+                if (this.stateEmail) {
+                    axios
+                        .patch(server_url + '/user/mail', {
+                            "value": this.newMail,
+                            "id_utilisateur": sessionStorage.getItem("id"),
+                        }, {
+                            headers: {
+                                "x-access-token": sessionStorage.getItem("accessToken"),
+                            },
+                        })
+                        .then(response => {
+                            this.mail = this.newMail;
+                            this.confirmed = true;
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                } if (this.stateMdp) {
+                    axios
+                        .patch(server_url + '/user/mdp', {
+                            "value": this.newMdp.one,
+                            "id_utilisateur": sessionStorage.getItem("id"),
+                        }, {
+                            headers: {
+                                "x-access-token": sessionStorage.getItem("accessToken"),
+                            }
+                        })
+                        .then(response => {
+                            this.confirmed = true;
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                } if (!this.stateMdp && !this.stateEmail) {
+                    console.log("Invalid values");
+                }
             },
 
         },
@@ -194,7 +417,7 @@
             if (token !== undefined && token !== 'null') {
                 this.userConnected = true;
                 axios
-                    .get(server_url + "/user/info/" + sessionStorage.getItem("id"))
+                    .get(server_url + "/user/index/" + sessionStorage.getItem("id"))
                     .then(response => {
                         this.username = response.data[0].pseudo;
                         this.picture = response.data[0].image === null ? "user.png" : response.data[0].image;
@@ -290,6 +513,7 @@
     }
 
     #image-user {
+        height: 100%;
         max-width: 75px;
         max-height: 75px;
         border-radius: 75px;
@@ -325,5 +549,8 @@
         opacity: 0;
     }
 
+    #account-creation {
+        position: fixed;
+    }
 
 </style>

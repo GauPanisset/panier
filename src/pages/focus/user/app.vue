@@ -122,8 +122,8 @@
 
     import MyModal from "../../../components/myModal";
 
-    //const server_url = "https://panier-app.herokuapp.com";
-    const server_url = "http://localhost:3031";
+    const server_url = "https://panier-app.herokuapp.com";
+    //const server_url = "http://localhost:3031";
 
     export default {
         name: "app",
@@ -204,9 +204,6 @@
             closeModalBack() {
                 this.showModalBack = false;
             },
-            confirmBack() {
-
-            },
             closeModalModif() {
                 this.showModalModif = false;
                 this.confirmed = false;
@@ -214,7 +211,7 @@
             confirmModif() {
                 if (this.stateEmail) {
                     axios
-                        .patch(server_url + '/user/account/mail', {
+                        .patch(server_url + '/user/mail', {
                             "value": this.newMail,
                             "id_utilisateur": sessionStorage.getItem("id"),
                         }, {
@@ -231,7 +228,7 @@
                         });
                 } if (this.stateMdp) {
                     axios
-                        .patch(server_url + '/user/account/mdp', {
+                        .patch(server_url + '/user/mdp', {
                             "value": this.newMdp.one,
                             "id_utilisateur": sessionStorage.getItem("id"),
                         }, {
@@ -252,7 +249,7 @@
         },
         mounted() {
             axios
-                .get(server_url + '/user/info/' + sessionStorage.getItem("id"))
+                .get(server_url + '/user/index/' + sessionStorage.getItem("id"))
                 .then(response => {
                     this.pseudo = response.data[0].pseudo;
                     this.mail = response.data[0].mail;
@@ -292,7 +289,7 @@
     .profil-container {
         width: 50vw;
         height: 20vw;
-        margin: 150px 0 0 0;
+        margin: 250px 0 0 0;
     }
 
     .image-container {

@@ -45,7 +45,6 @@
                     myApp.style.overflowX = "scroll";
                     myApp.style.overflowY = "hidden";
                 }
-
             },
         },
 
@@ -53,21 +52,19 @@
         },
 
         mounted() {
+            const that = this;
             document.getElementById("app").addEventListener('scroll', this.handleScroll);
+            $('#app').on('mousewheel', function(event) {
+                if (that.position.scrollTop >= $(window).height()) {
+                    this.scrollLeft -= event.deltaY;
+                }
+            });
         },
-        created() {
-
-            document.getElementById("app").addEventListener('scroll', this.handleScroll);
-
-            this.windowHeight = window.innerHeight;
-        },
-
         beforeUpdate () {
           this.windowHeight = window.innerHeight;
         },
-
         destroyed () {
-          window.removeEventListener('scroll', this.handleScroll);
+            document.getElementById("app").removeEventListener('scroll', this.handleScroll);
         }
     }
 </script>

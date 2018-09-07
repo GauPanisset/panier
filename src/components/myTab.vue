@@ -16,6 +16,15 @@
                         <li role="presentation" class="nav-item">
                             <a role="tab" href="#" id="tab_button_4" :aria-selected="selected4" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" :class="{'active': selected4, 'nav-link': true}" @click="changeAttributes(3)">Marque</a>
                         </li>
+                        <li role="presentation" class="nav-item">
+                            <a role="tab" href="#"  aria-setsize="3" aria-posinset="1" aria-controls="tab_container" class="nav-link disabled">  </a>
+                        </li>
+                        <li role="presentation" class="nav-item">
+                            <a role="tab" href="#" id="tab_button_5" :aria-selected="selected5" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" :class="{'active': selected5, 'nav-link': true}" @click="changeAttributes(4)">Utilisateurs</a>
+                        </li>
+                        <li role="presentation" class="nav-item">
+                            <a role="tab" href="#" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" class="nav-link disabled">  </a>
+                        </li>
                     </ul>
                 </div>
                 <div id="tab_container" class="tab-content col">
@@ -30,6 +39,9 @@
                     </div>
                     <div role="tabpanel" id="tab_content_4" :aria-hidden="selected4" :aria-expanded="selected4" aria-labelledby="tab_button_4" :class="{'active': selected4, 'show': selected4, 'displayed': !selected4, 'tab-pane': true, 'card-body': true, 'fade': true}">
                         <my-table :columnNames="columnsBrand" :categorie="'brand'"></my-table>
+                    </div>
+                    <div role="tabpanel" id="tab_content_5" :aria-hidden="selected5" :aria-expanded="selected5" aria-labelledby="tab_button_5" :class="{'active': selected5, 'show': selected5, 'displayed': !selected5, 'tab-pane': true, 'card-body': true, 'fade': true}">
+                        <my-table :columnNames="columnsUsers" :categorie="'user'"></my-table>
                     </div>
                 </div>
             </div>
@@ -49,10 +61,12 @@
                 selected2: false,
                 selected3: false,
                 selected4: false,
+                selected5: false,
                 columnsProduct: [{friendlyName: 'Nom', id: 'nom', type: 'text'}, {friendlyName: 'Categorie', id: 'categorie', type: 'text'}, {friendlyName: 'Description', id: 'description'}, {friendlyName: 'Sous categorie', id: 'sous_categorie', type: 'text'}, {friendlyName: 'Couleur', id: 'couleur', type: 'text'}, {friendlyName: 'Type de couleur', id: 'couleur_type', type: 'text'}, {friendlyName: 'Matière', id: 'matiere', type: 'text'}, {friendlyName: 'Forme', id: 'forme', type: 'text'}, {friendlyName: 'Prix', id: 'prix', type: 'text'}, {friendlyName: 'Marque', id: 'marque', type: 'text'}, {friendlyName: 'Collection', id: 'collection', type: 'text'}, {friendlyName: 'Numero', id: 'numero', type: 'text'}],
                 columnsArticle: [{friendlyName: 'Titre', id: 'titre', type: 'text'}, {friendlyName: 'Sous-titre', id: 'sous_titre', type: 'text'}, {friendlyName: 'Texte', id: 'texte', type: 'text'}, {friendlyName: 'Auteur', id: 'auteur', type: 'text'}, {friendlyName: 'Lien', id: 'lien', type: 'text'}, {friendlyName: 'Date', id: 'date', type: 'text'}, {friendlyName: 'Type', id: 'type', type: 'text'}, {friendlyName: 'Accueil', id: 'accueil', type: 'checkbox'}],
                 columnsShop: [{friendlyName: 'Nom', id: 'nom', type: 'text'}, {friendlyName: 'Site', id: 'site', type: 'text'}, {friendlyName: 'Description', id: 'description', type: 'text'}, {friendlyName: 'Pays', id: 'pays', type: 'text'}, {friendlyName: 'Ville', id: 'ville', type: 'text'}, {friendlyName: 'Rue', id: 'rue', type: 'text'}, {friendlyName: 'Numéro', id: 'numero', type: 'text'}, {friendlyName: 'Complément', id: 'complement', type: 'text'}, {friendlyName: 'Accueil', id: 'accueil', type: 'checkbox'}],
                 columnsBrand: [{friendlyName: 'Nom', id: 'nom', type: 'text'}, {friendlyName: 'Site', id: 'site', type: 'text'}, {friendlyName: 'Description', id: 'description', type: 'text'}, {friendlyName: 'Accueil', id: 'accueil', type: 'checkbox'}, {friendlyName: 'Photo', id: 'photo', type: 'file'}],
+                columnsUsers: [{friendlyName: 'Pseudo', id: 'pseudo', type: 'text'}, {friendlyName: 'Email', id: 'mail', type: 'text'}, {friendlyName: 'Admin', id: 'admin', type: 'checkbox'}, {friendlyName: 'Marque', id: 'marque', type: 'text'}, {friendlyName: 'Photo', id: 'photo', type: 'file'}],
             }
         },
         computed: {
@@ -63,6 +77,7 @@
                 this.selected2 = 1 === index;
                 this.selected3 = 2 === index;
                 this.selected4 = 3 === index;
+                this.selected5 = 4 === index;
                 document.getElementById('tab_button_1').setAttribute('aria-selected', this.selected1 ? 'true' : 'false');
                 const content_element1 = document.getElementById('tab_content_1');
                 content_element1.setAttribute('aria-hidden', this.selected1 ? 'true' : 'false');
@@ -116,6 +131,11 @@
     .nav-link {
         color: rgba(0, 0, 0, 1);
 
+    }
+
+    .nav-tabs .nav-link.disabled {
+        height: 25vh;
+        border-right: 1px solid rgba(200, 200, 200, 1);
     }
 
     .nav-tabs .nav-link {
