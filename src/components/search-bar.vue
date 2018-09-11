@@ -35,8 +35,8 @@
 
 <script>
 
-    //const domain_url = "https://panier-vue.herokuapp.com";
-    const domain_url = "http://localhost:8010";
+    const domain_url = "https://panier-vue.herokuapp.com";
+    //const domain_url = "http://localhost:8010";
 
     export default {
         name: "search-bar",

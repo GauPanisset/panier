@@ -88,13 +88,13 @@
                     <div class="col-12">
                         <b-button class="profil-button" variant="outline-light" id="show-list" @click="">Voir mes collections</b-button>
                     </div>
-                    <div v-if="admin" class="col-12">
+                    <div v-if="back || admin" class="col-12">
                         <b-button class="profil-button" variant="outline-light" id="show-list" @click="showModalBack = true">Back Office</b-button>
                         <my-modal v-if="showModalBack" @close="closeModalBack()" :backOffice="true" :width="'98%'">
                             <h4 slot="header">Back Office</h4>
 
                             <div slot="body" role="tablist">
-                                <my-tab></my-tab>
+                                <my-tab :isAdmin="admin"></my-tab>
                             </div>
                         </my-modal>
                     </div>
@@ -122,8 +122,8 @@
 
     import MyModal from "../../../components/myModal";
 
-    const server_url = "https://panier-app.herokuapp.com";
-    //const server_url = "http://localhost:3031";
+    //const server_url = "https://panier-app.herokuapp.com";
+    const server_url = "http://localhost:3031";
 
     export default {
         name: "app",
@@ -133,6 +133,7 @@
                 mail: "example@mail.com",
                 picture: "user.png",
                 admin: false,
+                back: false,
                 showModalModif: false,
                 stateEmail: false,
                 newMail: "",
@@ -260,6 +261,14 @@
                     this.userConnected = false;
                     console.log(err);
                 });
+            if (this.back !== true) {
+                axios
+                    .get(server_url + '/user/authorization/' + sessionStorage.getItem("id"))
+                    .then(response => {
+                        this.back = response.data.length > 1;
+                    })
+            }
+
         }
     }
 </script>

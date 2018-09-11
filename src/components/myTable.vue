@@ -3,7 +3,7 @@
 
         <div class="column small-12 left_panel" >
             <div id="chart_table">
-                <form v-if="categorie !== 'user'" id="chart_datas"  >
+                <form v-if="categorie !== 'user' && (userAutho[id_categorie[categorie]*3] !== undefined || isAdmin)" id="chart_datas"  >
                     <div class="grid-container">
                         <div class="grid-x grid-padding-x input_wrp">
                             <div class="col-3 cell column" v-for="column in columnNames" :key="column.id + '_input'">
@@ -22,19 +22,43 @@
                         </div>
                         <button class="addRowBtn" v-on:click.prevent="addRow" value=""><icon id="plus" name="plus"></icon></button>
                     </div>
-
                 </form>
 
                 <div id="chart_table_container">
                     <div class="item-container" v-for="(item, index) in labels" :key="item.id">
                         <div class="content-container">
-                            <div class="small-12 medium-2 column single-cel" v-for="column in columnNames" :key="column.id + '_cell'">
+                            <div class="small-12 medium-2 column single-cel" v-for="(column, index) in columnNames" :key="column.id + '_cell'">
                                 <label>{{column.friendlyName}}</label>
-                                <input :type="column.type" v-model="item[column.id]" v-bind:disabled="disabled" v-on:blur="updateEvent(column.id, item.id, item[column.id])">
+
+                                <input :type="column.type" v-model="item[column.id]" v-bind:disabled="userAutho[id_categorie[categorie]*3 + 1] === undefined && !isAdmin" v-on:blur="updateEvent(column.id, item.id, item[column.id])">
+                            </div>
+                            <div v-if="categorie === 'user' && (userAutho[15] !== undefined || isAdmin)" class="small-12 medium-2 column single-cel">
+                                <button class="" @click="openModalAutho(item.id, item)">Autorisations</button>
+                                <my-modal v-if="item.showModal" @close="closeModalAutho(item)" @ok="updateAutho(item.id)" :backOffice="false" :width="'60%'">
+                                    <h4 slot="header">Modifier les autorisations</h4>
+
+                                    <div slot="body" role="tablist">
+                                        <div class="check-container">
+                                            <div v-for="autho in authorizations" :key="autho.id">
+                                                <b-form-checkbox v-model="autho.right"
+                                                                 value="1"
+                                                                 unchecked-value="0">
+                                                    {{autho.friendlyName}}
+                                                </b-form-checkbox>
+                                                <b-form-group v-show="autho.right == 1 && autho.scope !== null">
+                                                    <b-form-radio-group v-model="autho.scope"
+                                                                        :options="[{text: 'Limitée', value: '0'}, {text: 'Totale', value: '1'}]"
+                                                                        stacked>
+                                                    </b-form-radio-group>
+                                                </b-form-group>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </my-modal>
                             </div>
                         </div>
                         <div class="small-12 medium-1 column edit_panel smaller-column">
-                            <button class="edit_mode" @click="deleteEvent(index)">
+                            <button v-bind:disabled="userAutho[id_categorie[categorie]*3 + 2] === undefined && !isAdmin" class="edit_mode" @click="deleteEvent(index)">
                                 <icon name="trash"></icon>
                             </button>
                         </div>
@@ -52,6 +76,7 @@
 <script>
 
     import axios from 'axios';
+    import MyModal from 'components/myModal';
 
     const server_url = "https://panier-app.herokuapp.com";
     //const server_url = "http://localhost:3031";
@@ -64,14 +89,17 @@
 
     export default {
         name: "my-table",
-        components: {Icon},
-        props: ['columnNames', 'categorie'],
+        components: {Icon, MyModal},
+        props: ['columnNames', 'categorie', 'isAdmin', 'userAutho'],
         data() {
             return {
+                id_categorie: {'product': 0, 'article': 1, 'shop': 2, 'brand': 3, 'user': 4},
                 disabled: false,
                 labels: [],
                 inputValue: {},
                 state: true,
+                authorizations: [],
+                oldAutho: [],
             }
         },
         computed: {
@@ -86,7 +114,71 @@
             },
         },
         methods: {
-
+            updateAutho(id_utilisateur) {
+                this.authorizations.forEach(autho => {
+                    if (this.oldAutho.includes(autho.id) && autho.right == 0) {
+                        axios({
+                            method: "DELETE",
+                            url: server_url + '/user/authorization/' + id_utilisateur + '/' + autho.id,
+                            headers: {"x-access-token": sessionStorage.getItem("accessToken"),},
+                        })
+                            .then(response => {
+                                console.log('autho deleted');
+                                this.oldAutho.splice(this.oldAutho.indexOf(autho.id), 1);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    } else if (this.oldAutho.includes(autho.id) && autho.right == 1) {
+                        axios({
+                            method: "PATCH",
+                            url: server_url + '/user/account/authorization',
+                            data: {id: id_utilisateur, right: autho.id, scope: autho.scope},
+                            headers: {"x-access-token": sessionStorage.getItem("accessToken"),},
+                        })
+                            .then(response => {
+                                console.log('autho patched');
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    } else if (!this.oldAutho.includes(autho.id) && autho.right == 1){
+                        axios({
+                            method: "POST",
+                            url: server_url + '/user/authorization',
+                            data: {id: id_utilisateur, right: autho.id, scope: autho.scope},
+                            headers: {"x-access-token": sessionStorage.getItem("accessToken"),},
+                        })
+                            .then(response => {
+                                console.log('autho created');
+                                this.oldAutho.push(autho.id);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    }
+                });
+            },
+            openModalAutho(id_utilisateur, item) {
+                axios
+                    .get(server_url + '/user/authorization/' + id_utilisateur)
+                    .then(response => {
+                        this.authorizations = [{friendlyName: "Ajouter un produit", id: 0, right: 0, scope: null}, {friendlyName: "Modifier un produit", id: 1, right: 0, scope: -1}, {friendlyName: "Supprimer un produit", id: 2, right: 0, scope: -1}, {friendlyName: "Ajouter un article", id: 3, right: 0, scope: null}, {friendlyName: "Modifier un article", id: 4, right: 0, scope: -1}, {friendlyName: "Supprimer un article", id: 5, right: 0, scope: -1}, {friendlyName: "Ajouter une boutique", id: 6, right: 0, scope: null}, {friendlyName: "Modifier une boutique", id: 7, right: 0, scope: -1}, {friendlyName: "Supprimer une boutique", id: 8, right: 0, scope: -1}, {friendlyName: "Ajouter une marque", id: 9, right: 0, scope: null}, {friendlyName: "Modifier une marque", id: 10, right: 0, scope: -1}, {friendlyName: "Supprimer une marque", id: 11, right: 0, scope: -1}, {friendlyName: "Ajouter un utilisateur", id: 12, right: 0, scope: null}, {friendlyName: "Modifier un utilisateur", id: 13, right: 0, scope: -1}, {friendlyName: "Supprimer un utilisateur", id: 14, right: 0, scope: -1}, {friendlyName: "Modifier les autorisations", id: 15, right: 0, scope: -1}];
+                        this.oldAutho = [];
+                        response.data.forEach(autho => {
+                            this.authorizations[autho.id_droit].scope = autho.total;
+                            this.authorizations[autho.id_droit].right = 1;
+                            this.oldAutho.push(autho.id_droit);
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+                item.showModal = true;
+            },
+            closeModalAutho(item) {
+                item.showModal = false;
+            },
             updateEvent(column, item, value) {
                 axios({
                     method: "PATCH",
@@ -154,8 +246,12 @@
                 axios.get(server_url + '/' + this.categorie + '/index/allback')
                     .then(response => {
                         response.data.forEach(item => {
+                            if (this.categorie === 'user') {
+                                item.showModal = false;
+                            }
                             this.labels.push(item);
                         });
+
                     })
                     .catch(err => {
                         console.log(err);
@@ -169,9 +265,6 @@
             });
 
             this.getItems();
-
-            document.getElementById("marque").classList.remove("form-control");
-
         }
     }
 </script>
@@ -227,4 +320,6 @@
 
     #chart_table_container .item-container .content-container div.single-cel input[type="text"]:disabled, .smaller-column input { background: rgba(0,0,0,.02); }
     #chart_table_container .item-container .content-container div.single-cel input[type="checkbox"] {box-shadow: none; width:fit-content}
+
+    .check-container {height: 70vh; overflow: scroll}
 </style>

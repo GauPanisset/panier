@@ -5,22 +5,22 @@
                 <div class="col-auto">
                     <ul role="tablist" id="tab_control" class="nav nav-tabs card-header h-100 flex-column border-bottom-0 rounded-0">
                         <li role="presentation" class="nav-item">
-                            <a role="tab" href="#" id="tab_button_1" :aria-selected="selected1" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" :class="{'active': selected1, 'nav-link': true}" @click="changeAttributes(0)">Produit</a>
+                            <a role="tab" href="#" id="tab_button_1" v-show="updateUserAutho[id_categorie['product']*3] >= 0 || updateUserAutho[id_categorie['product']*3 + 1] >= 0 || updateUserAutho[id_categorie['product']*3 + 2] >= 0 || isAdmin" :aria-selected="selected1" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" :class="{'active': selected1, 'nav-link': true}" @click="changeAttributes(0)">Produit</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a role="tab" href="#" id="tab_button_2" :aria-selected="selected2" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" :class="{'active': selected2, 'nav-link': true}" @click="changeAttributes(1)">Article</a>
+                            <a role="tab" href="#" id="tab_button_2" v-show="updateUserAutho[id_categorie['article']*3] >= 0 || updateUserAutho[id_categorie['article']*3 + 1] >= 0 || updateUserAutho[id_categorie['article']*3 + 2] >= 0 || isAdmin" :aria-selected="selected2" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" :class="{'active': selected2, 'nav-link': true}" @click="changeAttributes(1)">Article</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a role="tab" href="#" id="tab_button_3" :aria-selected="selected3" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" :class="{'active': selected3, 'nav-link': true}" @click="changeAttributes(2)">Boutique</a>
+                            <a role="tab" href="#" id="tab_button_3" v-show="updateUserAutho[id_categorie['shop']*3] >= 0 || updateUserAutho[id_categorie['shop']*3 + 1] >= 0 || updateUserAutho[id_categorie['shop']*3 + 2] >= 0 || isAdmin" :aria-selected="selected3" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" :class="{'active': selected3, 'nav-link': true}" @click="changeAttributes(2)">Boutique</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a role="tab" href="#" id="tab_button_4" :aria-selected="selected4" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" :class="{'active': selected4, 'nav-link': true}" @click="changeAttributes(3)">Marque</a>
+                            <a role="tab" href="#" id="tab_button_4" v-show="updateUserAutho[id_categorie['brand']*3] >= 0 || updateUserAutho[id_categorie['brand']*3 + 1] >= 0 || updateUserAutho[id_categorie['brand']*3 + 2] >= 0 || isAdmin" :aria-selected="selected4" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" :class="{'active': selected4, 'nav-link': true}" @click="changeAttributes(3)">Marque</a>
                         </li>
                         <li role="presentation" class="nav-item">
                             <a role="tab" href="#"  aria-setsize="3" aria-posinset="1" aria-controls="tab_container" class="nav-link disabled">  </a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a role="tab" href="#" id="tab_button_5" :aria-selected="selected5" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" :class="{'active': selected5, 'nav-link': true}" @click="changeAttributes(4)">Utilisateurs</a>
+                            <a role="tab" href="#" id="tab_button_5" v-show="updateUserAutho[id_categorie['user']*3] >= 0 || updateUserAutho[id_categorie['user']*3 + 1] >= 0 || updateUserAutho[id_categorie['user']*3 + 2] >= 0 || updateUserAutho['15'] >= 0 || isAdmin" :aria-selected="selected5" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" :class="{'active': selected5, 'nav-link': true}" @click="changeAttributes(4)">Utilisateurs</a>
                         </li>
                         <li role="presentation" class="nav-item">
                             <a role="tab" href="#" aria-setsize="3" aria-posinset="1" aria-controls="tab_container" class="nav-link disabled">  </a>
@@ -28,20 +28,20 @@
                     </ul>
                 </div>
                 <div id="tab_container" class="tab-content col">
-                    <div role="tabpanel" id="tab_content_1" :aria-hidden="selected1" :aria-expanded="selected1" aria-labelledby="tab_button_1" :class="{'active': selected1, 'show': selected1, 'displayed': !selected1, 'tab-pane': true, 'card-body': true, 'fade': true}">
-                        <my-table :columnNames="columnsProduct" :categorie="'product'"></my-table>
+                    <div v-show="updateUserAutho[id_categorie['product']*3] >= 0 || updateUserAutho[id_categorie['product']*3 + 1] >= 0 || updateUserAutho[id_categorie['product']*3 + 2] >= 0 || isAdmin" role="tabpanel" id="tab_content_1" :aria-hidden="selected1" :aria-expanded="selected1" aria-labelledby="tab_button_1" :class="{'active': selected1, 'show': selected1, 'displayed': !selected1, 'tab-pane': true, 'card-body': true, 'fade': true}">
+                        <my-table :columnNames="columnsProduct" :categorie="'product'" :isAdmin="isAdmin" :userAutho="userAutho"></my-table>
                     </div>
-                    <div role="tabpanel" id="tab_content_2" :aria-hidden="selected2" :aria-expanded="selected2" aria-labelledby="tab_button_2" :class="{'active': selected2, 'show': selected2, 'displayed': !selected2, 'tab-pane': true, 'card-body': true, 'fade': true}">
-                        <my-table :columnNames="columnsArticle" :categorie="'article'"></my-table>
+                    <div v-show="updateUserAutho[id_categorie['article']*3] >= 0 || updateUserAutho[id_categorie['article']*3 + 1] >= 0 || updateUserAutho[id_categorie['article']*3 + 2] >= 0 || isAdmin" role="tabpanel" id="tab_content_2" :aria-hidden="selected2" :aria-expanded="selected2" aria-labelledby="tab_button_2" :class="{'active': selected2, 'show': selected2, 'displayed': !selected2, 'tab-pane': true, 'card-body': true, 'fade': true}">
+                        <my-table :columnNames="columnsArticle" :categorie="'article'" :isAdmin="isAdmin" :userAutho="userAutho"></my-table>
                     </div>
-                    <div role="tabpanel" id="tab_content_3" :aria-hidden="selected3" :aria-expanded="selected3" aria-labelledby="tab_button_3" :class="{'active': selected3, 'show': selected3, 'displayed': !selected3, 'tab-pane': true, 'card-body': true, 'fade': true}">
-                        <my-table :columnNames="columnsShop" :categorie="'shop'"></my-table>
+                    <div v-show="updateUserAutho[id_categorie['shop']*3] >= 0 || updateUserAutho[id_categorie['shop']*3 + 1] >= 0 || updateUserAutho[id_categorie['shop']*3 + 2] >= 0 || isAdmin" role="tabpanel" id="tab_content_3" :aria-hidden="selected3" :aria-expanded="selected3" aria-labelledby="tab_button_3" :class="{'active': selected3, 'show': selected3, 'displayed': !selected3, 'tab-pane': true, 'card-body': true, 'fade': true}">
+                        <my-table :columnNames="columnsShop" :categorie="'shop'" :isAdmin="isAdmin" :userAutho="userAutho"></my-table>
                     </div>
-                    <div role="tabpanel" id="tab_content_4" :aria-hidden="selected4" :aria-expanded="selected4" aria-labelledby="tab_button_4" :class="{'active': selected4, 'show': selected4, 'displayed': !selected4, 'tab-pane': true, 'card-body': true, 'fade': true}">
-                        <my-table :columnNames="columnsBrand" :categorie="'brand'"></my-table>
+                    <div v-show="updateUserAutho[id_categorie['brand']*3] >= 0 || updateUserAutho[id_categorie['brand']*3 + 1] >= 0 || updateUserAutho[id_categorie['brand']*3 + 2] >= 0 || isAdmin" role="tabpanel" id="tab_content_4" :aria-hidden="selected4" :aria-expanded="selected4" aria-labelledby="tab_button_4" :class="{'active': selected4, 'show': selected4, 'displayed': !selected4, 'tab-pane': true, 'card-body': true, 'fade': true}">
+                        <my-table :columnNames="columnsBrand" :categorie="'brand'" :isAdmin="isAdmin" :userAutho="userAutho"></my-table>
                     </div>
-                    <div role="tabpanel" id="tab_content_5" :aria-hidden="selected5" :aria-expanded="selected5" aria-labelledby="tab_button_5" :class="{'active': selected5, 'show': selected5, 'displayed': !selected5, 'tab-pane': true, 'card-body': true, 'fade': true}">
-                        <my-table :columnNames="columnsUsers" :categorie="'user'"></my-table>
+                    <div v-show="updateUserAutho[id_categorie['user']*3] >= 0 || updateUserAutho[id_categorie['user']*3 + 1] >= 0 || updateUserAutho[id_categorie['user']*3 + 2] >= 0 || updateUserAutho['15'] >= 0 || isAdmin" role="tabpanel" id="tab_content_5" :aria-hidden="selected5" :aria-expanded="selected5" aria-labelledby="tab_button_5" :class="{'active': selected5, 'show': selected5, 'displayed': !selected5, 'tab-pane': true, 'card-body': true, 'fade': true}">
+                        <my-table :columnNames="columnsUsers" :categorie="'user'" :isAdmin="isAdmin" :userAutho="userAutho"></my-table>
                     </div>
                 </div>
             </div>
@@ -50,13 +50,20 @@
 </template>
 
 <script>
+    const server_url = "https://panier-app.herokuapp.com";
+    //const server_url = "http://localhost:3031";
+
+    import axios from 'axios';
     import MyTable from "components/myTable";
 
     export default {
         name: "nav-tab",
         components: {MyTable},
+        props: ['isAdmin'],
         data() {
             return {
+                userAutho: {13: 2},
+                id_categorie: {'product': 0, 'article': 1, 'shop': 2, 'brand': 3, 'user': 4},
                 selected1: true,
                 selected2: false,
                 selected3: false,
@@ -70,6 +77,9 @@
             }
         },
         computed: {
+            updateUserAutho() {
+                return this.userAutho;
+            }
         },
         methods: {
             changeAttributes(index) {
@@ -96,6 +106,25 @@
                 content_element4.setAttribute('aria-expanded', this.selected4 ? 'true' : 'false');
 
             },
+        },
+        created() {
+            axios
+                .get(server_url + '/user/authorization/' + sessionStorage.getItem("id"))
+                .then(response => {
+                    response.data.forEach(autho => {
+
+                        this.userAutho[autho.id_droit] = autho.total;
+
+
+                    });
+                    if (this.userAutho[0] >= 0 || this.isAdmin) {
+                        document.getElementById("marque").classList.remove("form-control");
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+
         }
     }
 </script>
