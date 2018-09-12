@@ -13,12 +13,40 @@
     <div class="cat-section" v-if="displayLength.length > 0">
         <div class="title" :style="font[attribute.font]">{{attribute.title}}</div>          <!-- Titre de la section -->
         <b-container class="bv-example-row" v-if="display === 'short'">                     <!-- Contenu de la section en mode 'short' -->
-            <b-row align-h="start" v-if="attribute.type === 'brand' || attribute.type === 'shop'">
+
+            <b-row align-h="start">
+                <b-col class="result-container" :cols="attribute.content[index].type === 'article' ? 4 : 2" v-for="index in displayLength" :key="attribute.content[index].name">
+                    <a :href="getLinkUrl(attribute.content[index].type, attribute.content[index].id)">
+                        <b-card :title="attribute.content[index].name" :img-src="getImgUrl(attribute.content[index].image)" :img-alt="attribute.content[index].name">
+                            <p v-if="attribute.content[index].type === 'product'" class="card-text">
+                                Prix constaté {{attribute.content[index].price}} €
+                            </p>
+                        </b-card>
+                    </a>
+                    <p v-if="attribute.content[index].type === 'article'" class="card-text-article">
+                        <strong>{{attribute.content[index].subtitle}}</strong>
+                        <br>
+                        {{getText(attribute.content[index].text)}}
+                        <br>
+                        <a class="readMore" :href="getLinkUrl(attribute.content[index].type, attribute.content[index].id)">Lire la suite</a>
+                    </p>
+                </b-col>
+                <b-col class="result-plus" sm="1" md="1" lg="2">
+                    <b-button v-if="attribute.content.length >= 5" :variant="'outline-secondary'" class="plus-button" @click="changeDisplay">
+                        <icon name="plus"></icon>
+                    </b-button>
+                </b-col>
+            </b-row>
+
+
+
+            <!--b-row align-h="start" v-if="attribute.type === 'brand' || attribute.type === 'shop'">
                 <b-col class="result-container" cols="2" v-for="index in displayLength" :key="attribute.content[index].name">
                     <a :href="getLinkUrl(attribute.type, attribute.content[index].id)">
                         <b-card :title="attribute.content[index].name" :img-src="getImgUrl(attribute.content[index].image)" :img-alt="attribute.content[index].name"></b-card>
                     </a>
                 </b-col>
+
                 <b-col class="result-plus" sm="1" md="1" lg="2">
                     <b-button v-if="attribute.content.length >= 5" :variant="'outline-secondary'" class="plus-button" @click="changeDisplay">
                         <icon name="plus"></icon>
@@ -62,12 +90,31 @@
                         <icon name="plus"></icon>
                     </b-button>
                 </b-col>
-            </b-row>
+            </b-row-->
 
         </b-container>
-        <b-container class="bv-example-row" v-if="display === 'large'">                     <!-- Contenu de la section en mode 'short' -->
+        <b-container class="bv-example-row" v-if="display === 'large'">                     <!-- Contenu de la section en mode 'large' -->
 
-            <b-row align-h="start" v-if="attribute.type === 'brand' || attribute.type === 'shop'">
+            <b-row align-h="start">
+                <b-col class="result-container" :cols="item.type === 'article' ? 4 : 2" v-for="item in attribute.content" :key="item.name">
+                    <a :href="getLinkUrl(attribute.type, item.id)">
+                        <b-card :title="item.name" :img-src="getImgUrl(item.image)" :img-alt="item.name">
+                            <p v-if="item.type === 'product'" class="card-text">
+                                Prix constaté {{item.price}} €
+                            </p>
+                        </b-card>
+                    </a>
+                    <p v-if="item.type === 'article'" class="card-text-article">
+                        <strong>{{item.subtitle}}</strong>
+                        <br>
+                        {{getText(item.text)}}
+                        <br>
+                        <a class="readMore" :href="getLinkUrl(item.type, item.id)">Lire la suite</a>
+                    </p>
+                </b-col>
+            </b-row>
+
+            <!--b-row align-h="start" v-if="attribute.type === 'brand' || attribute.type === 'shop'">
                 <b-col class="result-container" cols="2" v-for="item in attribute.content" :key="item.name">
                     <a :href="getLinkUrl(attribute.type, item.id)">
                         <b-card :title="item.name" :img-src="getImgUrl(item.image)" :img-alt="item.name"></b-card>
@@ -101,7 +148,7 @@
                         <a class="readMore" :href="getLinkUrl(attribute.type, article.id)">Lire la suite</a>
                     </p>
                 </b-col>
-            </b-row>
+            </b-row-->
 
         </b-container>
     </div>
@@ -111,15 +158,19 @@
     import 'vue-awesome/icons/plus'
     import Icon from 'vue-awesome/components/Icon'
 
-    //const domain_url = "https://panier-vue.herokuapp.com";
-    const domain_url = "http://localhost:8010";
+    const domain_url = "https://panier-vue.herokuapp.com";
+    //const domain_url = "http://localhost:8010";
 
     export default {
         name: "cat-section",
         data() {
             const dl = [];
-            for(let i = 0; i < Math.min(this.attribute.content.length, 4); i++) {
-                dl.push(i);
+            let score = 0;
+            let index = 0;
+            while (score < 4 && index < this.attribute.content.length) {
+                score += this.attribute.content[0].type === 'product' ? 1 : 2;
+                dl.push(index);
+                index++;
             }
             return {
                 displayLength: dl,                          //Array avec les indices des items à afficher.
@@ -192,6 +243,7 @@
         margin-right: 20px;
         width: fit-content;
         max-width: none;
+        display: flex;
     }
 
     .result-plus {
@@ -242,10 +294,6 @@
         color: rgb(233, 138, 120);
     }
 
-    .result-container-article {
-        display: flex;
-        max-width: none;
-    }
 
     .card-text-article {
         text-indent: 15px;

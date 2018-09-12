@@ -52,7 +52,7 @@
                 <div v-if="userConnected" class="dropdown-menu" aria-labelledby="dropdown-user">
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item first-item" :href="domain + '/focus/user.html'">{{username}}</a>
-                    <a class="dropdown-item first-item">Mes collections <icon name="heart"></icon></a>
+                    <a class="dropdown-item first-item" :href="domain + '/focus/collection.html'">Mes collections <icon name="heart"></icon></a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item first-item" @click="logout()" style="text-decoration: underline">Déconnexion</a>
                 </div>

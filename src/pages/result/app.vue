@@ -115,12 +115,14 @@
                                     title = "Dossiers";
                                     break;
                             }
+                            response.data.forEach(item => {
+                                item.type = 'article';
+                            });
                             this.sections.push({
                                     title: title,
                                     display: this.displayType.article,
                                     font: "salome",
                                     content: response.data,
-                                    type: "article"
                                 }
                             );
                         });
@@ -137,12 +139,14 @@
                                     title = "Boutiques";
                                     break;
                             }
+                            response.data.forEach(item => {
+                                item.type = this.$route.query.section;
+                            });
                             this.sections.push({
                                     title: title,
                                     display: this.displayType[this.$route.query.section],
                                     font: "salome",
                                     content: response.data,
-                                    type: this.$route.query.section
                                 }
                             );
                         });
@@ -165,6 +169,7 @@
                                     image: '',
                                     price: item._source.prix,
                                     id: item._source.id,
+                                    type: "product",
                                 };
                                 axios
                                     .get(server_url + '/product/image/' + tmp.id)
@@ -179,7 +184,6 @@
                                 display: this.displayType.product,
                                 font: "salome",
                                 content: itemContent,
-                                type: "product"
                             });
                             if (filters === '') {
                                 this.filters = response.data[1];
@@ -199,6 +203,7 @@
                                     id: item._source.id,
                                     subtitle: item._source.sous_titre,
                                     text: item._source.texte,
+                                    type: "article"
                                 };
                                 axios
                                     .get(server_url + '/article/image/' + tmp.id)
@@ -212,7 +217,6 @@
                                 display: this.displayType.article,
                                 font: "salome",
                                 content: itemContent,
-                                type: "article"
                             });
                         }
                     });

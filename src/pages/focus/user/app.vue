@@ -86,7 +86,7 @@
                         </my-modal>
                     </div>
                     <div class="col-12">
-                        <b-button class="profil-button" variant="outline-light" id="show-list" @click="">Voir mes collections</b-button>
+                        <b-button class="profil-button" variant="outline-light" id="show-list" @click="goTo('/focus/collection.html')">Voir mes collections <icon name="heart"></icon></b-button>
                     </div>
                     <div v-if="back || admin" class="col-12">
                         <b-button class="profil-button" variant="outline-light" id="show-list" @click="showModalBack = true">Back Office</b-button>
@@ -114,21 +114,22 @@
     import 'vue-awesome/icons/heart'
     import Icon from 'vue-awesome/components/Icon'
 
-    import CatSection from 'components/cat-section'
-
     import NavBar from "components/nav-bar"
 
     import MyTab from "components/myTab"
 
     import MyModal from "../../../components/myModal";
 
-    //const server_url = "https://panier-app.herokuapp.com";
-    const server_url = "http://localhost:3031";
+    const domain_url = "https://panier-vue.herokuapp.com";
+    //const domain_url = "http://localhost:8010";
+
+    const server_url = "https://panier-app.herokuapp.com";
+    //const server_url = "http://localhost:3031";
 
     export default {
         name: "app",
         data() {
-            return {                                //données liées à l'article
+            return {
                 pseudo: "Pseudo",
                 mail: "example@mail.com",
                 picture: "user.png",
@@ -150,7 +151,6 @@
         components: {
             MyModal,
             NavBar,
-            CatSection,
             Icon,
             MyTab,
         },
@@ -195,6 +195,9 @@
             },
         },
         methods: {
+            goTo(url) {
+                window.location.href = domain_url + url;
+            },
             getImgUrl(pic) {
 
                 if (pic !== "") {
