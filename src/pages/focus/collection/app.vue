@@ -19,8 +19,8 @@
 
     import NavBar from "components/nav-bar"
 
-    //const server_url = "https://panier-app.herokuapp.com";
-    const server_url = "http://localhost:3031";
+    const server_url = "https://panier-app.herokuapp.com";
+    //const server_url = "http://localhost:3031";
 
     export default {
         name: "app",
