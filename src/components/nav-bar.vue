@@ -452,6 +452,10 @@
         border-radius: 0;
     }
 
+    #nav-search-bar {
+        margin-top: 15px;
+    }
+
     .nav-item {
         margin: auto;
     }
@@ -471,6 +475,7 @@
 
     .logo-nav {
         text-align: center;
+        padding-top: 7px;
     }
 
     .middle-nav {
@@ -503,6 +508,7 @@
     }
 
     .user-nav {
+        padding-top: 7px;
         text-align: center;
     }
 

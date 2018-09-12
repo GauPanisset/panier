@@ -168,7 +168,7 @@
             let score = 0;
             let index = 0;
             while (score < 4 && index < this.attribute.content.length) {
-                score += this.attribute.content[0].type === 'product' ? 1 : 2;
+                score += this.attribute.content[0].type === 'article' ? 2 : 1;
                 dl.push(index);
                 index++;
             }
