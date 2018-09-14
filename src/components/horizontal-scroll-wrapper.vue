@@ -3,7 +3,7 @@
     Section principale de scroll horizontal. Les différentes catégories sont mises en avant dans des <home-section>.
     -->
     <div id="horizontal-scroll-wrapper">
-        <transition name="fade">
+        <transition name="slide-fade">
           <nav-bar v-if="position.scrollTop + 8 >= windowHeight"></nav-bar>
         </transition>
         <!-- Bouton survol permettant de se déplacer -->
@@ -115,11 +115,14 @@
         right: -10px;
     }
 
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
+    .slide-fade-enter-active {
+        transition: all .5s ease;
     }
-
-    .fade-enter, .fade-leave-to {
+    .slide-fade-leave-active {
+        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to {
+        transform: translateY(-50px);
         opacity: 0;
     }
 
