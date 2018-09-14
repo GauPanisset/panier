@@ -221,8 +221,8 @@
                         }, {
                             headers: {
                             "x-access-token": sessionStorage.getItem("accessToken"),
-                        },
-                    })
+                            },
+                        })
                         .then(response => {
                             this.mail = this.newMail;
                             this.confirmed = true;

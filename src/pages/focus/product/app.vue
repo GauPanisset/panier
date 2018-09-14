@@ -16,7 +16,38 @@
                 </div>
                 <div class="text-container">
                     <div class="add-button">
-                        <b-button :variant="'link'">Ajouter à ma Collection <icon name="heart"></icon></b-button><br>
+                        <b-button :variant="'link'" @click="showAddModal = true">Ajouter à ma Collection <icon name="heart"></icon></b-button><br>
+                        <b-button v-if="inCollection" :variant="'link'" @click="showDeleteModal = true">Enlever de ma Collection <icon name="heart"></icon></b-button><br>
+                        <my-modal v-if="showAddModal" @close="closeAddModal()" @ok="addToCollection()" :backOffice="false" :width="'20%'">
+                            <h4 slot="header">Choisissez la collection du produit à ajouter</h4>
+                            <div slot="body" role="tablist">
+                                <b-form-group>
+                                    <b-form-radio-group id="btnradios1"
+                                                        buttons
+                                                        stacked
+                                                        v-model="collectionName"
+                                                        :options="options"
+                                                        name="addRadio" />
+                                    <b-form-input v-model="collectionName"
+                                                  type="text"
+                                                  placeholder="Nouvelle collection ?"></b-form-input>
+                                </b-form-group>
+                            </div>
+                        </my-modal>
+                        <my-modal v-if="showDeleteModal" @close="closeDeleteModal()" @ok="removeFromCollection()" :backOffice="false" :width="'20%'">
+                            <h4 slot="header">Choisissez la collection du produit à supprimer</h4>
+
+                            <div slot="body" role="tablist">
+                                <b-form-group>
+                                    <b-form-radio-group id="btnradios2"
+                                                        buttons
+                                                        stacked
+                                                        v-model="collectionName"
+                                                        :options="optionsDelete"
+                                                        name="deleteRadio" />
+                                </b-form-group>
+                            </div>
+                        </my-modal>
                         <b-button :variant="'link'">Partager</b-button>
                     </div>
 
@@ -70,6 +101,8 @@
 
     import VueGallery from "vue-gallery"
 
+    import MyModal from "components/myModal"
+
     const server_url = "https://panier-app.herokuapp.com";
     //const server_url = "http://localhost:3031";
 
@@ -84,6 +117,7 @@
                 images: [],
                 imagesGallery: [],
                 positions: {},
+                inCollection: false,
                 products: {
                     title: "Produits similaires",
                     display: "short",
@@ -96,7 +130,12 @@
                     font: "raleway",
                     content: [{name: "Titre article 1", image: "5.jpg", id: '10'}, {name: "Titre article 2", image: "6.jpg", id: '11'}],
                 },
-                index: null
+                index: null,
+                showAddModal: false,
+                showDeleteModal: false,
+                collectionName: '',
+                options: [],
+                optionsDelete: [],
             }
 
         },
@@ -105,8 +144,48 @@
             CatSection,
             Icon,
             gallery: VueGallery,
+            MyModal,
         },
         methods: {
+            closeAddModal() {
+                this.showAddModal = false;
+            },
+            closeDeleteModal() {
+                this.showDeleteModal = false;
+            },
+            addToCollection() {
+                axios
+                    .post(server_url + '/user/collection', {
+                        item: 'produit',
+                        id_item: this.$route.query.id,
+                        id: sessionStorage.getItem('id'),
+                        nom: this.collectionName,
+                    }, {
+                            headers: {
+                                "x-access-token": sessionStorage.getItem("accessToken"),
+                            },
+                    })
+                    .then(response => {
+                        location.reload();
+                        console.log('added to collection');
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            },
+            removeFromCollection() {
+                axios
+                    .delete(server_url + '/user/collection/' + sessionStorage.getItem('id') + '/' + this.collectionName + '/?item=produit&id_item=' + this.$route.query.id,
+                        { headers: {"x-access-token": sessionStorage.getItem("accessToken"),},})
+                    .then(response => {
+                        location.reload();
+                        console.log('deleted from collection');
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+
+            },
             getImgUrl(pic) {
 
                 if (pic !== "") {
@@ -162,6 +241,36 @@
                         this.imagesGallery.push(this.getImgUrl(response.data[i]["url"]));
                         this.positions[response.data[i]["url"]] = pos[i];
                     }
+                });
+            axios
+                .get(server_url + '/user/collection/all/' + sessionStorage.getItem('id'))
+                .then(response => {
+                    response.data.forEach(item => {
+                        this.options.push({
+                            text: item.nom,
+                            value: item.nom,
+                        })
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+            axios
+                .get(server_url + '/user/collection/check/' + sessionStorage.getItem('id') + '/?item=produit&id_item=' + this.$route.query.id)
+                .then(response => {
+
+                    if (response.data.length > 0) {
+                        this.inCollection = true;
+                        response.data.forEach(item => {
+                            this.optionsDelete.push({
+                                text: item.nom,
+                                value: item.nom,
+                            })
+                        })
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
                 });
         }
     }
@@ -306,6 +415,17 @@
 
     .blueimp-gallery {
         background: rgba(0,0,0,.5);
+    }
+
+    #btnradios1, #btnradios2 {
+        width:80%;
+    }
+
+    .form-control {
+        text-align: center;
+        width: 80%;
+
+        margin: 20px auto auto auto;
     }
 
 
