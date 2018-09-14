@@ -16,7 +16,8 @@
                     <a :href="website">{{website}}</a>
                     <div class="link-section">
                         <p style="font-size: 1.2em">Lien vers :</p>
-                        <a v-for="link in links" :key="link.name" :href="link.url">{{link.name}}</a>
+                        <a v-if="link.url !== 'index = 0'" v-for="link in links" :key="link.name" :href="link.url">{{link.name}}</a>
+                        <b-button v-if="link.url === 'index = 0'" variant="link" v-for="link in links" :key="link.name" @click="index = 0">{{link.name}}</b-button>
                     </div>
                 </div>
 
@@ -58,6 +59,9 @@
     const server_url = "https://panier-app.herokuapp.com";
     //const server_url = "http://localhost:3031";
 
+    const domain_url = "https://panier-vue.herokuapp.com";
+    //const domain_url = "http://localhost:8010";
+
     export default {
         name: "app",
         data() {
@@ -65,7 +69,7 @@
                 brand: "Nom de marque",
                 website: "www.site.com",
                 content: [],
-                links: [{name: 'Les produits', url: '#'}, {name: 'Collections', url: '#'}, {name: 'Catalogues', url: '#'}, {name: 'Actualités', url: '#'}, {name: "Galerie d'images", url: '#'}],
+                links: [],
                 tags: ['tag1', 'tag2', 'tag3'],
                 images: [],
                 imagesGallery: [],
@@ -122,6 +126,7 @@
                 .get(server_url + '/brand/' + id)
                 .then(response => {
                     this.brand = response.data[0].nom;
+                    this.links = [{name: 'Les produits', url: domain_url + '/result.html?request=' + response.data[0].nom}, {name: 'Collections', url: domain_url + '/focus/collection.html?brand=' + id}, {name: 'Catalogues', url: '#'}, {name: 'Actualités', url: '#'}, {name: "Galerie d'images", url: 'index = 0'}];
                     this.website = response.data[0].site;
                     let tmp = 0;
                     for (let i = 0; i < response.data[0].description.length - 4; i ++) {
@@ -203,9 +208,13 @@
         margin-bottom: 50px;
     }
 
-    .text-container a {
+    .text-container a, .text-container button {
+        margin: 5px;
+        padding: 0;
         color: black;
         text-decoration: underline;
+        display: block;
+        text-indent: 0;
     }
 
     .add-button {
@@ -218,7 +227,6 @@
         margin-left: auto;
         margin-right: auto;
     }
-
     .add-button button {
         padding: 0;
     }

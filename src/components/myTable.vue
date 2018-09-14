@@ -83,8 +83,7 @@
 
     import 'vue-awesome/icons/trash'
     import 'vue-awesome/icons/times'
-    import 'vue-awesome/icons/pencil'
-    import 'vue-awesome/icons/plus-square'
+    import 'vue-awesome/icons/plus'
     import Icon from 'vue-awesome/components/Icon'
 
     export default {

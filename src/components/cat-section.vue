@@ -38,66 +38,12 @@
                 </b-col>
             </b-row>
 
-
-
-            <!--b-row align-h="start" v-if="attribute.type === 'brand' || attribute.type === 'shop'">
-                <b-col class="result-container" cols="2" v-for="index in displayLength" :key="attribute.content[index].name">
-                    <a :href="getLinkUrl(attribute.type, attribute.content[index].id)">
-                        <b-card :title="attribute.content[index].name" :img-src="getImgUrl(attribute.content[index].image)" :img-alt="attribute.content[index].name"></b-card>
-                    </a>
-                </b-col>
-
-                <b-col class="result-plus" sm="1" md="1" lg="2">
-                    <b-button v-if="attribute.content.length >= 5" :variant="'outline-secondary'" class="plus-button" @click="changeDisplay">
-                        <icon name="plus"></icon>
-                    </b-button>
-                </b-col>
-            </b-row>
-
-            <b-row align-h="start" v-if="attribute.type === 'product'">
-                <b-col class="result-container" cols="2" v-for="index in displayLength" :key="attribute.content[index].name">
-                    <a :href="getLinkUrl(attribute.type, attribute.content[index].id)">
-                        <b-card :title="attribute.content[index].name" :img-src="getImgUrl(attribute.content[index].image)" :img-alt="attribute.content[index].name">
-                            <p class="card-text">
-                                Prix constaté {{attribute.content[index].price}} €
-                            </p>
-                        </b-card>
-                    </a>
-                </b-col>
-                <b-col class="result-plus" sm="1" md="1" lg="2">
-                    <b-button v-if="attribute.content.length >= 5" :variant="'outline-secondary'" class="plus-button" @click="changeDisplay">
-                        <icon name="plus"></icon>
-                    </b-button>
-                </b-col>
-            </b-row>
-
-            <b-row align-h="start" v-if="attribute.type === 'article'">
-                <b-col class="result-container-article" cols="5" v-for="index in [0, 1]" :key="attribute.content[index].name">
-                    <a :href="getLinkUrl(attribute.type, attribute.content[index].id)">
-                        <b-card :title="attribute.content[index].name" :img-src="getImgUrl(attribute.content[index].image)" :img-alt="attribute.content[index].name">
-                        </b-card>
-                    </a>
-                    <p class="card-text-article">
-                        <strong>{{attribute.content[index].subtitle}}</strong>
-                        <br>
-                        {{getText(attribute.content[index].text)}}
-                        <br>
-                        <a class="readMore" :href="getLinkUrl(attribute.type, attribute.content[index].id)">Lire la suite</a>
-                    </p>
-                </b-col>
-                <b-col class="result-plus" sm="1" md="1" lg="2">
-                    <b-button v-if="attribute.content.length >= 5" :variant="'outline-secondary'" class="plus-button" @click="changeDisplay">
-                        <icon name="plus"></icon>
-                    </b-button>
-                </b-col>
-            </b-row-->
-
         </b-container>
         <b-container class="bv-example-row" v-if="display === 'large'">                     <!-- Contenu de la section en mode 'large' -->
 
             <b-row align-h="start">
                 <b-col class="result-container" :cols="item.type === 'article' ? 4 : 2" v-for="item in attribute.content" :key="item.name">
-                    <a :href="getLinkUrl(attribute.type, item.id)">
+                    <a :href="getLinkUrl(item.type, item.id)">
                         <b-card :title="item.name" :img-src="getImgUrl(item.image)" :img-alt="item.name">
                             <p v-if="item.type === 'product'" class="card-text">
                                 Prix constaté {{item.price}} €
@@ -113,42 +59,6 @@
                     </p>
                 </b-col>
             </b-row>
-
-            <!--b-row align-h="start" v-if="attribute.type === 'brand' || attribute.type === 'shop'">
-                <b-col class="result-container" cols="2" v-for="item in attribute.content" :key="item.name">
-                    <a :href="getLinkUrl(attribute.type, item.id)">
-                        <b-card :title="item.name" :img-src="getImgUrl(item.image)" :img-alt="item.name"></b-card>
-                    </a>
-                </b-col>
-            </b-row>
-
-            <b-row align-h="start" v-if="attribute.type === 'product'">
-                <b-col class="result-container" cols="2" v-for="product in attribute.content" :key="product.name">
-                    <a :href="getLinkUrl(attribute.type, product.id)">
-                        <b-card :title="product.name" :img-src="getImgUrl(product.image)" :img-alt="product.name">
-                            <p class="card-text">
-                                Prix constaté {{product.price}} €
-                            </p>
-                        </b-card>
-                    </a>
-                </b-col>
-            </b-row>
-
-            <b-row align-h="start" v-if="attribute.type === 'article'">
-                <b-col class="result-container-article" cols="6" v-for="article in attribute.content" :key="article.name">
-                    <a :href="getLinkUrl(attribute.type, article.id)">
-                        <b-card :title="article.name" :img-src="getImgUrl(article.image)" :img-alt="article.name">
-                        </b-card>
-                    </a>
-                    <p class="card-text-article">
-                        <strong>{{article.subtitle}}</strong>
-                        <br>
-                        {{getText(article.text)}}
-                        <br>
-                        <a class="readMore" :href="getLinkUrl(attribute.type, article.id)">Lire la suite</a>
-                    </p>
-                </b-col>
-            </b-row-->
 
         </b-container>
     </div>
@@ -291,7 +201,7 @@
     .card-text {
         width: fit-content;
         margin: 0 auto 0 auto;
-        color: rgb(233, 138, 120);
+        color: $secondColor;
     }
 
 

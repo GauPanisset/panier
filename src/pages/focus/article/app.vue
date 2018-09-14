@@ -72,12 +72,13 @@
                     title: "Produits liés",
                     display: "short",
                     font: "raleway",
-                    content: [{name: 'Pot blanc', image: '11.jpeg', price:'30', id: '3'}, {name: 'Assiette rose', image: '25.jpg', price:'35', id: '4'}, {name: 'Petite peluche souris', image: '32.jpg', price:'25', id: '5'}, {name: 'Baignoire Design', image: '43.jpg', price:'450', id: '6'}, {name: 'Bougie de jardin', image: '49.jpg', price: '20', id: '7'}, {name: 'Chaise design', image: '8.jpg', price:'50', id: '2'}],
+                    content: [],
                 },
                 articles: {
                     title: "Articles similaires",
                     display: "short",
                     font: "raleway",
+                    content: [],
                 },
                 index: null
             }

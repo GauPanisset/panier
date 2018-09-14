@@ -45,46 +45,83 @@
             },
         },
         mounted() {
-            axios
-                .get(server_url + '/user/collection/' + sessionStorage.getItem("id"))
-                .then(response => {
-                    let itemContent = {};
-                    response.data.forEach(item => {
-                        let name = item.nom;
-                        if (!Object.keys(itemContent).includes(item.nom)) {
-                            itemContent[name] = [];
-                        }
-                        if (item.valeur3 === 'product') {
+
+            if (this.$route.query.brand !== undefined) {
+                axios
+                    .get(server_url + '/product/collection/' + this.$route.query.brand)
+                    .then(response => {
+                        let itemContent = {};
+                        console.log(response.data);
+                        response.data.forEach(item => {
+                            let name = item.collection;
+                            if (!Object.keys(itemContent).includes(name)) {
+                                itemContent[name] = [];
+                            }
                             itemContent[name].push({
-                                name: item.valeur1,
+                                name: item.nom,
                                 image: item.image,
                                 id: item.id,
-                                price: item.valeur2,
+                                price: item.prix,
                                 type: 'product',
                             })
-                        } else {
-                            itemContent[name].push({
-                                name: item.valeur1,
-                                image: item.image,
-                                id: item.id,
-                                subtitle: item.valeur2,
-                                text: item.valeur3,
-                                type: 'article',
-                            })
-                        }
-                    });
-                    for (let prop in itemContent) {
-                        this.sections.push({
-                            title: prop,
-                            display: "short",
-                            font: "salome",
-                            content: itemContent[prop],
                         });
-                    }
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+                        for (let prop in itemContent) {
+                            this.sections.push({
+                                title: prop,
+                                display: "short",
+                                font: "salome",
+                                content: itemContent[prop],
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+                console.log(this.sections);
+
+            } else {
+                axios
+                    .get(server_url + '/user/collection/' + sessionStorage.getItem("id"))
+                    .then(response => {
+                        let itemContent = {};
+                        response.data.forEach(item => {
+                            let name = item.nom;
+                            if (!Object.keys(itemContent).includes(name)) {
+                                itemContent[name] = [];
+                            }
+                            if (item.valeur3 === 'product') {
+                                itemContent[name].push({
+                                    name: item.valeur1,
+                                    image: item.image,
+                                    id: item.id,
+                                    price: item.valeur2,
+                                    type: 'product',
+                                })
+                            } else {
+                                itemContent[name].push({
+                                    name: item.valeur1,
+                                    image: item.image,
+                                    id: item.id,
+                                    subtitle: item.valeur2,
+                                    text: item.valeur3,
+                                    type: 'article',
+                                })
+                            }
+                        });
+                        for (let prop in itemContent) {
+                            this.sections.push({
+                                title: prop,
+                                display: "short",
+                                font: "salome",
+                                content: itemContent[prop],
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+
         }
     }
 </script>

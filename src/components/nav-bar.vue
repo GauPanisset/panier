@@ -17,7 +17,7 @@
                         </b-input-group-append>
                     </b-input-group>
                 </div>
-                <b-navbar variant="primary" toggleable>
+                <b-navbar id="my-navbar" variant="primary" toggleable>
                     <b-navbar-toggle target="nav_dropdown_collapse"></b-navbar-toggle>
                     <b-collapse is-nav id="nav_dropdown_collapse" class="nav-bar-container">
                         <b-navbar-nav class="main-bar">
@@ -50,10 +50,10 @@
                     <a class="dropdown-item second-item" href="#" @click="showModal = true">Créer un compte</a>
                 </div>
                 <div v-if="userConnected" class="dropdown-menu" aria-labelledby="dropdown-user">
-                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-divider" style="margin: 5px 0;"></div>
                     <a class="dropdown-item first-item" :href="domain + '/focus/user.html'">{{username}}</a>
                     <a class="dropdown-item first-item" :href="domain + '/focus/collection.html'">Mes collections <icon name="heart"></icon></a>
-                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-divider" style="margin: 5px 0;"></div>
                     <a class="dropdown-item first-item" @click="logout()" style="text-decoration: underline">Déconnexion</a>
                 </div>
             </div>
@@ -460,6 +460,11 @@
         margin: auto;
     }
 
+    #my-navbar {
+        background-color: transparent !important;
+        background-image: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8) 10%, rgba(0, 0, 0, 0.8) 90%, rgba(0, 0, 0, 0)) !important;//rgba(0, 0, 0, 0.1) !important;
+    }
+
     .navbar {
         padding: 0 0 0 0;
     }
@@ -471,6 +476,10 @@
         left: 0;
         width: 100vw;
         height: fit-content;
+    }
+
+    .nav-link {
+        color: white !important;
     }
 
     .logo-nav {
@@ -491,7 +500,7 @@
 
     .divider {
         margin: 7px 0 7px 0;
-        border-left:1px solid rgba(0, 0, 0, 0.5);
+        border-left:1px solid white !important;;
     }
 
     .logo {
@@ -504,7 +513,10 @@
         height: fit-content;
         margin: 0 0 0 0;
         z-index: 1;
-        background-color: $firstColor;
+        background-image: url("../assets/img/64.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100%;
     }
 
     .user-nav {
@@ -515,7 +527,9 @@
     #dropdown-user {
         padding: 1px;
         height: 75px;
-        width: 75px;
+        width: 78px;
+        background-color: transparent;
+        border-color: transparent;
     }
 
     #image-user {

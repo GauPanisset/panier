@@ -149,6 +149,7 @@
                                     content: response.data,
                                 }
                             );
+                            console.log(this.sections);
                         });
                 }
             },

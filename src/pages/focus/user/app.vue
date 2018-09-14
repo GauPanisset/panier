@@ -3,8 +3,8 @@
         <div class="focus-user">
             <nav-bar></nav-bar>
             <div id="background">
-                <div class="row profil-container">
-                    <div class="image-container col-12 col-md-6">
+                <div class="row profil-container mt-5 mt-md-4">
+                    <div class="image-container d-none col-12 d-md-block col-md-6">
                         <img class="profil-picture" :src="getImgUrl(picture)"/>
                     </div>
                     <div class="text-container col-12 col-md-6">
@@ -296,12 +296,21 @@
         height: 100vh;
         width: 50vw;
         display: flex;
+        min-width: 280px;
+    }
+
+    .mt-5 {
+        margin-top: 250px;
+    }
+
+    .mt-md-0 {
+        margin-top: 150px;
     }
 
     .profil-container {
         width: 50vw;
         height: 20vw;
-        margin: 250px 0 0 0;
+        margin-left: 0;
     }
 
     .image-container {

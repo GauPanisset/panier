@@ -8,6 +8,7 @@
         </transition>
         <!-- Bouton survol permettant de se déplacer -->
         <img v-show="position.scrollTop + 8 >= windowHeight" @mouseenter="mouseScroll(-1)" @mouseleave="mouseFree()" class="arrow" id="left-arrow" src="../assets/img/fleches_gauche.png">
+        <product-section :position="position"></product-section>
         <home-section v-for="section in sections" :key="section.image" :attribute="section" :position="position"></home-section>
         <img v-show="position.scrollTop + 8 >= windowHeight" @mouseenter="mouseScroll(1)" @mouseleave="mouseFree()" class="arrow" id="right-arrow" src="../assets/img/fleches_droite.png">
     </div>
@@ -18,6 +19,7 @@
 
     import NavBar from "./nav-bar";
     import HomeSection from "./home-section";
+    import ProductSection from "./product-section";
 
     import axios from 'axios';
 
@@ -37,7 +39,8 @@
             },
         components: {
             HomeSection,
-            NavBar
+            NavBar,
+            ProductSection,
         },
         name: "horizontal-scroll-wrapper",
         methods: {
