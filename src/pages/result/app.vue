@@ -120,7 +120,7 @@
                             });
                             this.sections.push({
                                     title: title,
-                                    display: this.displayType.article,
+                                    display: "large",
                                     font: "salome",
                                     content: response.data,
                                 }
@@ -144,7 +144,7 @@
                             });
                             this.sections.push({
                                     title: title,
-                                    display: this.displayType[this.$route.query.section],
+                                    display: "large",
                                     font: "salome",
                                     content: response.data,
                                 }
