@@ -361,6 +361,7 @@
                         })
                 }
                 if (this.stateEmail) {
+                    console.log(sessionStorage.getItem("id"));
                     axios
                         .patch(server_url + '/user/mail', {
                             "value": this.newMail,

@@ -22,7 +22,6 @@
                 </div>
 
                 <div class="add-button">
-                    <b-button :variant="'link'">Ajouter à ma Collection <icon name="heart"></icon></b-button><br>
                     <b-button :variant="'link'">Partager</b-button>
                 </div>
 
