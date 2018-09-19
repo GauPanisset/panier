@@ -18,6 +18,7 @@
     "jquery": "^3.3.1",
     "jquery-mousewheel": "^3.1.13",
     "node-sass": "^4.9.2",
+    "papaparse": "^4.6.0",
     "sass-loader": "^7.0.3",
     "serve-static": "^1.13.2",
     "sweetalert2": "^7.26.12",

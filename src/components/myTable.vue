@@ -19,6 +19,7 @@
                                     <input v-if="column.id != 'marque' || categorie != 'product'" :type="column.type" :placeholder="column.friendlyName" v-model="inputValue[column.id]" :id="column.id" :name="column.id">
                                 </label>
                             </div>
+                            <b-form-file variant="primary" v-model="file" placeholder="Choisissez un fichier CSV"></b-form-file>
                         </div>
                         <button class="addRowBtn" v-on:click.prevent="addRow" value=""><icon id="plus" name="plus"></icon></button>
                     </div>
@@ -76,6 +77,7 @@
 <script>
 
     import axios from 'axios';
+    import Papa from 'papaparse';
     import MyModal from 'components/myModal';
 
     const server_url = "https://panier-app.herokuapp.com";
@@ -99,6 +101,7 @@
                 state: true,
                 authorizations: [],
                 oldAutho: [],
+                file: null,
             }
         },
         computed: {
@@ -113,6 +116,42 @@
             },
         },
         methods: {
+            sendData() {
+                let brands = {};
+                axios
+                    .get(server_url + '/brand/index/allback')
+                    .then(response => {
+                        response.data.forEach(brand => {
+                            brands[brand.nom] = brand.id;
+                        });
+                        Papa.parse(this.file, {
+                            header: true,
+                            complete: (results, file) => {
+                                results.data.forEach(item => {
+                                    item.marque = brands[item.marque];
+                                });
+                                axios({
+                                    method: "POST",
+                                    url: server_url + '/product/jsoncreate',
+                                    headers: {"x-access-token": sessionStorage.getItem("accessToken"),},
+                                    data: {content: results.data},
+                                })
+                                    .then(response => {
+                                        location.reload();
+                                    })
+                                    .catch(err => {
+                                        console.log(err);
+                                    })
+                            },
+                            error: (err) => {
+                                console.log(err);
+                            }
+                        })
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
             updateAutho(id_utilisateur) {
                 this.authorizations.forEach(autho => {
                     if (this.oldAutho.includes(autho.id) && autho.right == 0) {
@@ -222,24 +261,28 @@
 
             },
             addRow: function (event) {
-                let newRow = {};
-                this.columnNames.forEach(column => {
-                    newRow[column.id] = this.inputValue[column.id];
-                });
-                newRow['id_marque'] = this.inputValue['id_marque'] === undefined ? 0 : this.inputValue['id_marque'];
-                axios({
-                    method: "POST",
-                    url: server_url + '/' + this.categorie + '/create',
-                    data: newRow,
-                    headers: {"x-access-token": sessionStorage.getItem("accessToken"),},
-                })
-                    .then(response => {
-                        newRow['id'] = response.data[0].id;
-                        this.labels.push(newRow);
+                if (this.file !== null) {
+                    this.sendData();
+                } else {
+                    let newRow = {};
+                    this.columnNames.forEach(column => {
+                        newRow[column.id] = this.inputValue[column.id];
+                    });
+                    newRow['id_marque'] = this.inputValue['id_marque'] === undefined ? 0 : this.inputValue['id_marque'];
+                    axios({
+                        method: "POST",
+                        url: server_url + '/' + this.categorie + '/create',
+                        data: newRow,
+                        headers: {"x-access-token": sessionStorage.getItem("accessToken"),},
                     })
-                    .catch(err => {
-                        console.log(err);
-                    })
+                        .then(response => {
+                            newRow['id'] = response.data[0].id;
+                            this.labels.push(newRow);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                }
             },
             getItems() {
                 axios.get(server_url + '/' + this.categorie + '/index/allback')
