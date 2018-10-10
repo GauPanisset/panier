@@ -75,7 +75,7 @@
         name: "cat-section",
         data() {
             const dl = [];
-            let score = 0;
+            let score = 0;                                  //Score permettant de calculer le nombre d'éléments à afficher. Utile pour différencier l'affichage d'un article qui est plus large que pour les autres éléments.
             let index = 0;
             while (score < 4 && index < this.attribute.content.length) {
                 score += this.attribute.content[0].type === 'article' ? 2 : 1;

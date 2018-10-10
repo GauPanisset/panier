@@ -24,7 +24,7 @@
                 init: {                                         //Stocke les valeurs initiatiales des éléments pour permettre l'effet parallaxe.
                     widthText: 0,
                     widthImg: 0,
-                    heightImg: 0,
+                    heightImg: 0,a
                     value: 0
                 },
                 styleObject: {                                  //Position aléatoire de la subsection.

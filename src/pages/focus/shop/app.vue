@@ -57,7 +57,7 @@
         name: "app",
         data() {
             return {
-                name: "Nom de marque",
+                name: "Nom de la boutique",
                 website: "www.site.com",
                 content: [],
                 location1: "",

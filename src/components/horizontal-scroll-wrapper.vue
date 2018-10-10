@@ -33,7 +33,7 @@
         props : ['position', 'windowHeight'],
             data() {
                 return {
-                    repeater: 0,
+                    repeater: 0,                                    //Le repeater sert à créer l'effet de scroll lors du survole des flèches à gauche et à droite.
                     sections: [],
                 }
             },

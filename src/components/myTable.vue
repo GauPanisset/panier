@@ -199,7 +199,7 @@
             },
             openModalAutho(id_utilisateur, item) {
                 axios
-                    .get(server_url + '/user/authorization/' + id_utilisateur)
+                    .get(server_url + 'i' + id_utilisateur)
                     .then(response => {
                         this.authorizations = [{friendlyName: "Ajouter un produit", id: 0, right: 0, scope: null}, {friendlyName: "Modifier un produit", id: 1, right: 0, scope: -1}, {friendlyName: "Supprimer un produit", id: 2, right: 0, scope: -1}, {friendlyName: "Ajouter un article", id: 3, right: 0, scope: null}, {friendlyName: "Modifier un article", id: 4, right: 0, scope: -1}, {friendlyName: "Supprimer un article", id: 5, right: 0, scope: -1}, {friendlyName: "Ajouter une boutique", id: 6, right: 0, scope: null}, {friendlyName: "Modifier une boutique", id: 7, right: 0, scope: -1}, {friendlyName: "Supprimer une boutique", id: 8, right: 0, scope: -1}, {friendlyName: "Ajouter une marque", id: 9, right: 0, scope: null}, {friendlyName: "Modifier une marque", id: 10, right: 0, scope: -1}, {friendlyName: "Supprimer une marque", id: 11, right: 0, scope: -1}, {friendlyName: "Ajouter un utilisateur", id: 12, right: 0, scope: null}, {friendlyName: "Modifier un utilisateur", id: 13, right: 0, scope: -1}, {friendlyName: "Supprimer un utilisateur", id: 14, right: 0, scope: -1}, {friendlyName: "Modifier les autorisations", id: 15, right: 0, scope: -1}];
                         this.oldAutho = [];
