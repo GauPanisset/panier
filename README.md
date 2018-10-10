@@ -35,43 +35,43 @@ Voici l'arborescence du projet :
         │   ├── font                    (contient l'ensemble des fonts utiles)
         │   └── img                     (contient l'ensemble des images)
         ├── components
-		│ 	├── cat-section.vue
-		│ 	├── filter-aside.vue
-		│ 	├── home-section.vue
-		│ 	├── horizontal-scroll-wrapper.vue
-		│ 	├── nav-bar.vue
-		│ 	├── myModal.vue
-		│ 	├── myTab.vue
-		│ 	├── myTable.vue
-		│ 	├── product-section.vue
-		│ 	├── search-bar.vue
-		│ 	└── subsection.vue
+        │ 	├── cat-section.vue
+        │ 	├── filter-aside.vue
+        │ 	├── home-section.vue
+        │ 	├── horizontal-scroll-wrapper.vue
+        │ 	├── nav-bar.vue
+        │ 	├── myModal.vue
+        │ 	├── myTab.vue
+        │ 	├── myTable.vue
+        │ 	├── product-section.vue
+        │ 	├── search-bar.vue
+        │ 	└── subsection.vue
         └── pages
             ├── focus
             │   ├── article
-			│ 	│ 	├── app.html
-			│ 	│ 	├── app.js
-			│ 	│ 	└── app.vue
-			│ 	├── brand
-			│ 	│ 	├── app.html
-			│ 	│ 	├── app.js
-			│ 	│ 	└── app.vue
-			│ 	├── collection
-			│ 	│ 	├── app.html
-			│ 	│ 	├── app.js
-			│ 	│ 	└── app.vue
-			│ 	├── product
-			│ 	│ 	├── app.html
-			│ 	│ 	├── app.js
-			│ 	│ 	└── app.vue
-			│ 	├── shop
-			│ 	│ 	├── app.html
-			│ 	│ 	├── app.js
-			│ 	│ 	└── app.vue
-			│ 	└── user
-			│ 		├── app.html
-			│ 		├── app.js
-			│ 		└── app.vue
+            │   │   ├── app.html
+            │   │ 	├── app.js
+            │   │ 	└── app.vue
+            │   ├── brand
+            │   │ 	├── app.html
+            │   │ 	├── app.js
+            │   │ 	└── app.vue
+            │   ├── collection
+            │   │ 	├── app.html
+            │   │ 	├── app.js
+            │   │ 	└── app.vue
+            │   ├── product
+            │   │ 	├── app.html
+            │   │ 	├── app.js
+            │   │ 	└── app.vue
+            │   ├── shop
+            │   │ 	├── app.html
+            │   │ 	├── app.js
+            │   │ 	└── app.vue
+            │   └── user
+            │   	├── app.html
+            │   	├── app.js
+            │   	└── app.vue
             ├── home
             │   ├── app.html
             │   ├── app.js
@@ -127,9 +127,9 @@ Aucune.
 
 | Parent(s) 			| Fils     	|
 | :-------------: 	|:-------------:	|
-| 						| 			  	|
+| result/app.vue <br> focus/*/app.vue						| 			  	|
 
--
+---
 
 * **filter-aside.vue :**
 
@@ -147,19 +147,19 @@ Dans les *data* de ce composants, on retrouve les différentes sections et filtr
 ##### Variables :
 
     {
-   			activeNames : ["collapse filtre ouvert"],
-   			activeNamesOrderBy : ["collapse tri ouvert"],
-   			selection : ["id des filtres actifs"],
-   			sortedBy : ["id des tris actifs"]
+        activeNames : ["collapse filtre ouvert"],
+        activeNamesOrderBy : ["collapse tri ouvert"],
+        selection : ["id des filtres actifs"],
+        sortedBy : ["id des tris actifs"]
     }
 
 
 ##### Méthodes :
 
     {
-    		sendSelection([] selected, string name) : callback de l'event @change des checkboxs des filtres.
-    		sendSort([] selected, int id) : callback de l'event @change des checkboxs des tris.
-    		reset() : reset les filtres.
+        sendSelection([] selected, string name) : callback de l'event @change des checkboxs des filtres.
+        sendSort([] selected, int id) : callback de l'event @change des checkboxs des tris.
+        reset() : reset les filtres.
     }
 
 Ces méthodes renvoient toutes une *emit* vers **result/app.vue** pour modifier les requêtes en tenant compte des tris et filtres.
@@ -167,16 +167,16 @@ Ces méthodes renvoient toutes une *emit* vers **result/app.vue** pour modifier 
 ##### Inputs :
 
     {
-   			filters : [{
-   							name : "nom du filtre",
-   							content : [{
-   											id : id du filtre,
-   											text : texte affiché sur le choix,
-   											value: valeur de retour
-   										}, ... , {...}],
-   							title : "nom du filtre affiché",
-   							selection : [liste des filtres sélectionnés]
-   						}, ... , {...}]
+        filters : [{
+                        name : "nom du filtre",
+                        content : [{
+                                        id : id du filtre,
+                                        text : texte affiché sur le choix,
+                                        value: valeur de retour
+                                    }, ... , {...}],
+                        title : "nom du filtre affiché",
+                        selection : [liste des filtres sélectionnés]
+                    }, ... , {...}]
     }
 
 ##### Utilisation de l'API :
@@ -189,7 +189,7 @@ Aucune.
 | :-------------: 	|:-------------:	|
 | result/app.vue		| 				  	|
 
--
+---
 
 * **home-sections.vue :**
 
@@ -210,13 +210,13 @@ la page d'accueil.
 ##### Inputs :
 
     {
-   			attribute : {
-   								name: "Nom de la section",
-   								content: [{img: 'image mise en valeur', text: 'texte associé'}, ..., {...}]
-    					},
-    		position : {
-    							scrollTop : position de la page par rapport à la fenêtre.
-    				   }
+        attribute : {
+                        name: "Nom de la section",
+                        content: [{img: 'image mise en valeur', text: 'texte associé'}, ..., {...}]
+                    },
+        position : {
+                        scrollTop : position de la page par rapport à la fenêtre.
+                   }
     }
 
 Le `content` va être retransmis au composant suivant qui va l'afficher.
@@ -230,9 +230,9 @@ Aucune.
 
 | Parent(s) 			| Fils     	|
 | :-------------: 	|:-------------:	|
-| 						| subsection.vue	|
+| horizontal-scroll-wrapper.vue				| subsection.vue	|
 
--
+---
 
 * **horizontal-scroll-wrapper.vue :**
 
@@ -244,29 +244,29 @@ et de la barre de navigation.
 ##### Variables :
 
     {
-   			sections : [{
-   								name : "nom de la section",
-   								content : [voir home-section.vue],
-   								type : "type de section, utile pour un affichage adéquate",
-   								link : lien redirigeant vers l'ensemble des éléments de la section.
-   						}, ... , {...}]
+        sections : [{
+                        name : "nom de la section",
+                        content : [voir home-section.vue],
+                        type : "type de section, utile pour un affichage adéquate",
+                        link : lien redirigeant vers l'ensemble des éléments de la section.
+                    }, ... , {...}]
     }
 
 
 ##### Méthodes :
 
     {
-   			mouseScroll(val) : callback de l'event @mouseenter des flêches sur les côtés de la fenêtre. Permet de lancer le scroll. "val" indique le sens de scroll.
-   			mouseFree() : callbakc de l'event @mouseleave des flêches sur les côtés de la fenêtre. Permet d'arrêter le scroll.
+        mouseScroll(val) : callback de l'event @mouseenter des flêches sur les côtés de la fenêtre. Permet de lancer le scroll. "val" indique le sens de scroll.
+        mouseFree() : callbakc de l'event @mouseleave des flêches sur les côtés de la fenêtre. Permet d'arrêter le scroll.
     }
 
 ##### Inputs :
 
     {
-   			position : {
-   						 		scrollTop : position verticale de la page par rapport à la fenêtre.
-   						 		scrollLeft : position horizontale de la page par rapport à la fenêtre.
-   					   }
+        position : {
+                        scrollTop : position verticale de la page par rapport à la fenêtre.
+                        scrollLeft : position horizontale de la page par rapport à la fenêtre.
+                   }
     }
 
 ##### Utilisation de l'API :
@@ -282,9 +282,9 @@ et de la barre de navigation.
 
 | Parent(s) 			| Fils     	|
 | :-------------: 	|:-------------:	|
-| 						| home-section.vue <br> nav-bar.vue <br> product-section.vue 				  	|
+| home.vue						| home-section.vue <br> nav-bar.vue <br> product-section.vue 				  	|
 
--
+---
 
 * **myModal.vue :**
 
@@ -325,7 +325,7 @@ Aucune.
 
 | Parent(s) 			| Fils     	|
 | :-------------: 	|:-------------:	|
-| nav-bar.vue <br> user/app.vue	|  	|
+| nav-bar.vue <br> focus/user/app.vue <br> focus/product/app.vue	|  	|
 
 -
 
@@ -338,13 +338,13 @@ Ce composant permet l'affichage du nav-tab personnalisé du back office. Le comp
 ##### Variables :
 
     {
-   			userAutho : {id_authorization : scope_authorization, ...}.
-   			selectedX : true si onglet actif, false sinon.
-   			columnsCategorie : [{
-   										friendlyName : nom de l'attribut affiché,
-   										id : nom de l'attribut,
-   										type : type d'input (text, image, file, ...)
-   								}, ... , {...}]
+        userAutho : {id_authorization : scope_authorization, ...}.
+        selectedX : true si onglet actif, false sinon.
+        columnsCategorie : [{
+                                friendlyName : nom de l'attribut affiché,
+                                id : nom de l'attribut,
+                                type : type d'input (text, image, file, ...)
+                            }, ... , {...}]
     }
 
 Il y a 5 catégories : *product*, *article*, *shop*, *brand*, *user*, qui possèdent toutes un **selectedX** associé.
@@ -353,13 +353,13 @@ Il y a 5 catégories : *product*, *article*, *shop*, *brand*, *user*, qui possè
 ##### Méthodes :
 
     {
-    		changeAttributes(index) :	callback de l'event @click, permettant l'affichage du bon contenu en fonction de l'onglet actif.
+        changeAttributes(index) :	callback de l'event @click, permettant l'affichage du bon contenu en fonction de l'onglet actif.
     }
 
 ##### Inputs :
 
     {
-   			isAdmin : true si l'utilisateur est admin, false sinon. Utile pour conntourner les problèmes d'authentification.
+        isAdmin : true si l'utilisateur est admin, false sinon. Utile pour conntourner les problèmes d'authentification.
     }
 
 ##### Utilisation de l'API :
@@ -383,16 +383,16 @@ Ce composant permet l'affichage du tableau du back-office. Il possède deux part
 ##### Variables :
 
     {
-   			labels : [{tous les attributs d'un élément}],
-   			inputValue : {tous les attributs d'un élément qu'un utilisateur rentre grâce aux formulaires},
-   			authorizations : [{
-   										friendlyName : nom de l'authorisation affichée,
-   										id : id de l'authorisation,
-   										right : 0 si pas le droit, 1 sinon,
-   										scope : scope de l'authorisation
-   								  }, ... , {...}],
-   			oldAutho : [liste des id des authorisations avant modification],
-   			file : fichier CSV que l'utilisateur peut entrer
+        labels : [{tous les attributs d'un élément}],
+        inputValue : {tous les attributs d'un élément qu'un utilisateur rentre grâce aux formulaires},
+        authorizations : [{
+                                friendlyName : nom de l'authorisation affichée,
+                                id : id de l'authorisation,
+                                right : 0 si pas le droit, 1 sinon,
+                                scope : scope de l'authorisation
+                              }, ... , {...}],
+        oldAutho : [liste des id des authorisations avant modification],
+        file : fichier CSV que l'utilisateur peut entrer
     }
 
 Pour avoir le détails du contenu de *labels* ou *inputValue* voir la description des fonctions de l'API utilisées par ce composant (cf. [GauPanisset/panier-app](https://github.com/GauPanisset/passer-app/tree/master/routes)).
@@ -405,24 +405,24 @@ Pour avoir le détails du contenu de *labels* ou *inputValue* voir la descriptio
 ##### Méthodes :
 
     {
-   			sendData() : méthode permettant d'envoyer les données dans la base de données à partir du fichier CSV.
-   			updateAutho(id_utilisateur) : callback de l'event @ok de la modal. Modifie, supprime ou ajoute les authorisations de l'utilisateur d'identifiant id_utilisateur en base de données, après avoir confirmé.
-   			openModalAutho(id_utilisateur, item) : ouvre la modal correspondant à l'utilisateur d'id id_utilisateur.
-   			closeModalAutho() : ferme la modal.
-   			updateEvent(column, item, value) : callback de l'event @blur des input-form. Elle met à jour les données.
-   			checkBrand() : vérifie que la marque entrée par l'utilisateur existe. Si non il faut qu'il la crée.
-   			deleteEvent(index) : callback de l'event @click sur le bouton poubelle. Elle permet de supprimer l'élément d'id index.
-   			addRow() : callback de l'event @click sur le bouton (+). Elle ajoute un élément à partir des données stockées dans inputValue.
-   			getItems() : permet d'obtenir l'ensemble des éléments d'une catégorie.
+        sendData() : méthode permettant d'envoyer les données dans la base de données à partir du fichier CSV.
+        updateAutho(id_utilisateur) : callback de l'event @ok de la modal. Modifie, supprime ou ajoute les authorisations de l'utilisateur d'identifiant id_utilisateur en base de données, après avoir confirmé.
+        openModalAutho(id_utilisateur, item) : ouvre la modal correspondant à l'utilisateur d'id id_utilisateur.
+        closeModalAutho() : ferme la modal.
+        updateEvent(column, item, value) : callback de l'event @blur des input-form. Elle met à jour les données.
+        checkBrand() : vérifie que la marque entrée par l'utilisateur existe. Si non il faut qu'il la crée.
+        deleteEvent(index) : callback de l'event @click sur le bouton poubelle. Elle permet de supprimer l'élément d'id index.
+        addRow() : callback de l'event @click sur le bouton (+). Elle ajoute un élément à partir des données stockées dans inputValue.
+        getItems() : permet d'obtenir l'ensemble des éléments d'une catégorie.
     }
 
 ##### Inputs :
 
     {
-   			columnsNames : tableau des columnsCategorie (voir myTab.vue)
-   			categorie : [liste des categories et de leurs id]
-   			isAdmin : voir myTab.vue
-   			userAutho : voir myTab.vue
+        columnsNames : tableau des columnsCategorie (voir myTab.vue)
+        categorie : [liste des categories et de leurs id]
+        isAdmin : voir myTab.vue
+        userAutho : voir myTab.vue
     }
 
 ##### Utilisation de l'API :
@@ -473,29 +473,29 @@ L'utilisateur peut également faire une recherche depuis cette barre de navigati
 ##### Variables :
 
     {
-   			request : "requête faite via la barre de recherche".
-   			username : "variable contenant la valeur de l'input-form 'nom d'utilisateur'".
-   			password : "variable contenant la valeur de l'input-form 'mot de passe'".
-   			picture : "nom de la photo de l'utilisateur".
-   			userInput : vrai si l'utilisateur a ouvert le dropdown de connexion. Faux sinon.
-   			userConnected : vrai si l'utilisateur est connecté. Faux sinon.
-   			showModal : vrai pour afficher la modal de création de compte. Faux sinon.
-   			stateX : vrai si l'input est valide. Faux sinon.
-   			newX : "valeur de l'input".
-   			confirmed : vrai si la création a été effectuée. Faux sinon.
+        request : "requête faite via la barre de recherche".
+        username : "variable contenant la valeur de l'input-form 'nom d'utilisateur'".
+        password : "variable contenant la valeur de l'input-form 'mot de passe'".
+        picture : "nom de la photo de l'utilisateur".
+        userInput : vrai si l'utilisateur a ouvert le dropdown de connexion. Faux sinon.
+        userConnected : vrai si l'utilisateur est connecté. Faux sinon.
+        showModal : vrai pour afficher la modal de création de compte. Faux sinon.
+        stateX : vrai si l'input est valide. Faux sinon.
+        newX : "valeur de l'input".
+        confirmed : vrai si la création a été effectuée. Faux sinon.
     }
 
 
 ##### Méthodes :
 
     {
-   			getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic"
-   			toResult() : callback de l'event @click ou #keyup.enter de la barre de recherche qui appelle la page de résultat.
-   			changeUserConnect(event) : callback de l'event @click du bouton profil permettant de créer un écran opaque lorsque le dropdown est déplié. Modifie en réalité la variable userInput.
-   			login() : connecte un utilisateur.
-   			logout() : déconnecter l'utilisateur connecté.
-   			closeModal() : ferme la modal de création de compte.
-   			confirm() : confirme les choix de création de compte.
+        getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic"
+        toResult() : callback de l'event @click ou #keyup.enter de la barre de recherche qui appelle la page de résultat.
+        changeUserConnect(event) : callback de l'event @click du bouton profil permettant de créer un écran opaque lorsque le dropdown est déplié. Modifie en réalité la variable userInput.
+        login() : connecte un utilisateur.
+        logout() : déconnecter l'utilisateur connecté.
+        closeModal() : ferme la modal de création de compte.
+        confirm() : confirme les choix de création de compte.
     }
 
 ##### Inputs :
@@ -512,7 +512,7 @@ L'utilisateur peut également faire une recherche depuis cette barre de navigati
 
 | Parent(s) 			| Fils     		|
 | :-------------: 	|:-------------:	|
-| myTab.vue			| myModal		  	|
+| horizontal-scroll-wrapper.vue	<br> result/app.vue <br> focus/*/app.vue	| myModal.vue		  	|
 
 -
 
@@ -525,26 +525,26 @@ Ce composant permet l'affichage de la première section de la page d'accueil. Il
 ##### Variables :
 
     {
-    		categories : [{
-    								friendlyName : "nom affiché de la catégorie",
-    								categorie : "identifiant de la catégorie",
-    								image : "url de l'image associée à la catégorie"
-    					  }, ... , {...}]
+        categories : [{
+                            friendlyName : "nom affiché de la catégorie",
+                            categorie : "identifiant de la catégorie",
+                            image : "url de l'image associée à la catégorie"
+                      }, ... , {...}]
     }
 
 ##### Methodes :
 
     {
-    		getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic"
+        getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic"
     }
 
 ##### Inputs :
 
     {
-    		position : {
-   						 		scrollTop : position verticale de la page par rapport à la fenêtre.
-   						 		scrollLeft : position horizontale de la page par rapport à la fenêtre.
-   					   }
+        position : {
+                        scrollTop : position verticale de la page par rapport à la fenêtre.
+                        scrollLeft : position horizontale de la page par rapport à la fenêtre.
+                   }
     }
 
 ##### Utilisation de l'API :
@@ -555,7 +555,7 @@ Ce composant permet l'affichage de la première section de la page d'accueil. Il
 
 | Parent(s) 			| Fils    	 	|
 | :-------------: 	|:-------------:	|
-| 						| 				  	|
+| horizontal-scroll-wrapper.vue						| 				  	|
 
 -
 
@@ -569,20 +569,20 @@ recherche centrale.
 ##### Variables :
 
     {
-    		request : "requête faite via la barre de recherche"
+        request : "requête faite via la barre de recherche"
     }
 
 ##### Methodes :
 	{
-			toResult() : callback de l'event @click ou #keyup.enter de la barre de recherche qui appelle la page de résultat.
+        toResult() : callback de l'event @click ou #keyup.enter de la barre de recherche qui appelle la page de résultat.
 	}
 ##### Inputs :
 
     {
-    		position : {
-   						 		scrollTop : position verticale de la page par rapport à la fenêtre.
-   						 		scrollLeft : position horizontale de la page par rapport à la fenêtre.
-   					   }
+        position : {
+                        scrollTop : position verticale de la page par rapport à la fenêtre.
+                        scrollLeft : position horizontale de la page par rapport à la fenêtre.
+                   }
     }
 
 ##### Utilisation de l'API :
@@ -593,7 +593,7 @@ Aucune.
 
 | Parent(s) 			| Fils     	|
 | :-------------: 	|:-------------:	|
-| 						| 		     	  	|
+| 		home.vue.				| 		     	  	|
 
 -
 
@@ -613,23 +613,23 @@ pour permettre l'effet de parallaxe.
 ##### Variables :
 
 	{
-			init : {
-							widthText : largeur du block texte,
-							widthImg : largeur du block image,
-							heightImg : hauteur du block image,
-							value : alpha modificateur
-				   }
-			styleObject : {
-							top : valeur de l'attribut top des éléments,
-							padding-left : valeur de l'attribut padding-left des éléments,
-						  }
-			styleMove : {
-							left : valeur de l'attribut left des éléments
-						}
-			summary : {
-							content : "texte réduit pour être affiché",
-							link : "lien utile pour rediriger vers l'élément affiché"
-					  }
+        init : {
+                    widthText : largeur du block texte,
+                    widthImg : largeur du block image,
+                    heightImg : hauteur du block image,
+                    value : alpha modificateur
+               }
+        styleObject : {
+                    top : valeur de l'attribut top des éléments,
+                    padding-left : valeur de l'attribut padding-left des éléments,
+                      }
+        styleMove : {
+                    left : valeur de l'attribut left des éléments
+                    }
+        summary : {
+                    content : "texte réduit pour être affiché",
+                    link : "lien utile pour rediriger vers l'élément affiché"
+                  }
 	}
 
 *styleMove* engendre l'effet de désordre et *styleMove* l'effet parallaxe.
@@ -637,24 +637,24 @@ pour permettre l'effet de parallaxe.
 ##### Methodes :
 
     {
-    		getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic"
-    		parallaxe() : permet l'effet de parallaxe.
+        getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic"
+        parallaxe() : permet l'effet de parallaxe.
     }
 
 ##### Inputs :
 
 	{
-    		position : {
-   						 		scrollTop : position verticale de la page par rapport à la fenêtre.
-   						 		scrollLeft : position horizontale de la page par rapport à la fenêtre.
-   					   }
-   			attribut : {
-   								image : "url de l'image de la vignette"
-   								title : "titre affiché sous la vignette"
-   								content : "texte affiché sous le titre"
-   								id : id de l'élément affiché
-   								type : "type de l'élément : article, brand ou shop"
-   					   }
+        position : {
+                        scrollTop : position verticale de la page par rapport à la fenêtre.
+                        scrollLeft : position horizontale de la page par rapport à la fenêtre.
+                   }
+        attribut : {
+                        image : "url de l'image de la vignette"
+                        title : "titre affiché sous la vignette"
+                        content : "texte affiché sous le titre"
+                        id : id de l'élément affiché
+                        type : "type de l'élément : article, brand ou shop"
+                   }
     }
 
 ##### Utilisation de l'API :
@@ -665,7 +665,7 @@ Aucune.
 
 | Parent(s) 			| Fils     	|
 | :-------------: 	|:-------------:	|
-| 						| 				  	|
+| 	home-sections.vue | 				  	|
 
 
 
@@ -683,30 +683,30 @@ Elles donnent toutes les informations disponibles.
 ##### Variables :
 
 	{
-				title : "titre de l'article",
-               	subtitle : "sous-titre de l'article",
-                date : "date de l'article",
-                content: ["paragraphe du texte", ... , "..."],
-                tags : ["liste des tags"],
-                images : ["listes des urls des images"],
-                imagesGallery : ["listes des urls des images pour la gallerie],
-                positions: {
-                				"url de l'image" : {
-                										top : valeur de l'attribut top de l'élément
-                										left : valeur de l'attribut left de l'élément
-                									}
-                		   },
-                products : attributs nécessaires à la création d'une cat-section pour afficher les produits liés cf. cat-section.vue,
-                articles : attributs nécessaires à la création d'une cat-section pour afficher les articles similaires cf. cat-section.vue,
-                index: null. Utile pour l'utilisation de vue-gallery
+        title : "titre de l'article",
+        subtitle : "sous-titre de l'article",
+        date : "date de l'article",
+        content: ["paragraphe du texte", ... , "..."],
+        tags : ["liste des tags"],
+        images : ["listes des urls des images"],
+        imagesGallery : ["listes des urls des images pour la gallerie],
+        positions: {
+                        "url de l'image" : {
+                                                top : valeur de l'attribut top de l'élément
+                                                left : valeur de l'attribut left de l'élément
+                                            }
+                       },
+        products : attributs nécessaires à la création d'une cat-section pour afficher les produits liés cf. cat-section.vue,
+        articles : attributs nécessaires à la création d'une cat-section pour afficher les articles similaires cf. cat-section.vue,
+        index: null. Utile pour l'utilisation de vue-gallery
     }
 
 ##### Methodes :
 
 	{
-			getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic".
-			displayImg(string image) : callback de l'event @mouseenter de l'image. Passe l'image au premier plan.
-			hideImg(string image) : callback de l'event @mouseleave de l'image. Passe l'image à l'arrière plan.
+        getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic".
+        displayImg(string image) : callback de l'event @mouseenter de l'image. Passe l'image au premier plan.
+        hideImg(string image) : callback de l'event @mouseleave de l'image. Passe l'image à l'arrière plan.
 	}
 
 ##### Inputs :
@@ -731,34 +731,34 @@ Elles donnent toutes les informations disponibles.
 ##### Variables :
 
 	{
-				brand : "nom de la marque",
-               	website : "url du site de la marque",
-                content : ["paragraphe du texte de description", ... , "..."],
-                links : [{
-                				name : "nom du lien",
-                				url : "url du lien"
-                		 }, ... , {...}],
-                tags : ["liste des tags"],
-                images : ["listes des urls des images"],
-                imagesGallery : ["listes des urls des images pour la gallerie],
-                positions: {
-                				"url de l'image" : {
-                										top : valeur de l'attribut top de l'élément
-                										left : valeur de l'attribut left de l'élément
-                									}
-                		   },
-                shop : attributs nécessaires à la création d'une cat-section pour afficher les boutiques liées cf cat-section.vue,
-                products : attributs nécessaires à la création d'une cat-section pour afficher les produits liés cf. cat-section.vue,
-                articles : attributs nécessaires à la création d'une cat-section pour afficher les articles similaires cf. cat-section.vue,
-                index: null. Utile pour l'utilisation de vue-gallery
+        brand : "nom de la marque",
+        website : "url du site de la marque",
+        content : ["paragraphe du texte de description", ... , "..."],
+        links : [{
+                    name : "nom du lien",
+                    url : "url du lien"
+                 }, ... , {...}],
+        tags : ["liste des tags"],
+        images : ["listes des urls des images"],
+        imagesGallery : ["listes des urls des images pour la gallerie],
+        positions: {
+                        "url de l'image" : {
+                                                top : valeur de l'attribut top de l'élément
+                                                left : valeur de l'attribut left de l'élément
+                                            }
+                   },
+        shop : attributs nécessaires à la création d'une cat-section pour afficher les boutiques liées cf cat-section.vue,
+        products : attributs nécessaires à la création d'une cat-section pour afficher les produits liés cf. cat-section.vue,
+        articles : attributs nécessaires à la création d'une cat-section pour afficher les articles similaires cf. cat-section.vue,
+        index: null. Utile pour l'utilisation de vue-gallery
     }
 
 ##### Methodes :
 
 	{
-			getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic".
-			displayImg(string image) : callback de l'event @mouseenter de l'image. Passe l'image au premier plan.
-			hideImg(string image) : callback de l'event @mouseleave de l'image. Passe l'image à l'arrière plan.
+        getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic".
+        displayImg(string image) : callback de l'event @mouseenter de l'image. Passe l'image au premier plan.
+        hideImg(string image) : callback de l'event @mouseleave de l'image. Passe l'image à l'arrière plan.
 	}
 
 ##### Inputs :
@@ -783,13 +783,13 @@ Elles donnent toutes les informations disponibles.
 ##### Variables :
 
 	{
-				sections : liste des attributs nécessaires à la création des cat-section pour afficher les collections cf. cat-section.vue
+        sections : liste des attributs nécessaires à la création des cat-section pour afficher les collections cf. cat-section.vue
     }
 
 ##### Methodes :
 
 	{
-			getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic".
+        getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic".
 	}
 
 ##### Inputs :
@@ -814,39 +814,39 @@ Elles donnent toutes les informations disponibles.
 ##### Variables :
 
 	{
-				product : "nom du produit",
-               	price : prix du produit,
-               	attributes : [["nom de l'attribut affiché, valeur de l'attribut], ... , [...]]
-                description : ["paragraphe du texte de description", ... , "..."],
-                images : ["listes des urls des images"],
-                imagesGallery : ["listes des urls des images pour la gallerie],
-                positions : {
-                				"url de l'image" : {
-                										top : valeur de l'attribut top de l'élément
-                										left : valeur de l'attribut left de l'élément
-                									}
-                		   },
-               	inCollection : vrai si dans la collection, faux sinon.
-                products : attributs nécessaires à la création d'une cat-section pour afficher les produits liés cf. cat-section.vue,
-                articles : attributs nécessaires à la création d'une cat-section pour afficher les articles similaires cf. cat-section.vue,
-                index : null. Utile pour l'utilisation de vue-gallery,
-                showAddModal :  vrai pour afficher la modal d'ajout à la collection. Faux sinon,
-                showDeleteModal :  vrai pour afficher la modal de suppression de la collection. Faux sinon,
-                collectionName : "nom de la collection choisi pour l'ajout ou la suppression",
-                options : [Liste des noms de collections disponibles pour l'ajout]
-                optionsDelete : [Liste des noms de collections disponibles à la suppression]
+        product : "nom du produit",
+        price : prix du produit,
+        attributes : [["nom de l'attribut affiché, valeur de l'attribut], ... , [...]]
+        description : ["paragraphe du texte de description", ... , "..."],
+        images : ["listes des urls des images"],
+        imagesGallery : ["listes des urls des images pour la gallerie],
+        positions : {
+                        "url de l'image" : {
+                                                top : valeur de l'attribut top de l'élément
+                                                left : valeur de l'attribut left de l'élément
+                                            }
+                   },
+        inCollection : vrai si dans la collection, faux sinon.
+        products : attributs nécessaires à la création d'une cat-section pour afficher les produits liés cf. cat-section.vue,
+        articles : attributs nécessaires à la création d'une cat-section pour afficher les articles similaires cf. cat-section.vue,
+        index : null. Utile pour l'utilisation de vue-gallery,
+        showAddModal :  vrai pour afficher la modal d'ajout à la collection. Faux sinon,
+        showDeleteModal :  vrai pour afficher la modal de suppression de la collection. Faux sinon,
+        collectionName : "nom de la collection choisi pour l'ajout ou la suppression",
+        options : [Liste des noms de collections disponibles pour l'ajout]
+        optionsDelete : [Liste des noms de collections disponibles à la suppression]
     }
 
 ##### Methodes :
 
 	{
-			closeAddModal() : ferme la modal d'ajout à la collection.
-			closeDeleteModal() : ferme la modal de suppression de la collection.
-			addToCollection() : ajoute un produit à la collection choisie.
-			removeFromCollection() : supprime un produit de la collection choisie.
-			getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic".
-			displayImg(string image) : callback de l'event @mouseenter de l'image. Passe l'image au premier plan.
-			hideImg(string image) : callback de l'event @mouseleave de l'image. Passe l'image à l'arrière plan.
+        closeAddModal() : ferme la modal d'ajout à la collection.
+        closeDeleteModal() : ferme la modal de suppression de la collection.
+        addToCollection() : ajoute un produit à la collection choisie.
+        removeFromCollection() : supprime un produit de la collection choisie.
+        getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic".
+        displayImg(string image) : callback de l'event @mouseenter de l'image. Passe l'image au premier plan.
+        hideImg(string image) : callback de l'event @mouseleave de l'image. Passe l'image à l'arrière plan.
 	}
 
 ##### Inputs :
@@ -871,31 +871,31 @@ Elles donnent toutes les informations disponibles.
 ##### Variables :
 
 	{
-				name : "nom de la boutique",
-               	website : "url de son site web",
-                content : ["paragraphe du texte de description", ... , "..."],
-                location1 : "première ligne de l'adresse de la boutique",
-                location2 : "seconde ligne de l'adresse de la boutique",
-                images : ["listes des urls des images"],
-                imagesGallery : ["listes des urls des images pour la gallerie],
-                positions : {
-                				"url de l'image" : {
-                										top : valeur de l'attribut top de l'élément
-                										left : valeur de l'attribut left de l'élément
-                									}
-                		   },
-				brand : attributs nécessaires à la création d'une cat-section pour afficher les marques liées cf. cat-section.vue,
-                products : attributs nécessaires à la création d'une cat-section pour afficher les produits liés cf. cat-section.vue,
-                articles : attributs nécessaires à la création d'une cat-section pour afficher les articles similaires cf. cat-section.vue,
-                index : null. Utile pour l'utilisation de vue-gallery,
+        name : "nom de la boutique",
+        website : "url de son site web",
+        content : ["paragraphe du texte de description", ... , "..."],
+        location1 : "première ligne de l'adresse de la boutique",
+        location2 : "seconde ligne de l'adresse de la boutique",
+        images : ["listes des urls des images"],
+        imagesGallery : ["listes des urls des images pour la gallerie],
+        positions : {
+                        "url de l'image" : {
+                                                top : valeur de l'attribut top de l'élément
+                                                left : valeur de l'attribut left de l'élément
+                                            }
+                   },
+        brand : attributs nécessaires à la création d'une cat-section pour afficher les marques liées cf. cat-section.vue,
+        products : attributs nécessaires à la création d'une cat-section pour afficher les produits liés cf. cat-section.vue,
+        articles : attributs nécessaires à la création d'une cat-section pour afficher les articles similaires cf. cat-section.vue,
+        index : null. Utile pour l'utilisation de vue-gallery,
     }
 
 ##### Methodes :
 
 	{
-			getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic".
-			displayImg(string image) : callback de l'event @mouseenter de l'image. Passe l'image au premier plan.
-			hideImg(string image) : callback de l'event @mouseleave de l'image. Passe l'image à l'arrière plan.
+        getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic".
+        displayImg(string image) : callback de l'event @mouseenter de l'image. Passe l'image au premier plan.
+        hideImg(string image) : callback de l'event @mouseleave de l'image. Passe l'image à l'arrière plan.
 	}
 
 ##### Inputs :
@@ -920,29 +920,29 @@ Elles donnent toutes les informations disponibles.
 ##### Variables :
 
 	{
-				pseudo : "pseudo de l'utilisateur",
-               	mail : "adresse mail de l'utilisateur",
-                picture : "url de la photo de profil de l'utilisateur,
-                admin : vrai si l'utilisateur est administrateur. Faux sinon,
-                back : vrai si l'utilisateur a accès à une partie du back office. Faux sinon,
-                showModalModif : vrai si la modal de modification est affichée. Faux sinon,
-                stateEmail : vrai si l'email est valide. Faux sinon,
-                newMail : "nouvelle adresse mail de l'utilisateur lors d'une modification",
-				stateMdp : vrai si le mot de passe est valide. Faux sinon,
-                stateMdp2 : vrai si le mot de passe réécrit est identique. Faux sinon,
-                newMdp : {one : "valeur de l'input-form du nouveau mot de passe", two : "valeur de l'input-form de la réécriture du mot de passe"},
-                confirmed : vrai si la création a été effectuée. Faux sinon,
-                showModalBack : vrai si la modal de back-office est affichée. Faux sinon
+        pseudo : "pseudo de l'utilisateur",
+        mail : "adresse mail de l'utilisateur",
+        picture : "url de la photo de profil de l'utilisateur,
+        admin : vrai si l'utilisateur est administrateur. Faux sinon,
+        back : vrai si l'utilisateur a accès à une partie du back office. Faux sinon,
+        showModalModif : vrai si la modal de modification est affichée. Faux sinon,
+        stateEmail : vrai si l'email est valide. Faux sinon,
+        newMail : "nouvelle adresse mail de l'utilisateur lors d'une modification",
+        stateMdp : vrai si le mot de passe est valide. Faux sinon,
+        stateMdp2 : vrai si le mot de passe réécrit est identique. Faux sinon,
+        newMdp : {one : "valeur de l'input-form du nouveau mot de passe", two : "valeur de l'input-form de la réécriture du mot de passe"},
+        confirmed : vrai si la création a été effectuée. Faux sinon,
+        showModalBack : vrai si la modal de back-office est affichée. Faux sinon
     }
 
 ##### Methodes :
 
 	{
-			goTo(string url) : Callback de l'envent @click de lien "Mes Collections". Renvoie vers la page url.
-			getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic".
-			closeModalBack() : ferme la modal du back-office.
-			closeModalModif() : ferme la modal de modification.
-			confirmModif : confirme les modifications.
+        goTo(string url) : Callback de l'envent @click de lien "Mes Collections". Renvoie vers la page url.
+        getImgUrl(string pic) : retourne le chemin pour afficher l'image "pic".
+        closeModalBack() : ferme la modal du back-office.
+        closeModalModif() : ferme la modal de modification.
+        confirmModif : confirme les modifications.
 	}
 
 ##### Inputs :
@@ -979,16 +979,16 @@ de chaque côté permettent de défiler sans avoir à scroller.
 ##### Variables :
 
 	{
-				position : {
-   						 		scrollTop : position verticale de la page par rapport à la fenêtre.
-   						 		scrollLeft : position horizontale de la page par rapport à la fenêtre.
-   					  	   }
+        position : {
+                        scrollTop : position verticale de la page par rapport à la fenêtre.
+                        scrollLeft : position horizontale de la page par rapport à la fenêtre.
+                   }
     }
 
 ##### Methodes :
 
 	{
-			handleScroll() : méthode permettant le changement de direction de scroll.
+        handleScroll() : méthode permettant le changement de direction de scroll.
 	}
 
 ##### Inputs :
@@ -1029,23 +1029,23 @@ de chaque côté permettent de défiler sans avoir à scroller.
 ##### Variables :
 
 	{
-				sections : [liste des sections à afficher cf. cat-section.vue],
-				filters : [liste des filtres disponibles cf. filter-aside.vue],
-				request : "enoncé de la requête",
-				section : "nom de la catégorie courante si il y a",
-				reqParams : {
-   						 		filter : valeur de la réécriture des filtres sous forme de paramètre de requête.
-   						 		sort : valeur de la réécriture des tris sous forme de paramètre de requête.
-   					  	   }
+        sections : [liste des sections à afficher cf. cat-section.vue],
+        filters : [liste des filtres disponibles cf. filter-aside.vue],
+        request : "enoncé de la requête",
+        section : "nom de la catégorie courante si il y a",
+        reqParams : {
+                        filter : valeur de la réécriture des filtres sous forme de paramètre de requête.
+                        sort : valeur de la réécriture des tris sous forme de paramètre de requête.
+                   }
     }
 
 ##### Methodes :
 
 	{
-			setSort(data) : méthode traitant le retour du composant filter-aside.vue. Réécrit le tri comme un paramètre de la requête.
-			setSelection(data) : méthode traitant le retour du composant filter-aside.vue. Réécrit les filtres comme un paramètre de la requête.
-			displaySection() : permet l'affichage et la mise à jour des catégories.
-			displayResult() : permet l'affichage de la mise à jour des résultats de requête.
+        setSort(data) : méthode traitant le retour du composant filter-aside.vue. Réécrit le tri comme un paramètre de la requête.
+        setSelection(data) : méthode traitant le retour du composant filter-aside.vue. Réécrit les filtres comme un paramètre de la requête.
+        displaySection() : permet l'affichage et la mise à jour des catégories.
+        displayResult() : permet l'affichage de la mise à jour des résultats de requête.
 	}
 
 ##### Inputs :
