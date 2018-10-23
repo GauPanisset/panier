@@ -1,5 +1,11 @@
 # Front Panier
 
+## Demo : 
+
+[Cliquez ici](https://panier-vue.herokuapp.com)
+
+N.B. L'application est hébergée sur un serveur *Heroku* gratuit. Il y a donc un petit délai lors du lancement.
+
 ## Requis
 
 * [npm]([https://www.npmjs.com/get-npm])
